@@ -185,6 +185,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Player
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 144
+        width: 27
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b11ae79a041a62b4b911416fe6ca24af
+      internalID: -102502394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -196,7 +217,6 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Enemy_0: 1329874105
       Enemy_1: 1141844707
       Enemy_10: -1084677336
       Enemy_11: -1457160894
@@ -225,6 +245,7 @@ TextureImporter:
       Enemy_7: -1949748880
       Enemy_8: 1798851730
       Enemy_9: 434421051
+      Player: 1329874105
       Zombie_1: 1946297204
       Zombie_2: 526606711
       Zombie_3: -862398942
