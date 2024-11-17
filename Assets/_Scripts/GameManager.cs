@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 { 
-    public static event Action<bool> OnGamePlayed;
+    public static event Action OnGamePlayed;
 
     public static bool isGame { get;private set; }
     public static int CurrentScores { get;private set; }
@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     {
         isGame = true;  
         CurrentScores = 0;
-        OnGamePlayed?.Invoke(true);
+        OnGamePlayed?.Invoke();
     }
     private void OnEnable()
     {
@@ -31,13 +31,6 @@ public class GameManager : MonoBehaviour
     private void GameOver()
     {
         isGame = false;
-    }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            PlayerPrefs.DeleteAll();
-        }
     }
     public void RestartGame()
     {

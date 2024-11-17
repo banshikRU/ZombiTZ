@@ -14,12 +14,17 @@ public class EnemyGenerator : MonoBehaviour
     [Header("Generator Prefabs")]
     [SerializeField] private List<GeneratedZombies> _zombiePrefabs;
     [SerializeField] private List<Collider2D> _generateAreas;
+
+    [Space(10)]
+
     [SerializeField] private Transform _player;
     [SerializeField] private GameManager _gameManager;
+
     [Header("Generator Parameters")]
     [SerializeField] private float _timeToNewSpawnLevel = 10;
     [SerializeField] private float _minimalTimeToSpawn = 0.5f;
     [SerializeField] private float _baseTimeToSpawnNewZombie = 2f;
+    [SerializeField] private float _reductionTime = 0.1f;
 
     private bool _isGame;
     private bool _isMinimalValueReached;
@@ -60,19 +65,19 @@ public class EnemyGenerator : MonoBehaviour
             if (_timeToNewSpawn <= 0 && !_isMinimalValueReached ) // проверка на достижение минимального значения по генерации
             {
                 _timeToNewSpawn = _timeToNewSpawnLevel;
-                _newTimeToNextSpawn -= 0.1f;
-                Debug.Log(_newTimeToNextSpawn);
+                _newTimeToNextSpawn -= _reductionTime;
                 if (_newTimeToNextSpawn <= _minimalTimeToSpawn) { _isMinimalValueReached = true; }
             }
         }
     }
+
     private void GameOver()
     {
         _isGame = false;
     }
-    private void StartGenerate(bool value)
+    private void StartGenerate()
     {
-        _isGame = true;
+      //  _isGame = true;
     }
     private void GenerateZombie()
     {

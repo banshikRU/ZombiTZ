@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class PlayerFireControll : MonoBehaviour
 {
-    [SerializeField] private Bullet _bullet;
+    [SerializeField] private BaseBullet _bullet;
     [SerializeField] private float _shootsInOneSeconds = 0.1f;
+
     private float _shootInSecond;
     private float _canShoot;
 
@@ -27,13 +28,11 @@ public class PlayerFireControll : MonoBehaviour
     }
     private void GenerateBullet(Vector3 vector)
     {
-        Bullet bullet = Instantiate(_bullet, transform.position, Quaternion.identity);
+        BaseBullet bullet = Instantiate(_bullet, transform.position, Quaternion.identity);
         bullet.Init(DirectionDefine(vector));
     }
     private Vector2 DirectionDefine(Vector3 vector)
     {
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(vector);
-        mousePosition.z = 0f;
-        return (mousePosition - transform.position).normalized;
+        return (HelpClass.GetWorldMousePosition() - transform.position).normalized;
     }
 }

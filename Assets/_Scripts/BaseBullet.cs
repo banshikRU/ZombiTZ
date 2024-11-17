@@ -1,21 +1,15 @@
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class BaseBullet : MonoBehaviour
 {
     [Header("Bullet Parameters")]
     [SerializeField] private float _bulletSpeed = 1;
     [SerializeField] private int _bulletDamage = 1;
     [SerializeField] private float _lifeTime = 1.5f;
 
-    public int Damage { get;private set; }
-
     private Vector3 _clickPointPosition;
     private bool isInit;
 
-    private void Awake()
-    {
-        Damage = _bulletDamage;
-    }
     private void Update()
     {
         if (isInit )
@@ -37,6 +31,8 @@ public class Bullet : MonoBehaviour
     {
         if (collision.tag == "Zombie")
         {
+           ZombieBehaviour zombie = collision.GetComponent<ZombieBehaviour>();
+            zombie.TakeDamage(_bulletDamage);
             Destroy(gameObject);
         }
     }

@@ -1,10 +1,10 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class CanvasManager : MonoBehaviour
 {
     [SerializeField] private GameObject _mainMenu;
     [SerializeField] private GameObject _endGameMenu;
+
     private void OnEnable()
     {
         GameManager.OnGamePlayed += OnOffMainMenu;
@@ -15,9 +15,9 @@ public class CanvasManager : MonoBehaviour
         GameManager.OnGamePlayed -= OnOffMainMenu;
         Player.OnPlayerDeath -= EndGameMenu;
     }
-    private void OnOffMainMenu(bool value)
+    private void OnOffMainMenu()
     {
-        _mainMenu.SetActive(!value);
+        _mainMenu.SetActive(false);
     }
     private void EndGameMenu()
     {

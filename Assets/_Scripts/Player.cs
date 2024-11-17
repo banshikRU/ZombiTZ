@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     {
         if (collision.tag == "Zombie")
         {
-          //  OnPlayerDeath.Invoke();
+            OnPlayerDeath.Invoke();
         }
     }
 }
