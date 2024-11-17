@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class Weapon : ScriptableObject
 {
-    public string WeaponName;
+    public Bullet Bullet;
     public Sprite WeaponSprite;
+
+    public string WeaponName;
+    public float ShootsInOneSecond;
 }

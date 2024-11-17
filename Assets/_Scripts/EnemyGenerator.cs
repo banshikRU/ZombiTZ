@@ -77,7 +77,7 @@ public class EnemyGenerator : MonoBehaviour
     }
     private void StartGenerate()
     {
-      //  _isGame = true;
+        _isGame = true;
     }
     private void GenerateZombie()
     {

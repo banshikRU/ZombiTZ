@@ -2,19 +2,30 @@ using UnityEngine;
 
 public class PlayerFireControll : MonoBehaviour
 {
+    [SerializeField] private WeaponHandler _weaponHandler;
     [SerializeField] private BaseBullet _bullet;
-    [SerializeField] private float _shootsInOneSeconds = 0.1f;
-
+    
+    private float _shootsInOneSeconds;
     private float _shootInSecond;
     private float _canShoot;
 
-    private void Awake()
-    {
-        _shootInSecond = _shootsInOneSeconds;
-    }
     private void Update()
     {
         TakeInput();
+    }
+    private void OnEnable()
+    {
+        GameManager.OnGamePlayed += TakeWeapon;
+    }
+    private void OnDisable()
+    {
+        GameManager.OnGamePlayed -= TakeWeapon;
+    }
+    private void TakeWeapon()
+    {
+        _weaponHandler.TakeWeapon();
+        _shootsInOneSeconds = _weaponHandler.WeaponFireRate;
+        _shootInSecond = _shootsInOneSeconds;
     }
     private void TakeInput()
     {
@@ -28,8 +39,8 @@ public class PlayerFireControll : MonoBehaviour
     }
     private void GenerateBullet(Vector3 vector)
     {
-        BaseBullet bullet = Instantiate(_bullet, transform.position, Quaternion.identity);
-        bullet.Init(DirectionDefine(vector));
+        BaseBullet bullet = Instantiate(_bullet, _weaponHandler.transform.position, Quaternion.identity);
+        bullet.Init(DirectionDefine(vector),_weaponHandler.BulletDamage);
     }
     private Vector2 DirectionDefine(Vector3 vector)
     {

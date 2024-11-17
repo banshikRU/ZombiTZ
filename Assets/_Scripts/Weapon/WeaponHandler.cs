@@ -8,23 +8,30 @@ public class WeaponHandler : MonoBehaviour
     [SerializeField] private float _distanceFromPlayer = 0.25f;
 
     private SpriteRenderer _renderer;
+
+    public int BulletDamage
+    {
+        get
+        {
+            if (_currentWeapon == null) return 0;
+            return _currentWeapon.Bullet.BulletDamage;
+        } 
+    }
+    public float WeaponFireRate
+    {
+        get
+        {
+            if (_currentWeapon == null) return 0;
+            return _currentWeapon.ShootsInOneSecond;
+        }
+         
+    }
+
     private void Awake()
     {
         _renderer = GetComponent<SpriteRenderer>();
     }
-    private void OnEnable()
-    {
-        GameManager.OnGamePlayed += TakeWeapon;
-    }
-    private void OnDisable()
-    {
-        GameManager.OnGamePlayed -= TakeWeapon;
-    }
-    private void Start()
-    {
-        TakeWeapon();
-    }
-    private void TakeWeapon()
+    public void TakeWeapon()
     {
         _renderer.sprite = _currentWeapon?.WeaponSprite;
     }
