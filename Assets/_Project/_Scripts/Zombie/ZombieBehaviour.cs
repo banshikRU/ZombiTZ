@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
-public abstract class ZombieBehaviour : MonoBehaviour // добавил на случай масштабирования проекта с добавлением новых видов зомби
+public class ZombieBehaviour : MonoBehaviour 
 {
     [Header("Zombie Stats")]
     [SerializeField] protected float _speed;
@@ -15,23 +15,17 @@ public abstract class ZombieBehaviour : MonoBehaviour // добавил на случай масшт
     protected bool _isInit;
     protected SpriteRenderer _sprite;
     protected ScoreUpdater _scoreUpdater;
+
     protected virtual void Awake()
     {
         _sprite = gameObject.GetComponent<SpriteRenderer>();
     }
-    public  void Init(Transform player, ScoreUpdater gameManager)
+    public virtual void Init(Transform player, ScoreUpdater gameManager)
     {
         _scoreUpdater = gameManager;
         _player = player;
         _isInit = true;
         _sprite.sprite = _zombieSprite;
-    }
-    protected virtual void Update()
-    {
-        if (_isInit)
-        {
-            MoveToPlyer();
-        }
     }
     public virtual void TakeDamage(int damage)
     {
@@ -42,5 +36,4 @@ public abstract class ZombieBehaviour : MonoBehaviour // добавил на случай масшт
             Destroy(gameObject);
         }
     }
-    protected abstract void MoveToPlyer();
 }
