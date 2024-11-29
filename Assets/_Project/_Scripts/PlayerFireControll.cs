@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class PlayerFireControll : MonoBehaviour
 {
     [SerializeField] private WeaponHandler _weaponHandler;
     [SerializeField] private BaseBullet _bullet;
+    [SerializeField] private ObjectPool _objectPool;
     
     private float _shootsInOneSeconds;
     private float _shootInSecond;
@@ -33,14 +35,20 @@ public class PlayerFireControll : MonoBehaviour
         if (Input.GetMouseButton(0) && Time.time >= _shootInSecond)
         {
             _shootInSecond = Time.time + _shootsInOneSeconds;
-            GenerateBullet(Input.mousePosition);
+            TakeBulletFromPool(Input.mousePosition);
 
         }
     }
-    private void GenerateBullet(Vector3 vector)
+    private void TakeBulletFromPool(Vector3 vector)
     {
-        BaseBullet bullet = Instantiate(_bullet, _weaponHandler.transform.position, Quaternion.identity);
-        bullet.Init(DirectionDefine(vector),_weaponHandler.BulletDamage);
+        GameObject bulletObject = _objectPool.GetPooledObject().gameObject;
+        if (bulletObject == null)
+            return;
+
+        bulletObject.SetActive(true);
+        bulletObject.transform.SetPositionAndRotation(_weaponHandler.transform.position, Quaternion.identity);
+        BaseBullet baseBullet = bulletObject.GetComponent<BaseBullet>();
+        baseBullet.StartMoveBullet(DirectionDefine(vector), _weaponHandler.BulletDamage);
     }
     private Vector2 DirectionDefine(Vector3 vector)
     {
