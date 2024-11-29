@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScoreUpdater : MonoBehaviour
+public class ScoreValueUpdater : MonoBehaviour
 {
     public int CurrentScores { get; private set; }
     private void Start()

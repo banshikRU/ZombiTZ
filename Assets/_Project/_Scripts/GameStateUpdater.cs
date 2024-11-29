@@ -4,12 +4,11 @@ using UnityEngine.SceneManagement;
 
 public class GameStateUpdater : MonoBehaviour
 {
-    [SerializeField] private ScoreUpdater _scoreUpdater;
+    [SerializeField] private ScoreValueUpdater _scoreUpdater;
 
-    public static event Action OnGamePlayed;
+    public event Action OnGamePlayed;
 
-    public static bool isGame { get;private set; }
-    public static int CurrentScores { get;private set; }
+    public  bool isGame { get;private set; }
 
     private void Awake()
     {
@@ -23,11 +22,11 @@ public class GameStateUpdater : MonoBehaviour
     }
     private void OnEnable()
     {
-        Player.OnPlayerDeath += GameOver;
+        PlayerBehaviour.OnPlayerDeath += GameOver;
     }
     private void OnDisable()
     {
-        Player.OnPlayerDeath -= GameOver;   
+        PlayerBehaviour.OnPlayerDeath -= GameOver;   
     }
     private void GameOver()
     {

@@ -14,13 +14,13 @@ public class ZombieBehaviour : MonoBehaviour
     protected Transform _player;
     protected bool _isInit;
     protected SpriteRenderer _sprite;
-    protected ScoreUpdater _scoreUpdater;
+    protected ScoreValueUpdater _scoreUpdater;
 
     protected virtual void Awake()
     {
         _sprite = gameObject.GetComponent<SpriteRenderer>();
     }
-    public virtual void Init(Transform player, ScoreUpdater gameManager)
+    public virtual void Init(Transform player, ScoreValueUpdater gameManager)
     {
         _scoreUpdater = gameManager;
         _player = player;

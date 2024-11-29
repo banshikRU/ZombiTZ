@@ -6,6 +6,7 @@ public class PlayerFireControll : MonoBehaviour
     [SerializeField] private WeaponHandler _weaponHandler;
     [SerializeField] private BaseBullet _bullet;
     [SerializeField] private ObjectPool _objectPool;
+    [SerializeField] private GameStateUpdater _gameStateUpdater;
     
     private float _shootsInOneSeconds;
     private float _shootInSecond;
@@ -17,11 +18,11 @@ public class PlayerFireControll : MonoBehaviour
     }
     private void OnEnable()
     {
-        GameStateUpdater.OnGamePlayed += TakeWeapon;
+        _gameStateUpdater.OnGamePlayed += TakeWeapon;
     }
     private void OnDisable()
     {
-        GameStateUpdater.OnGamePlayed -= TakeWeapon;
+        _gameStateUpdater.OnGamePlayed -= TakeWeapon;
     }
     private void TakeWeapon()
     {
@@ -31,7 +32,7 @@ public class PlayerFireControll : MonoBehaviour
     }
     private void TakeInput()
     {
-        if (!GameStateUpdater.isGame) return;
+        if (!_gameStateUpdater.isGame) return;
         if (Input.GetMouseButton(0) && Time.time >= _shootInSecond)
         {
             _shootInSecond = Time.time + _shootsInOneSeconds;
