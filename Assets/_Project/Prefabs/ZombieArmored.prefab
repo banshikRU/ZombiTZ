@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6de741528216ab348a920977c3726855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 3
+  _speed: 1
   _healPoint: 10
   _scoresByDeath: 12
   _zombieSprite: {fileID: 526606711, guid: 2055a1064dfb89b4091660e3a4ddf141, type: 3}

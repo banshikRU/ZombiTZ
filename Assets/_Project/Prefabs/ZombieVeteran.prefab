@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 1
-  _healPoint: 50
+  _healPoint: 20
   _scoresByDeath: 30
   _zombieSprite: {fileID: -862398942, guid: 2055a1064dfb89b4091660e3a4ddf141, type: 3}
 --- !u!212 &7428410020644884482

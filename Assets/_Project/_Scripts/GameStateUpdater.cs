@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class GameStateUpdater : MonoBehaviour
 {
     [SerializeField] private ScoreValueUpdater _scoreUpdater;
+    [SerializeField] private PlayerBehaviour _player;
 
     public event Action OnGamePlayed;
 
@@ -22,11 +23,11 @@ public class GameStateUpdater : MonoBehaviour
     }
     private void OnEnable()
     {
-        PlayerBehaviour.OnPlayerDeath += GameOver;
+        _player.OnPlayerDeath += GameOver;
     }
     private void OnDisable()
     {
-        PlayerBehaviour.OnPlayerDeath -= GameOver;   
+        _player.OnPlayerDeath -= GameOver;   
     }
     private void GameOver()
     {

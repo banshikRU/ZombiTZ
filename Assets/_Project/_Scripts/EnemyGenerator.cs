@@ -20,7 +20,8 @@ public class EnemyGenerator : MonoBehaviour
     [SerializeField] private Transform _player;
     [SerializeField] private ScoreValueUpdater _scoreUpdater;
     [SerializeField] private GameStateUpdater _gameStateUpdater;
-    
+    [SerializeField] private PlayerBehaviour _playerBehaviour;
+
     [Header("Generator Parameters")]
     [SerializeField] private float _timeToNewSpawnLevel = 10;
     [SerializeField] private float _minimalTimeToSpawn = 0.5f;
@@ -42,12 +43,12 @@ public class EnemyGenerator : MonoBehaviour
     private void OnEnable()
     {
         _gameStateUpdater.OnGamePlayed += StartGenerate;
-        PlayerBehaviour.OnPlayerDeath += GameOver;
+        _playerBehaviour.OnPlayerDeath += GameOver;
     }
     private void OnDisable()
     {
         _gameStateUpdater.OnGamePlayed -= StartGenerate;
-        PlayerBehaviour.OnPlayerDeath -= GameOver;
+        _playerBehaviour.OnPlayerDeath -= GameOver;
     }
     private void Update()
     {
