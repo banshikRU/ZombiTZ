@@ -77,7 +77,7 @@ public class EnemyGenerator : MonoBehaviour
     }
     private void StartGenerate()
     {
-        //_isGame = true;
+        _isGame = true;
     }
     private void GenerateZombie()
     {
@@ -96,8 +96,13 @@ public class EnemyGenerator : MonoBehaviour
 
         float x = Random.Range(bounds.min.x, bounds.max.x);
         float y = Random.Range(bounds.min.y, bounds.max.y);
-
+        if (IsPointVisible(new Vector2(x, y))) GetRandomPositionInCollider(ChoseRandomCollider());
         return new Vector2(x, y);
+    }
+    bool IsPointVisible(Vector2 point)
+    {
+        Vector3 viewportPoint = Camera.main.WorldToViewportPoint(new Vector3(point.x, point.y, 0));
+        return viewportPoint.x >= 0 && viewportPoint.x <= 1 && viewportPoint.y >= 0 && viewportPoint.y <= 1;
     }
     private ZombieBehaviour GetZombieByChance()
     {
