@@ -2,8 +2,10 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
-{ 
+public class GameStateUpdater : MonoBehaviour
+{
+    [SerializeField] private ScoreUpdater _scoreUpdater;
+
     public static event Action OnGamePlayed;
 
     public static bool isGame { get;private set; }
@@ -12,12 +14,11 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         isGame = false;
-        InitMaxScores();
+        _scoreUpdater.InitMaxScores();
     }
     public void StartGame()
     {
         isGame = true;  
-        CurrentScores = 0;
         OnGamePlayed?.Invoke();
     }
     private void OnEnable()
@@ -34,30 +35,7 @@ public class GameManager : MonoBehaviour
     }
     public void RestartGame()
     {
-        UpdateMaxScores();
+        _scoreUpdater.UpdateMaxScores();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-    public void AddScores(int scores)
-    {
-        CurrentScores += scores;
-    }
-    private void InitMaxScores()
-    {
-        if (!PlayerPrefs.HasKey("MaxScores"))
-        {
-            CurrentScores = 0;
-            PlayerPrefs.SetInt("MaxScores", 0);
-        }
-        else
-        {
-            CurrentScores = PlayerPrefs.GetInt("MaxScores");
-        }
-    }
-    private void UpdateMaxScores()
-    {
-        if (PlayerPrefs.GetInt("MaxScores")<CurrentScores)
-        {
-            PlayerPrefs.SetInt("MaxScores", CurrentScores);
-        }
     }
 }

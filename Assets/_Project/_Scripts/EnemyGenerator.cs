@@ -18,7 +18,7 @@ public class EnemyGenerator : MonoBehaviour
     [Space(10)]
 
     [SerializeField] private Transform _player;
-    [SerializeField] private GameManager _gameManager;
+    [SerializeField] private ScoreUpdater _scoreUpdater;
 
     [Header("Generator Parameters")]
     [SerializeField] private float _timeToNewSpawnLevel = 10;
@@ -40,12 +40,12 @@ public class EnemyGenerator : MonoBehaviour
     }
     private void OnEnable()
     {
-        GameManager.OnGamePlayed += StartGenerate;
+        GameStateUpdater.OnGamePlayed += StartGenerate;
         Player.OnPlayerDeath += GameOver;
     }
     private void OnDisable()
     {
-        GameManager.OnGamePlayed -= StartGenerate;
+        GameStateUpdater.OnGamePlayed -= StartGenerate;
         Player.OnPlayerDeath -= GameOver;
     }
     private void Update()
@@ -83,7 +83,7 @@ public class EnemyGenerator : MonoBehaviour
     {
         Vector2 _randomGeneratedPosition = GetRandomPositionInCollider(ChoseRandomCollider());
         ZombieBehaviour generatedZombie =  Instantiate(GetZombieByChance(), _randomGeneratedPosition, Quaternion.identity);
-        generatedZombie.Init(_player,_gameManager);
+        generatedZombie.Init(_player,_scoreUpdater);
     }
     private Collider2D ChoseRandomCollider()
     {

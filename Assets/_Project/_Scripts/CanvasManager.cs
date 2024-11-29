@@ -7,12 +7,12 @@ public class CanvasManager : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.OnGamePlayed += OnOffMainMenu;
+        GameStateUpdater.OnGamePlayed += OnOffMainMenu;
         Player.OnPlayerDeath += EndGameMenu;
     }
     private void OnDisable()
     {
-        GameManager.OnGamePlayed -= OnOffMainMenu;
+        GameStateUpdater.OnGamePlayed -= OnOffMainMenu;
         Player.OnPlayerDeath -= EndGameMenu;
     }
     private void OnOffMainMenu()

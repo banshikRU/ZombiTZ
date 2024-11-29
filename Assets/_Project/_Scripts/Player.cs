@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
     public static event Action OnPlayerDeath;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Zombie")
+        if (collision.TryGetComponent<ZombieBehaviour>(out ZombieBehaviour zombie))
         {
             OnPlayerDeath.Invoke();
         }

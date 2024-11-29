@@ -30,9 +30,8 @@ public class BaseBullet : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Zombie")
+        if (collision.TryGetComponent<ZombieBehaviour>(out ZombieBehaviour zombie))
         {
-           ZombieBehaviour zombie = collision.GetComponent<ZombieBehaviour>();
             zombie.TakeDamage(_bulletDamage);
             Destroy(gameObject);
         }

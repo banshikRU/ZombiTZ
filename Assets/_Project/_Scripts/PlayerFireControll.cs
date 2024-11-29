@@ -15,11 +15,11 @@ public class PlayerFireControll : MonoBehaviour
     }
     private void OnEnable()
     {
-        GameManager.OnGamePlayed += TakeWeapon;
+        GameStateUpdater.OnGamePlayed += TakeWeapon;
     }
     private void OnDisable()
     {
-        GameManager.OnGamePlayed -= TakeWeapon;
+        GameStateUpdater.OnGamePlayed -= TakeWeapon;
     }
     private void TakeWeapon()
     {
@@ -29,7 +29,7 @@ public class PlayerFireControll : MonoBehaviour
     }
     private void TakeInput()
     {
-        if (!GameManager.isGame) return;
+        if (!GameStateUpdater.isGame) return;
         if (Input.GetMouseButton(0) && Time.time >= _shootInSecond)
         {
             _shootInSecond = Time.time + _shootsInOneSeconds;
@@ -44,6 +44,6 @@ public class PlayerFireControll : MonoBehaviour
     }
     private Vector2 DirectionDefine(Vector3 vector)
     {
-        return (HelpClass.GetWorldMousePosition() - transform.position).normalized;
+        return (Utilities.GetWorldMousePosition() - transform.position).normalized;
     }
 }

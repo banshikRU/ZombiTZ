@@ -47,6 +47,6 @@ public class WeaponHandler : MonoBehaviour
     }
     private Vector3 GetDirectionPlayerToMouse()
     {
-        return (HelpClass.GetWorldMousePosition() - _player.position).normalized;
+        return (Utilities.GetWorldMousePosition() - _player.position).normalized;
     }
 }

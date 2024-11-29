@@ -14,14 +14,14 @@ public abstract class ZombieBehaviour : MonoBehaviour // добавил на случай масшт
     protected Transform _player;
     protected bool _isInit;
     protected SpriteRenderer _sprite;
-    protected GameManager _gameManager;
+    protected ScoreUpdater _scoreUpdater;
     protected virtual void Awake()
     {
         _sprite = gameObject.GetComponent<SpriteRenderer>();
     }
-    public  void Init(Transform player, GameManager gameManager)
+    public  void Init(Transform player, ScoreUpdater gameManager)
     {
-        _gameManager = gameManager;
+        _scoreUpdater = gameManager;
         _player = player;
         _isInit = true;
         _sprite.sprite = _zombieSprite;
@@ -38,7 +38,7 @@ public abstract class ZombieBehaviour : MonoBehaviour // добавил на случай масшт
         _healPoint -= damage;
         if (_healPoint <= 0)
         {
-            _gameManager.AddScores(_scoresByDeath);
+            _scoreUpdater.AddScores(_scoresByDeath);
             Destroy(gameObject);
         }
     }
