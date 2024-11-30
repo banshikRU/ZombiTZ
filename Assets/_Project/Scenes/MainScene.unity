@@ -451,6 +451,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mainMenu: {fileID: 1849207690}
   _endGameMenu: {fileID: 932228837}
+  _gameStateUpdater: {fileID: 1833471801}
+  _player: {fileID: 1138701229}
 --- !u!1 &265366848
 GameObject:
   m_ObjectHideFlags: 0
@@ -1573,6 +1575,51 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentScores: {fileID: 951431944}
+  _scoreValueUpdater: {fileID: 940384503}
+--- !u!1 &940384502
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 940384504}
+  - component: {fileID: 940384503}
+  m_Layer: 0
+  m_Name: ScoreUpdater
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &940384503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940384502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f744b75c8107a814a9de04acb1fad199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &940384504
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940384502}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.716859, y: 1.5611066, z: -0.083377615}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &951431942
 GameObject:
   m_ObjectHideFlags: 0
@@ -1893,6 +1940,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weaponHandler: {fileID: 265366849}
   _bullet: {fileID: 8096135253056256665, guid: 20a9870db205982428f6839313c732c8, type: 3}
+  _gameStateUpdater: {fileID: 1833471801}
 --- !u!114 &1138701229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1950,6 +1998,59 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.27, y: 0.39}
   m_EdgeRadius: 0
+--- !u!1 &1344387041
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1344387043}
+  - component: {fileID: 1344387042}
+  m_Layer: 0
+  m_Name: PoolOrganizer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1344387042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344387041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39307cd397a79de46ba287082353716d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolsConfig:
+  - prefab: {fileID: 981984430295587347, guid: 20a9870db205982428f6839313c732c8, type: 3}
+    initialSize: 25
+  - prefab: {fileID: 4351460392474539409, guid: 77aa5fd395ec803439567187e83df0ba, type: 3}
+    initialSize: 5
+  - prefab: {fileID: 4351460392474539409, guid: 08d0f56b519ddc04abac2965f08fdcf8, type: 3}
+    initialSize: 5
+  - prefab: {fileID: 4351460392474539409, guid: b898b147e919d46459af2bebe50f5118, type: 3}
+    initialSize: 5
+--- !u!4 &1344387043
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344387041}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.716859, y: 1.5611066, z: -0.083377615}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1394818056
 GameObject:
   m_ObjectHideFlags: 0
@@ -2068,7 +2169,9 @@ MonoBehaviour:
   - {fileID: 2030949238}
   - {fileID: 1394818057}
   _player: {fileID: 1138701227}
-  _gameManager: {fileID: 1833471801}
+  _scoreUpdater: {fileID: 940384503}
+  _gameStateUpdater: {fileID: 1833471801}
+  _playerBehaviour: {fileID: 1138701229}
   _timeToNewSpawnLevel: 10
   _minimalTimeToSpawn: 0.5
   _baseTimeToSpawnNewZombie: 2
@@ -2313,7 +2416,7 @@ GameObject:
   - component: {fileID: 1833471802}
   - component: {fileID: 1833471801}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: GameStateUpdater
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2328,9 +2431,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1833471800}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3748466f34203dd4a9a7b138ab5f983c, type: 3}
+  m_Script: {fileID: 11500000, guid: e3f768fbb6a6a594988f29a97cf9ec79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _scoreUpdater: {fileID: 940384503}
+  _player: {fileID: 1138701229}
 --- !u!4 &1833471802
 Transform:
   m_ObjectHideFlags: 0
@@ -2438,6 +2543,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentScores: {fileID: 1941837914}
+  _scoreValueUpdater: {fileID: 940384503}
 --- !u!1 &1941837912
 GameObject:
   m_ObjectHideFlags: 0
@@ -2803,3 +2909,5 @@ SceneRoots:
   - {fileID: 1138701227}
   - {fileID: 1637735305}
   - {fileID: 1833471802}
+  - {fileID: 940384504}
+  - {fileID: 1344387043}

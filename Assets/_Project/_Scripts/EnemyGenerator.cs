@@ -84,8 +84,11 @@ public class EnemyGenerator : MonoBehaviour
     private void GenerateZombie()
     {
         Vector2 _randomGeneratedPosition = GetRandomPositionInCollider(ChoseRandomCollider());
-        ZombieBehaviour generatedZombie =  Instantiate(GetZombieByChance(), _randomGeneratedPosition, Quaternion.identity);
-        generatedZombie.Init(_player,_scoreUpdater);
+        GameObject zombie = GetZombieByChance();
+        zombie.transform.position = _randomGeneratedPosition;   
+        zombie.GetComponent<ZombieBehaviour>().Init(_player, _scoreUpdater);
+        zombie.SetActive(true);
+
     }
     private Collider2D ChoseRandomCollider()
     {
@@ -106,7 +109,7 @@ public class EnemyGenerator : MonoBehaviour
         Vector3 viewportPoint = Camera.main.WorldToViewportPoint(new Vector3(point.x, point.y, 0));
         return viewportPoint.x >= 0 && viewportPoint.x <= 1 && viewportPoint.y >= 0 && viewportPoint.y <= 1;
     }
-    private ZombieBehaviour GetZombieByChance()
+    private GameObject GetZombieByChance()
     {
         float randomValue = Random.Range(0f, 100);
         float cumulativeChance = 0f;
@@ -115,9 +118,15 @@ public class EnemyGenerator : MonoBehaviour
             cumulativeChance += zombie.ChanceToSpawn;
             if (randomValue < cumulativeChance)
             {
-                return zombie.ZombiesPrefab;
+                return GetPooledZombie(zombie.ZombiesPrefab);
             }
         }
         return null;
+    }
+    private GameObject GetPooledZombie(ZombieBehaviour zombie)
+    {
+        ObjectPoolOrganizer poolOrganizer = FindObjectOfType<ObjectPoolOrganizer>();
+        ObjectPool objectPool = poolOrganizer.GetPool(zombie.gameObject.name);
+        return objectPool.GetPooledObject().gameObject;
     }
 }

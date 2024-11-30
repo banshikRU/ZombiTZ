@@ -1,17 +1,22 @@
 using UnityEngine;
-using UnityEngine.Pool;
 
 public class PlayerFireControll : MonoBehaviour
 {
     [SerializeField] private WeaponHandler _weaponHandler;
     [SerializeField] private BaseBullet _bullet;
-    [SerializeField] private ObjectPool _objectPool;
     [SerializeField] private GameStateUpdater _gameStateUpdater;
     
     private float _shootsInOneSeconds;
     private float _shootInSecond;
     private float _canShoot;
 
+    private ObjectPool _objectPool;
+
+    private void Start()
+    {
+        ObjectPoolOrganizer poolOrganizer = FindObjectOfType<ObjectPoolOrganizer>();
+        _objectPool = poolOrganizer.GetPool(_bullet.gameObject.name);
+    }
     private void Update()
     {
         TakeInput();
@@ -42,6 +47,7 @@ public class PlayerFireControll : MonoBehaviour
     }
     private void TakeBulletFromPool(Vector3 vector)
     {
+
         GameObject bulletObject = _objectPool.GetPooledObject().gameObject;
         if (bulletObject == null)
             return;

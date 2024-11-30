@@ -3,6 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(PooledObject))]
 public class ZombieBehaviour : MonoBehaviour 
 {
     [Header("Zombie Stats")]
@@ -16,12 +17,17 @@ public class ZombieBehaviour : MonoBehaviour
     protected SpriteRenderer _sprite;
     protected ScoreValueUpdater _scoreUpdater;
 
+    private int _currentHealPoint;
+    private PooledObject _pooledObject;
+
     protected virtual void Awake()
     {
+        _pooledObject = GetComponent<PooledObject>();
         _sprite = gameObject.GetComponent<SpriteRenderer>();
     }
     public virtual void Init(Transform player, ScoreValueUpdater gameManager)
     {
+        _currentHealPoint = _healPoint;
         _scoreUpdater = gameManager;
         _player = player;
         _isInit = true;
@@ -29,11 +35,16 @@ public class ZombieBehaviour : MonoBehaviour
     }
     public virtual void TakeDamage(int damage)
     {
-        _healPoint -= damage;
-        if (_healPoint <= 0)
+        _currentHealPoint -= damage;
+        if (_currentHealPoint <= 0)
         {
             _scoreUpdater.AddScores(_scoresByDeath);
-            Destroy(gameObject);
+            DeactivateObject();
         }
+    }
+    private void DeactivateObject()
+    {
+        _pooledObject.ReturnToPool();
+        gameObject.SetActive(false);
     }
 }

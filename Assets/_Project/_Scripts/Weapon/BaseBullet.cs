@@ -52,7 +52,7 @@ public class BaseBullet : MonoBehaviour
     }
     private void DeactivateObject()
     {
-        _pooledObject.Release();
+        _pooledObject.ReturnToPool();
         gameObject.SetActive(false);
     }
 }

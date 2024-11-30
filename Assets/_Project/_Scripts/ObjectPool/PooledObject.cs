@@ -5,7 +5,7 @@ using UnityEngine;
         private ObjectPool pool;
         public ObjectPool Pool { get => pool; set => pool = value; }
 
-        public void Release()
+        public void ReturnToPool()
         {
             pool.ReturnToPool(this);
         }
