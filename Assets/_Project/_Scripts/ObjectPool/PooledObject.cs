@@ -2,12 +2,11 @@ using UnityEngine;
 
     public class PooledObject : MonoBehaviour
     {
-        private ObjectPool pool;
-        public ObjectPool Pool { get => pool; set => pool = value; }
+        public ObjectPool Pool { get; set ; }
 
         public void ReturnToPool()
         {
-            pool.ReturnToPool(this);
+            Pool.ReturnToPool(this);
         }
     }
 

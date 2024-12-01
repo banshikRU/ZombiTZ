@@ -8,6 +8,7 @@ public class WalkingZombie : ZombieBehaviour
         float step = _speed * Time.deltaTime;
         transform.position += direction * step;
     }
+
     private void Update()
     {
         if (_isInit)

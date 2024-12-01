@@ -1,16 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPoolOrganizer : MonoBehaviour
+public partial class ObjectPoolOrganizer : MonoBehaviour
 {
-    [System.Serializable]
-    public class PoolConfig
-    {
-        public PooledObject prefab;
-        public uint initialSize;
-    }
-
-    [SerializeField] private List<PoolConfig> poolsConfig;
+    [SerializeField]
+    private List<PoolConfig> poolsConfig;
 
     private Dictionary<string, ObjectPool> pools;
 

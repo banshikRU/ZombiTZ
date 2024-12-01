@@ -1,25 +1,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class ObjectPool : MonoBehaviour
 {
-
-    [SerializeField] private uint initPoolSize;
-    public uint InitPoolSize => initPoolSize;
-
-    [SerializeField] private PooledObject objectToPool;
-
+    [SerializeField]
+    private PooledObject objectToPool;
 
     private Stack<PooledObject> stack;
+
+    public uint InitPoolSize { get; private set; }
 
     public void Init(PooledObject prefab, uint initialSize)
     {
         objectToPool = prefab;
-        initPoolSize = initialSize;
+        InitPoolSize = initialSize;
 
         SetupPool();
     }
+
     private void SetupPool()
     {
         if (objectToPool == null)
@@ -30,11 +28,12 @@ public class ObjectPool : MonoBehaviour
         stack = new Stack<PooledObject>();
 
 
-        for (int i = 0; i < initPoolSize; i++)
+        for (int i = 0; i < InitPoolSize; i++)
         {
             CreateNewInstance();
         }
     }
+
     private PooledObject CreateNewInstance()
     {
         PooledObject instance = Instantiate(objectToPool);
@@ -43,6 +42,7 @@ public class ObjectPool : MonoBehaviour
         stack.Push(instance);
         return instance;
     }
+
     public PooledObject GetPooledObject()
     {
         if (objectToPool == null)

@@ -1,18 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ScoreValueUpdater : MonoBehaviour
 {
     public int CurrentScores { get; private set; }
+
     private void Start()
     {
         CurrentScores = 0;
     }
+
     public void AddScores(int scores)
     {
         CurrentScores += scores;
     }
+
     public void InitMaxScores()
     {
         if (!PlayerPrefs.HasKey("MaxScores"))
@@ -25,6 +26,7 @@ public class ScoreValueUpdater : MonoBehaviour
             CurrentScores = PlayerPrefs.GetInt("MaxScores");
         }
     }
+
     public void UpdateMaxScores()
     {
         if (PlayerPrefs.GetInt("MaxScores") < CurrentScores)
