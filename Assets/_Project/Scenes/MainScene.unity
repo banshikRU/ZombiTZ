@@ -1605,6 +1605,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f744b75c8107a814a9de04acb1fad199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _saveGameController: {fileID: 1401891592}
 --- !u!4 &940384504
 Transform:
   m_ObjectHideFlags: 0
@@ -1941,6 +1942,7 @@ MonoBehaviour:
   _weaponHandler: {fileID: 265366849}
   _bullet: {fileID: 8096135253056256665, guid: 20a9870db205982428f6839313c732c8, type: 3}
   _gameStateUpdater: {fileID: 1833471801}
+  _objectPoolOrganizer: {fileID: 1344387042}
 --- !u!114 &1138701229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2128,6 +2130,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1637735305}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1401891589
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1401891591}
+  - component: {fileID: 1401891592}
+  m_Layer: 0
+  m_Name: SaveGameController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1401891591
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1401891589}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.4753137, y: 2.343381, z: -0.07574419}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1401891592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1401891589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0df9326696f301b4ba3353818108c3be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1637735303
 GameObject:
   m_ObjectHideFlags: 0
@@ -2172,6 +2218,7 @@ MonoBehaviour:
   _scoreUpdater: {fileID: 940384503}
   _gameStateUpdater: {fileID: 1833471801}
   _playerBehaviour: {fileID: 1138701229}
+  _objectPoolOrganizer: {fileID: 1344387042}
   _timeToNewSpawnLevel: 10
   _minimalTimeToSpawn: 0.5
   _baseTimeToSpawnNewZombie: 2
@@ -2435,6 +2482,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scoreUpdater: {fileID: 940384503}
+  _saveGameController: {fileID: 1401891592}
   _player: {fileID: 1138701229}
 --- !u!4 &1833471802
 Transform:
@@ -2902,12 +2950,13 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1833471802}
   - {fileID: 519420032}
   - {fileID: 47028881}
   - {fileID: 2131125937}
   - {fileID: 1041660824}
   - {fileID: 1138701227}
   - {fileID: 1637735305}
-  - {fileID: 1833471802}
   - {fileID: 940384504}
   - {fileID: 1344387043}
+  - {fileID: 1401891591}

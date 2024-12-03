@@ -23,6 +23,8 @@ public partial class EnemyGenerator : MonoBehaviour
     private GameStateUpdater _gameStateUpdater;
     [SerializeField]
     private PlayerBehaviour _playerBehaviour;
+    [SerializeField]
+    private ObjectPoolOrganizer _objectPoolOrganizer;
 
     [Header("Generator Parameters")]
 
@@ -142,8 +144,7 @@ public partial class EnemyGenerator : MonoBehaviour
 
     private GameObject GetPooledZombie(ZombieBehaviour zombie)
     {
-        ObjectPoolOrganizer poolOrganizer = FindObjectOfType<ObjectPoolOrganizer>();
-        ObjectPool objectPool = poolOrganizer.GetPool(zombie.gameObject.name);
+        ObjectPool objectPool = _objectPoolOrganizer.GetPool(zombie.gameObject.name);
         return objectPool.GetPooledObject().gameObject;
     }
 }

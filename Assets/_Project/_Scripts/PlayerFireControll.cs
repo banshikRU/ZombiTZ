@@ -8,6 +8,8 @@ public class PlayerFireControll : MonoBehaviour
     private BaseBullet _bullet;
     [SerializeField]
     private GameStateUpdater _gameStateUpdater;
+    [SerializeField]
+    private ObjectPoolOrganizer _objectPoolOrganizer;
     
     private float _shootsInOneSeconds;
     private float _shootInSecond;
@@ -17,8 +19,7 @@ public class PlayerFireControll : MonoBehaviour
 
     private void Start()
     {
-        ObjectPoolOrganizer poolOrganizer = FindObjectOfType<ObjectPoolOrganizer>();
-        _objectPool = poolOrganizer.GetPool(_bullet.gameObject.name);
+        _objectPool = _objectPoolOrganizer.GetPool(_bullet.gameObject.name);
     }
 
     private void Update()
