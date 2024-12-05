@@ -1,36 +1,28 @@
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 using Random = UnityEngine.Random;
 
-public partial class EnemyGenerator : MonoBehaviour
+public class ZombieGeneratornParameters : MonoBehaviour
 {
-    
     [Header("Generator Prefabs")]
 
-    [SerializeField]
-    private List<GeneratedZombies> _zombiePrefabs;
     [SerializeField]
     private List<Collider2D> _generateAreas;
 
     [Space(10)]
 
     [SerializeField]
-    private Transform _player;
-    [SerializeField]
-    private ScoreValueUpdater _scoreUpdater;
-    [SerializeField]
     private GameStateUpdater _gameStateUpdater;
     [SerializeField]
     private PlayerBehaviour _playerBehaviour;
     [SerializeField]
-    private ObjectPoolOrganizer _objectPoolOrganizer;
+    private ZombieFabric _zombieFabric;
 
     [Header("Generator Parameters")]
 
     [SerializeField]
     private float _timeToNewSpawnLevel = 10;
-    [SerializeField] 
+    [SerializeField]
     private float _minimalTimeToSpawn = 0.5f;
     [SerializeField]
     private float _baseTimeToSpawnNewZombie = 2f;
@@ -71,12 +63,12 @@ public partial class EnemyGenerator : MonoBehaviour
             {
                 _timeToNewSpawn -= Time.deltaTime;
             }
-            if (_baseTimeToSpawnNewZombie <= 0 )
+            if (_baseTimeToSpawnNewZombie <= 0)
             {
                 _baseTimeToSpawnNewZombie = _newTimeToNextSpawn;
-                GenerateZombie();
+                _zombieFabric.GenerateZombie(GetRandomPositionInCollider(ChoseRandomCollider()));
             }
-            if (_timeToNewSpawn <= 0 && !_isMinimalValueReached ) // проверка на достижение минимального значения по генерации
+            if (_timeToNewSpawn <= 0 && !_isMinimalValueReached)
             {
                 _timeToNewSpawn = _timeToNewSpawnLevel;
                 _newTimeToNextSpawn -= _reductionTime;
@@ -95,16 +87,6 @@ public partial class EnemyGenerator : MonoBehaviour
         _isGame = true;
     }
 
-    private void GenerateZombie()
-    {
-        Vector2 _randomGeneratedPosition = GetRandomPositionInCollider(ChoseRandomCollider());
-        GameObject zombie = GetZombieByChance();
-        zombie.transform.position = _randomGeneratedPosition;   
-        zombie.GetComponent<ZombieBehaviour>().Init(_player, _scoreUpdater);
-        zombie.SetActive(true);
-
-    }
-
     private Collider2D ChoseRandomCollider()
     {
         int randomAreaIndex = Random.Range(0, _generateAreas.Count);
@@ -117,34 +99,7 @@ public partial class EnemyGenerator : MonoBehaviour
 
         float x = Random.Range(bounds.min.x, bounds.max.x);
         float y = Random.Range(bounds.min.y, bounds.max.y);
-        if (IsPointVisible(new Vector2(x, y))) GetRandomPositionInCollider(ChoseRandomCollider());
+        if (Utilities.IsPointVisible(new Vector2(x, y))) GetRandomPositionInCollider(ChoseRandomCollider());
         return new Vector2(x, y);
-    }
-
-    bool IsPointVisible(Vector2 point)
-    {
-        Vector3 viewportPoint = Camera.main.WorldToViewportPoint(new Vector3(point.x, point.y, 0));
-        return viewportPoint.x >= 0 && viewportPoint.x <= 1 && viewportPoint.y >= 0 && viewportPoint.y <= 1;
-    }
-
-    private GameObject GetZombieByChance()
-    {
-        float randomValue = Random.Range(0f, 100);
-        float cumulativeChance = 0f;
-        foreach (var zombie in _zombiePrefabs)
-        {
-            cumulativeChance += zombie.ChanceToSpawn;
-            if (randomValue < cumulativeChance)
-            {
-                return GetPooledZombie(zombie.ZombiesPrefab);
-            }
-        }
-        return null;
-    }
-
-    private GameObject GetPooledZombie(ZombieBehaviour zombie)
-    {
-        ObjectPool objectPool = _objectPoolOrganizer.GetPool(zombie.gameObject.name);
-        return objectPool.GetPooledObject().gameObject;
     }
 }

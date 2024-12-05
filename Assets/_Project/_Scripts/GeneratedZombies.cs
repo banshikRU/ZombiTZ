@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public partial class EnemyGenerator : MonoBehaviour
+public partial class ZombieFabric : MonoBehaviour
 {
     [Serializable]
     public class GeneratedZombies
