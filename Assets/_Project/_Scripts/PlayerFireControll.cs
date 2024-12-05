@@ -1,39 +1,30 @@
 using UnityEngine;
+using InputControll;
 
 public class PlayerFireControll : MonoBehaviour
 {
     [SerializeField]
     private WeaponHandler _weaponHandler;
     [SerializeField]
-    private BaseBullet _bullet;
+    private BulletFabric _bulletFabric;
     [SerializeField]
     private GameStateUpdater _gameStateUpdater;
     [SerializeField]
-    private ObjectPoolOrganizer _objectPoolOrganizer;
+    private InputHandler _inputHandler;
     
     private float _shootsInOneSeconds;
     private float _shootInSecond;
     private float _canShoot;
 
-    private ObjectPool _objectPool;
-
-    private void Start()
-    {
-        _objectPool = _objectPoolOrganizer.GetPool(_bullet.gameObject.name);
-    }
-
-    private void Update()
-    {
-        TakeInput();
-    }
-
     private void OnEnable()
     {
+        _inputHandler.currentInput.OnShoot += Shot;
         _gameStateUpdater.OnGamePlayed += TakeWeapon;
     }
 
     private void OnDisable()
     {
+        _inputHandler.currentInput.OnShoot -= Shot;
         _gameStateUpdater.OnGamePlayed -= TakeWeapon;
     }
 
@@ -44,32 +35,13 @@ public class PlayerFireControll : MonoBehaviour
         _shootInSecond = _shootsInOneSeconds;
     }
 
-    private void TakeInput()
+    private void Shot()
     {
         if (!_gameStateUpdater.isGame) return;
-        if (Input.GetMouseButton(0) && Time.time >= _shootInSecond)
+        if ( Time.time >= _shootInSecond)
         {
             _shootInSecond = Time.time + _shootsInOneSeconds;
-            TakeBulletFromPool(Input.mousePosition);
-
+            _bulletFabric.Shot(Input.mousePosition);
         }
-    }
-
-    private void TakeBulletFromPool(Vector3 vector)
-    {
-
-        GameObject bulletObject = _objectPool.GetPooledObject().gameObject;
-        if (bulletObject == null)
-            return;
-
-        bulletObject.SetActive(true);
-        bulletObject.transform.SetPositionAndRotation(_weaponHandler.transform.position, Quaternion.identity);
-        BaseBullet baseBullet = bulletObject.GetComponent<BaseBullet>();
-        baseBullet.StartMoveBullet(DirectionDefine(vector), _weaponHandler.BulletDamage);
-    }
-
-    private Vector2 DirectionDefine(Vector3 vector)
-    {
-        return (Utilities.GetWorldMousePosition() - transform.position).normalized;
     }
 }
