@@ -1,44 +1,54 @@
 using UnityEngine;
 
-public class BulletFabric : MonoBehaviour
+namespace FireSystem
 {
-    [SerializeField]
-    private ObjectPoolOrganizer _objectPoolOrganizer;
-    [SerializeField]
-    private BaseBullet _bullet;
-    [SerializeField]
-    private WeaponHandler _weaponHandler;
-
-    private ObjectPool _objectPool;
-
-    private void Start()
+    public class BulletFabric
     {
-        _objectPool = _objectPoolOrganizer.GetPool(_bullet.gameObject.name);
-    }
+        private ObjectPoolOrganizer _objectPoolOrganizer;
+        private BaseBullet _bullet;
+        private WeaponHandler _weaponHandler;
 
-    public void Shot(Vector3 movingVector)
-    {
-        BulletSetUp(TakeBulletFromPool(),movingVector);
-    }
+        private ObjectPool _objectPool;
 
-    private Vector2 DirectionDefine(Vector3 vector)
-    {
-        return (Utilities.GetWorldMousePosition() - transform.position).normalized;
-    }
+        public BulletFabric(ObjectPoolOrganizer objectPoolOrganizer, BaseBullet bullet, WeaponHandler weaponHandler)
+        {
+            _objectPoolOrganizer = objectPoolOrganizer;
+            _bullet = bullet;
+            _weaponHandler = weaponHandler;
 
-    private GameObject TakeBulletFromPool()
-    {
-        GameObject bulletObject = _objectPool.GetPooledObject().gameObject;
-        if (bulletObject == null)
-            return null;
-        return bulletObject;
-    }
+            Init();
+        }
 
-    private void BulletSetUp (GameObject bullet,Vector3 movingVector)
-    {
-        bullet.SetActive(true);
-        bullet.transform.SetPositionAndRotation(_weaponHandler.transform.position, Quaternion.identity);
-        BaseBullet baseBullet = bullet.GetComponent<BaseBullet>();
-        baseBullet.StartMoveBullet(DirectionDefine(movingVector), _weaponHandler.BulletDamage);
+        public void Init()
+        {
+            _objectPool = _objectPoolOrganizer.GetPool(_bullet.gameObject.name);
+        }
+
+        public void Shot(Vector3 movingVector)
+        {
+            BulletSetUp(TakeBulletFromPool(), movingVector);
+        }
+
+        private Vector2 DirectionDefine(Vector3 vector)
+        {
+            return (Utilities.GetWorldMousePosition() - _weaponHandler.transform.position).normalized;
+        }
+
+        private GameObject TakeBulletFromPool()
+        {
+            GameObject bulletObject = _objectPool.GetPooledObject().gameObject;
+            if (bulletObject == null)
+                return null;
+            return bulletObject;
+        }
+
+        private void BulletSetUp(GameObject bullet, Vector3 movingVector)
+        {
+            bullet.SetActive(true);
+            bullet.transform.SetPositionAndRotation(_weaponHandler.transform.position, Quaternion.identity);
+            BaseBullet baseBullet = bullet.GetComponent<BaseBullet>();
+            baseBullet.StartMoveBullet(DirectionDefine(movingVector), _weaponHandler.BulletDamage);
+        }
     }
 }
+

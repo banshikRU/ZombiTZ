@@ -3,9 +3,7 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
-    [SerializeField]
     private PooledObject objectToPool;
-
     private Stack<PooledObject> stack;
 
     public uint InitPoolSize { get; private set; }

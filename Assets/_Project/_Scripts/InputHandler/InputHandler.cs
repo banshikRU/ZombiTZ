@@ -1,10 +1,10 @@
 using UnityEngine;
+using FireSystem;
 
 namespace InputControll
 {
     public class InputHandler : MonoBehaviour
     {
-        [SerializeField]
         private PlayerFireControll _playerFireControll;
 
         private bool isDesktop = true;
@@ -12,8 +12,9 @@ namespace InputControll
 
         public IInput currentInput { get; private set; }
 
-        private void Awake()
+        public void Init(PlayerFireControll playerFireControll)
         {
+            _playerFireControll = playerFireControll;
             CheckPlatform();
         }
 

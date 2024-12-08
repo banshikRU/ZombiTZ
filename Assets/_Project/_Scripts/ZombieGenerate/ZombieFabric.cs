@@ -3,14 +3,18 @@ using UnityEngine;
 
 public partial class ZombieFabric : MonoBehaviour
 {
-    [SerializeField]
     private ObjectPoolOrganizer _objectPoolOrganizer;
-    [SerializeField]
     private List<GeneratedZombies> _zombiePrefabs;
-    [SerializeField]
     private Transform _player;
-    [SerializeField]
     private ScoreValueUpdater _scoreUpdater;
+
+    public void Init(ObjectPoolOrganizer objectPoolOrganizer,List<GeneratedZombies> zombiesPrefab, Transform player,ScoreValueUpdater scoreValueUpdater)
+    {
+        _objectPoolOrganizer = objectPoolOrganizer;
+        _player = player;
+        _scoreUpdater = scoreValueUpdater;
+        _zombiePrefabs = zombiesPrefab;
+    }
 
     public void GenerateZombie(Vector2  zombiePosition)
     {

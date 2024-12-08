@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public partial class ObjectPoolOrganizer : MonoBehaviour
+public partial class ObjectPoolOrganizer 
 {
     [System.Serializable]
     public class PoolConfig

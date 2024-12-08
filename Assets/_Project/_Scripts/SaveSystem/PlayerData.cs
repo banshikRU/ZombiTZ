@@ -1,7 +1,4 @@
-using System;
-using UnityEngine;
-
-public partial class SaveGameController :MonoBehaviour
+public partial class SaveGameController 
 {
     public class PlayerData
     {

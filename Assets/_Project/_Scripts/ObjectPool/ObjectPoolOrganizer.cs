@@ -1,17 +1,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class ObjectPoolOrganizer : MonoBehaviour
+public partial class ObjectPoolOrganizer 
 {
-    [SerializeField]
-    private List<PoolConfig> poolsConfig;
+    private List<PoolConfig> _poolsConfig;
 
     private Dictionary<string, ObjectPool> pools;
 
-    private void Awake()
+    public ObjectPoolOrganizer(List<PoolConfig> poolsConfig)
+    {
+        _poolsConfig = poolsConfig;
+
+        Init();
+    }
+
+    public void Init()
     {
         pools = new Dictionary<string, ObjectPool>();
-        foreach (var config in poolsConfig)
+        foreach (var config in _poolsConfig)
         {
             GameObject poolGameObject = new GameObject(config.prefab.name + " Pool");
             ObjectPool pool = poolGameObject.AddComponent<ObjectPool>();

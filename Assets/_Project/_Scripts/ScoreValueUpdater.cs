@@ -1,13 +1,24 @@
-using UnityEngine;
-
-public class ScoreValueUpdater : MonoBehaviour 
+public class ScoreValueUpdater 
 {
-    [SerializeField]
     private SaveGameController _saveGameController;
+    private GameStateUpdater _gameStateUpdater;
 
     public int CurrentScores { get; private set; }
 
-    private void Start()
+    public ScoreValueUpdater (SaveGameController saveGameController,GameStateUpdater gameStateUpdater)
+    {
+        _saveGameController = saveGameController;
+        _gameStateUpdater = gameStateUpdater;
+
+        EventInit();
+    }
+
+    public void EventInit()
+    {
+        _gameStateUpdater.OnGamePlayed += ResetCurrentScores;
+    }
+
+    private void ResetCurrentScores()
     {
         CurrentScores = 0;
     }

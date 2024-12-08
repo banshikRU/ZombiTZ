@@ -1,36 +1,37 @@
 using UnityEngine;
+using UnityEngine.UI;
 
-public class UIController : MonoBehaviour
+public class UIController 
 {
-    [SerializeField]
-    private GameObject _mainMenu;
-    [SerializeField]
-    private GameObject _endGameMenu;
-    [SerializeField] 
+    private ScoresMenu _mainMenu;
+    private ScoresMenu _endGameMenu;
     private GameStateUpdater _gameStateUpdater;
-    [SerializeField]
     private PlayerBehaviour _player;
 
-    private void OnEnable()
+    public UIController(ScoresMenu mainMenu, ScoresMenu endGameMenu, GameStateUpdater gameStateUpdater,PlayerBehaviour player)
+    {
+        _endGameMenu = endGameMenu;
+        _mainMenu = mainMenu;
+        _gameStateUpdater = gameStateUpdater;
+        _player = player;
+
+        EventInit();
+    }
+
+    private void EventInit()
     {
         _gameStateUpdater.OnGamePlayed += OffMainMenu;
         _player.OnPlayerDeath += OnEndGameMenu;
     }
 
-    private void OnDisable()
-    {
-        _gameStateUpdater.OnGamePlayed -= OffMainMenu;
-        _player.OnPlayerDeath -= OnEndGameMenu;
-    }
-
     private void OffMainMenu()
     {
-        _mainMenu.SetActive(false);
+        _mainMenu.gameObject.SetActive(false);
     }
 
     private void OnEndGameMenu()
     {
-        _endGameMenu.SetActive(true);
+        _endGameMenu.gameObject.SetActive(true);
     }
 
 }

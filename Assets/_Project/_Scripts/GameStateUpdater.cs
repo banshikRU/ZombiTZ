@@ -7,19 +7,19 @@ public class GameStateUpdater : MonoBehaviour
     public event Action OnGamePlayed;
 
     [SerializeField]
-    private ScoreValueUpdater _scoreUpdater;
-    [SerializeField]
-    private SaveGameController _saveGameController;
-    [SerializeField]
     private PlayerBehaviour _player;
+
+    private ScoreValueUpdater _scoreUpdater;
+    private SaveGameController _saveGameController;
 
     public  bool isGame { get;private set; }
 
-    private void Awake()
+    public void Init(ScoreValueUpdater scoreValueUpdater,SaveGameController saveGameController)
     {
+        _scoreUpdater = scoreValueUpdater;
+        _saveGameController = saveGameController;
         isGame = false;
         _scoreUpdater.InitMaxScores();
-        _saveGameController.Init();
     }
 
     private void OnEnable()

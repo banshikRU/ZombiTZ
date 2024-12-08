@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public partial class SaveGameController : MonoBehaviour
+public partial class SaveGameController 
 {
     private const string _PLAYER_DATA = "PlayerData";
 

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class ZombieGeneratornParameters : MonoBehaviour
+public class ZombieGeneratorParameters : MonoBehaviour
 {
     [Header("Generator Prefabs")]
 
@@ -11,22 +11,15 @@ public class ZombieGeneratornParameters : MonoBehaviour
 
     [Space(10)]
 
-    [SerializeField]
     private GameStateUpdater _gameStateUpdater;
-    [SerializeField]
     private PlayerBehaviour _playerBehaviour;
-    [SerializeField]
     private ZombieFabric _zombieFabric;
 
     [Header("Generator Parameters")]
 
-    [SerializeField]
     private float _timeToNewSpawnLevel = 10;
-    [SerializeField]
     private float _minimalTimeToSpawn = 0.5f;
-    [SerializeField]
     private float _baseTimeToSpawnNewZombie = 2f;
-    [SerializeField]
     private float _reductionTime = 0.1f;
 
     private bool _isGame;
@@ -35,23 +28,27 @@ public class ZombieGeneratornParameters : MonoBehaviour
     private float _newTimeToNextSpawn;
     private float _timeToNewSpawn;
 
-    private void Awake()
+    public void Init(float timeToNewSpawnLevel,float minimalTimeToSpawn,float baseTimeToSpawnNewZombie,float reductionTime, GameStateUpdater gameStateUpdater,PlayerBehaviour playerBehaviour,ZombieFabric zombieFabric )
     {
+        _timeToNewSpawn = timeToNewSpawnLevel;
+        _minimalTimeToSpawn = minimalTimeToSpawn;
+        _baseTimeToSpawnNewZombie= baseTimeToSpawnNewZombie;
+        _reductionTime = reductionTime;
+        _gameStateUpdater = gameStateUpdater;
+        _playerBehaviour = playerBehaviour;
+        _zombieFabric = zombieFabric;
+
         _newTimeToNextSpawn = _baseTimeToSpawnNewZombie;
         _timeToNewSpawn = _timeToNewSpawnLevel;
         _isMinimalValueReached = false;
+
+        EventInit();
     }
 
-    private void OnEnable()
+    private void EventInit()
     {
         _gameStateUpdater.OnGamePlayed += StartGenerate;
         _playerBehaviour.OnPlayerDeath += GameOver;
-    }
-
-    private void OnDisable()
-    {
-        _gameStateUpdater.OnGamePlayed -= StartGenerate;
-        _playerBehaviour.OnPlayerDeath -= GameOver;
     }
 
     private void Update()
