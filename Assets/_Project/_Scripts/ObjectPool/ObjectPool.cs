@@ -1,69 +1,73 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPool : MonoBehaviour
+namespace ObjectPoolSystem
 {
-    private PooledObject objectToPool;
-    private Stack<PooledObject> stack;
-
-    public uint InitPoolSize { get; private set; }
-
-    public void Init(PooledObject prefab, uint initialSize)
+    public class ObjectPool : MonoBehaviour
     {
-        objectToPool = prefab;
-        InitPoolSize = initialSize;
+        private PooledObject objectToPool;
+        private Stack<PooledObject> stack;
 
-        SetupPool();
-    }
+        public uint InitPoolSize { get; private set; }
 
-    private void SetupPool()
-    {
-        if (objectToPool == null)
+        public void Init(PooledObject prefab, uint initialSize)
         {
-            return;
+            objectToPool = prefab;
+            InitPoolSize = initialSize;
+
+            SetupPool();
         }
 
-        stack = new Stack<PooledObject>();
-
-
-        for (int i = 0; i < InitPoolSize; i++)
+        private void SetupPool()
         {
-            CreateNewInstance();
-        }
-    }
+            if (objectToPool == null)
+            {
+                return;
+            }
 
-    private PooledObject CreateNewInstance()
-    {
-        PooledObject instance = Instantiate(objectToPool);
-        instance.Pool = this;
-        instance.gameObject.SetActive(false);
-        stack.Push(instance);
-        return instance;
-    }
+            stack = new Stack<PooledObject>();
 
-    public PooledObject GetPooledObject()
-    {
-        if (objectToPool == null)
-        {
-            return null;
+
+            for (int i = 0; i < InitPoolSize; i++)
+            {
+                CreateNewInstance();
+            }
         }
 
-        if (stack.Count == 0)
+        private PooledObject CreateNewInstance()
         {
-            PooledObject newInstance = Instantiate(objectToPool);
-            newInstance.Pool = this;
-            return newInstance;
+            PooledObject instance = Instantiate(objectToPool);
+            instance.Pool = this;
+            instance.gameObject.SetActive(false);
+            stack.Push(instance);
+            return instance;
         }
 
-        PooledObject nextInstance = stack.Pop();
-        nextInstance.gameObject.SetActive(true);
-        return nextInstance;
-    }
+        public PooledObject GetPooledObject()
+        {
+            if (objectToPool == null)
+            {
+                return null;
+            }
 
-    public void ReturnToPool(PooledObject pooledObject)
-    {
-        stack.Push(pooledObject);
-        pooledObject.gameObject.SetActive(false);
+            if (stack.Count == 0)
+            {
+                PooledObject newInstance = Instantiate(objectToPool);
+                newInstance.Pool = this;
+                return newInstance;
+            }
+
+            PooledObject nextInstance = stack.Pop();
+            nextInstance.gameObject.SetActive(true);
+            return nextInstance;
+        }
+
+        public void ReturnToPool(PooledObject pooledObject)
+        {
+            stack.Push(pooledObject);
+            pooledObject.gameObject.SetActive(false);
+        }
     }
 }
+
 

@@ -1,6 +1,7 @@
 using UnityEngine;
+using ObjectPoolSystem;
 
-namespace FireSystem
+namespace WeaponControl
 {
     public class BulletFabric
     {

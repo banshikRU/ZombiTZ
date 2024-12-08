@@ -1,67 +1,74 @@
 using UnityEngine;
+using ZombieGeneratorBehaviour;
+using ObjectPoolSystem;
 
-[RequireComponent(typeof(PooledObject))]
-
-public class BaseBullet : MonoBehaviour
+namespace WeaponControl
 {
-    [Header("Bullet Parameters")]
+    [RequireComponent(typeof(PooledObject))]
 
-    [SerializeField] 
-    private float _bulletSpeed = 1;
-    [SerializeField] 
-    private float _lifeTime = 1.5f;
-
-    private float removeTimer;
-    private int _bulletDamage;
-    private bool isMove;
-
-    private Vector3 _clickPointPosition;
-    private PooledObject _pooledObject;
-
-    private void Awake()
+    public class BaseBullet : MonoBehaviour
     {
-        _pooledObject = GetComponent<PooledObject>();
-    }
+        [Header("Bullet Parameters")]
 
-    private void Update()
-    {
-        if (isMove )
+        [SerializeField]
+        private float _bulletSpeed = 1;
+        [SerializeField]
+        private float _lifeTime = 1.5f;
+
+        private float removeTimer;
+        private int _bulletDamage;
+        private bool isMove;
+
+        private Vector3 _clickPointPosition;
+        private PooledObject _pooledObject;
+
+        private void Awake()
         {
-            removeTimer -= Time.deltaTime;
-            if ( removeTimer <= 0)
+            _pooledObject = GetComponent<PooledObject>();
+        }
+
+        private void Update()
+        {
+            if (isMove)
             {
-                isMove = false;
+                removeTimer -= Time.deltaTime;
+                if (removeTimer <= 0)
+                {
+                    isMove = false;
+                    DeactivateObject();
+                }
+                BulletMove();
+            }
+        }
+
+        public void StartMoveBullet(Vector3 _clickPosition, int bulletDamage)
+        {
+            _bulletDamage = bulletDamage;
+            _clickPointPosition = _clickPosition;
+            removeTimer = _lifeTime;
+            isMove = true;
+        }
+
+        private void BulletMove()
+        {
+            transform.position += _clickPointPosition * _bulletSpeed * Time.deltaTime;
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.TryGetComponent<ZombieBehaviour>(out ZombieBehaviour zombie))
+            {
+                zombie.TakeDamage(_bulletDamage);
                 DeactivateObject();
             }
-            BulletMove();
         }
-    }
 
-    public void StartMoveBullet(Vector3 _clickPosition, int bulletDamage)
-    {
-        _bulletDamage = bulletDamage;
-        _clickPointPosition = _clickPosition;
-        removeTimer = _lifeTime;
-        isMove = true;
-    }
-
-    private void BulletMove()
-    {
-        transform.position += _clickPointPosition * _bulletSpeed * Time.deltaTime;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent<ZombieBehaviour>(out ZombieBehaviour zombie))
+        private void DeactivateObject()
         {
-            zombie.TakeDamage(_bulletDamage);
-            DeactivateObject();
+            _pooledObject.ReturnToPool();
+            gameObject.SetActive(false);
         }
-    }
-
-    private void DeactivateObject()
-    {
-        _pooledObject.ReturnToPool();
-        gameObject.SetActive(false);
     }
 }
+
+

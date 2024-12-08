@@ -1,37 +1,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class ObjectPoolOrganizer 
+namespace ObjectPoolSystem 
 {
-    private List<PoolConfig> _poolsConfig;
-
-    private Dictionary<string, ObjectPool> pools;
-
-    public ObjectPoolOrganizer(List<PoolConfig> poolsConfig)
+    public partial class ObjectPoolOrganizer
     {
-        _poolsConfig = poolsConfig;
+        private List<PoolConfig> _poolsConfig;
 
-        Init();
-    }
+        private Dictionary<string, ObjectPool> pools;
 
-    public void Init()
-    {
-        pools = new Dictionary<string, ObjectPool>();
-        foreach (var config in _poolsConfig)
+        public ObjectPoolOrganizer(List<PoolConfig> poolsConfig)
         {
-            GameObject poolGameObject = new GameObject(config.prefab.name + " Pool");
-            ObjectPool pool = poolGameObject.AddComponent<ObjectPool>();
-            pool.Init(config.prefab, config.initialSize);
-            pools.Add(config.prefab.name, pool);
-        }
-    }
+            _poolsConfig = poolsConfig;
 
-    public ObjectPool GetPool(string prefabName)
-    {
-        if (pools.TryGetValue(prefabName, out ObjectPool pool))
-        {
-            return pool;
+            Init();
         }
-        return null;
+
+        public void Init()
+        {
+            pools = new Dictionary<string, ObjectPool>();
+            foreach (var config in _poolsConfig)
+            {
+                GameObject poolGameObject = new GameObject(config.prefab.name + " Pool");
+                ObjectPool pool = poolGameObject.AddComponent<ObjectPool>();
+                pool.Init(config.prefab, config.initialSize);
+                pools.Add(config.prefab.name, pool);
+            }
+        }
+
+        public ObjectPool GetPool(string prefabName)
+        {
+            if (pools.TryGetValue(prefabName, out ObjectPool pool))
+            {
+                return pool;
+            }
+            return null;
+        }
     }
 }
+

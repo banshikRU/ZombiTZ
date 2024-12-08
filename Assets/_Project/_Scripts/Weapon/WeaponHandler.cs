@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace FireSystem
+namespace WeaponControl
 {
     [RequireComponent(typeof(SpriteRenderer))]
 

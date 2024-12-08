@@ -1,11 +1,13 @@
-using UnityEngine;
-
-public partial class ObjectPoolOrganizer 
+namespace ObjectPoolSystem
 {
-    [System.Serializable]
-    public class PoolConfig
+    public partial class ObjectPoolOrganizer
     {
-        public PooledObject prefab;
-        public uint initialSize;
+        [System.Serializable]
+        public class PoolConfig
+        {
+            public PooledObject prefab;
+            public uint initialSize;
+        }
     }
+
 }

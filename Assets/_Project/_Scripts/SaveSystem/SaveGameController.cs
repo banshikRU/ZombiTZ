@@ -1,30 +1,34 @@
 using UnityEngine;
 
-public partial class SaveGameController 
+namespace SaveSystem
 {
-    private const string _PLAYER_DATA = "PlayerData";
-
-    public PlayerData PlayerDataValues = new PlayerData();
-
-    public void Init()
+    public partial class SaveGameController
     {
-        if (!PlayerPrefs.HasKey(_PLAYER_DATA))
+        private const string _PLAYER_DATA = "PlayerData";
+
+        public PlayerData PlayerDataValues = new PlayerData();
+
+        public void Init()
         {
-            PlayerDataValues.MaxScores = 0;
-            SaveData();
+            if (!PlayerPrefs.HasKey(_PLAYER_DATA))
+            {
+                PlayerDataValues.MaxScores = 0;
+                SaveData();
+            }
+        }
+
+        public void SaveData()
+        {
+            string json = JsonUtility.ToJson(PlayerDataValues);
+            PlayerPrefs.SetString("PlayerData", json);
+            PlayerPrefs.Save();
+        }
+
+        public PlayerData LoadData()
+        {
+            string jsonData = PlayerPrefs.GetString(_PLAYER_DATA);
+            return JsonUtility.FromJson<PlayerData>(jsonData);
         }
     }
-
-    public void SaveData()
-    {
-        string json = JsonUtility.ToJson(PlayerDataValues);
-        PlayerPrefs.SetString("PlayerData", json);
-        PlayerPrefs.Save();
-    }
-
-    public PlayerData LoadData()
-    {
-        string jsonData = PlayerPrefs.GetString(_PLAYER_DATA);
-        return JsonUtility.FromJson<PlayerData>(jsonData);
-    }
 }
+

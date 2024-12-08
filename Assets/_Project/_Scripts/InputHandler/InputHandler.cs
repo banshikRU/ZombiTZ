@@ -1,5 +1,5 @@
 using UnityEngine;
-using FireSystem;
+using WeaponControl;
 
 namespace InputControll
 {

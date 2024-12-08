@@ -1,19 +1,23 @@
 using UnityEngine;
 
-public class WalkingZombie : ZombieBehaviour
+namespace ZombieGeneratorBehaviour
 {
-    private void MoveToPlyer()
+    public class WalkingZombie : ZombieBehaviour
     {
-        Vector3 direction = (_player.position - transform.position).normalized;
-        float step = _speed * Time.deltaTime;
-        transform.position += direction * step;
-    }
-
-    private void Update()
-    {
-        if (_isInit)
+        private void MoveToPlyer()
         {
-            MoveToPlyer();
+            Vector3 direction = (_player.position - transform.position).normalized;
+            float step = _speed * Time.deltaTime;
+            transform.position += direction * step;
+        }
+
+        private void Update()
+        {
+            if (_isInit)
+            {
+                MoveToPlyer();
+            }
         }
     }
+
 }

@@ -1,7 +1,11 @@
-public partial class SaveGameController 
+namespace SaveSystem
 {
-    public class PlayerData
+    public partial class SaveGameController
     {
-        public int MaxScores;
+        public class PlayerData
+        {
+            public int MaxScores;
+        }
     }
+
 }

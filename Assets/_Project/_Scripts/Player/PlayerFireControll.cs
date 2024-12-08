@@ -1,7 +1,8 @@
 using UnityEngine;
 using InputControll;
+using GameStateControl;
 
-namespace FireSystem
+namespace WeaponControl
 {
     public class PlayerFireControll
     {

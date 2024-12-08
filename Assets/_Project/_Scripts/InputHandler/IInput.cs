@@ -1,8 +1,12 @@
 using System;
 
-public interface IInput 
+namespace InputControll
 {
-    public event Action OnShoot;
+    public interface IInput
+    {
+        public event Action OnShoot;
 
-    public void TakeShoot();
+        public void TakeShoot();
+    }
 }
+
