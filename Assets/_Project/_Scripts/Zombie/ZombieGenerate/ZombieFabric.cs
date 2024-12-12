@@ -47,7 +47,7 @@ namespace ZombieGeneratorBehaviour
         private GameObject GetPooledZombie(ZombieBehaviour zombie)
         {
             ObjectPool objectPool = _objectPoolOrganizer.GetPool(zombie.gameObject.name);
-            return objectPool.GetPooledObject().gameObject;
+            return objectPool.GetObject().gameObject;
         }
     }
 }

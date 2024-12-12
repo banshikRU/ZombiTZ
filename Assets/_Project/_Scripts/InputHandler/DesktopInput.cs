@@ -11,7 +11,7 @@ namespace InputControll
         {
             if (Input.GetMouseButton(0))
             {
-                OnShoot.Invoke();
+                OnShoot?.Invoke();
             }
         }
     }

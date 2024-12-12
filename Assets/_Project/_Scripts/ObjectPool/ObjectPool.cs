@@ -43,7 +43,7 @@ namespace ObjectPoolSystem
             return instance;
         }
 
-        public PooledObject GetPooledObject()
+        public PooledObject GetObject()
         {
             if (objectToPool == null)
             {

@@ -9,24 +9,21 @@ namespace WeaponControl
         private WeaponHandler _weaponHandler;
         private BulletFabric _bulletFabric;
         private GameStateUpdater _gameStateUpdater;
-        private InputHandler _inputHandler;
 
         private float _shootsInOneSeconds;
         private float _shootInSecond;
         private float _canShoot;
 
-        public PlayerFireControll(WeaponHandler weaponHandler, BulletFabric bulletFabric, GameStateUpdater gameStateUpdater, InputHandler inputHandler)
+        public PlayerFireControll(WeaponHandler weaponHandler, BulletFabric bulletFabric, GameStateUpdater gameStateUpdater)
         {
             _weaponHandler = weaponHandler;
             _bulletFabric = bulletFabric;
             _gameStateUpdater = gameStateUpdater;
-            _inputHandler = inputHandler;
 
         }
 
         public void Init()
         {
-            _inputHandler.currentInput.OnShoot += Shot;
             _gameStateUpdater.OnGamePlayed += TakeWeapon;
         }
 
@@ -37,9 +34,10 @@ namespace WeaponControl
             _shootInSecond = _shootsInOneSeconds;
         }
 
-        private void Shot()
+        public void Shot()
         {
-            if (!_gameStateUpdater.isGame) return;
+            if (!_gameStateUpdater.isGame)
+                return;
             if (Time.time >= _shootInSecond)
             {
                 _shootInSecond = Time.time + _shootsInOneSeconds;

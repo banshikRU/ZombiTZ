@@ -16,7 +16,8 @@ namespace WeaponControl
         {
             get
             {
-                if (_currentWeapon == null) return 0;
+                if (_currentWeapon == null)
+                    return 0;
                 return _currentWeapon.Bullet.BulletDamage;
             }
         }
@@ -25,7 +26,8 @@ namespace WeaponControl
         {
             get
             {
-                if (_currentWeapon == null) return 0;
+                if (_currentWeapon == null)
+                    return 0;
                 return _currentWeapon.ShootsInOneSecond;
             }
 

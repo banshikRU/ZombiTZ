@@ -3,7 +3,7 @@ using WeaponControl;
 
 namespace InputControll
 {
-    public class InputHandler : MonoBehaviour
+    public class InputController
     {
         private PlayerFireControll _playerFireControll;
 
@@ -12,13 +12,13 @@ namespace InputControll
 
         public IInput currentInput { get; private set; }
 
-        public void Init(PlayerFireControll playerFireControll)
+        public InputController(PlayerFireControll playerFireControll)
         {
             _playerFireControll = playerFireControll;
             CheckPlatform();
         }
-
-        private void Update()
+  
+        public void Update()
         {
             if (!isInit)
                 return;
@@ -30,6 +30,7 @@ namespace InputControll
             if (isDesktop )
             {
                 currentInput = new DesktopInput();
+                currentInput.OnShoot += _playerFireControll.Shot;
                 isInit = true;
             }
         }

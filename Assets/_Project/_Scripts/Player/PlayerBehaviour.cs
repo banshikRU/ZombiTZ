@@ -14,7 +14,7 @@ namespace PlayerControl
         {
             if (collision.TryGetComponent<ZombieBehaviour>(out ZombieBehaviour zombie))
             {
-                OnPlayerDeath.Invoke();
+                OnPlayerDeath?.Invoke();
             }
         }
     }

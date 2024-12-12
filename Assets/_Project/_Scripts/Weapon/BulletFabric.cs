@@ -8,7 +8,6 @@ namespace WeaponControl
         private ObjectPoolOrganizer _objectPoolOrganizer;
         private BaseBullet _bullet;
         private WeaponHandler _weaponHandler;
-
         private ObjectPool _objectPool;
 
         public BulletFabric(ObjectPoolOrganizer objectPoolOrganizer, BaseBullet bullet, WeaponHandler weaponHandler)
@@ -30,14 +29,14 @@ namespace WeaponControl
             BulletSetUp(TakeBulletFromPool(), movingVector);
         }
 
-        private Vector2 DirectionDefine(Vector3 vector)
+        private Vector2 DirectionDefine()
         {
             return (Utilities.GetWorldMousePosition() - _weaponHandler.transform.position).normalized;
         }
 
         private GameObject TakeBulletFromPool()
         {
-            GameObject bulletObject = _objectPool.GetPooledObject().gameObject;
+            GameObject bulletObject = _objectPool.GetObject().gameObject;
             if (bulletObject == null)
                 return null;
             return bulletObject;
@@ -48,7 +47,7 @@ namespace WeaponControl
             bullet.SetActive(true);
             bullet.transform.SetPositionAndRotation(_weaponHandler.transform.position, Quaternion.identity);
             BaseBullet baseBullet = bullet.GetComponent<BaseBullet>();
-            baseBullet.StartMoveBullet(DirectionDefine(movingVector), _weaponHandler.BulletDamage);
+            baseBullet.StartMoveBullet(DirectionDefine(), _weaponHandler.BulletDamage);
         }
     }
 }

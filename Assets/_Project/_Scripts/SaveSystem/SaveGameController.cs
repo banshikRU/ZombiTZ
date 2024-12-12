@@ -20,7 +20,7 @@ namespace SaveSystem
         public void SaveData()
         {
             string json = JsonUtility.ToJson(PlayerDataValues);
-            PlayerPrefs.SetString("PlayerData", json);
+            PlayerPrefs.SetString(_PLAYER_DATA, json);
             PlayerPrefs.Save();
         }
 
