@@ -4,13 +4,13 @@ namespace WeaponControl
 {
     [RequireComponent(typeof(SpriteRenderer))]
 
-    public class WeaponHandler : MonoBehaviour
+    public class WeaponHandler
     {
         private Weapon _currentWeapon;
         private Transform _player;
         private float _weaponDistanceFromPlayer = 0.25f;
-        private bool isInit;
-        private SpriteRenderer _renderer;
+
+        public SpriteRenderer _weaponRenderer { get; private set; }
 
         public int BulletDamage
         {
@@ -33,37 +33,29 @@ namespace WeaponControl
 
         }
 
-        public void Init(Weapon currentWeapon, Transform player, float weaponDistanceFromPlayer)
+        public WeaponHandler(Weapon currentWeapon, Transform player, float weaponDistanceFromPlayer, SpriteRenderer renderer)
         {
             _currentWeapon = currentWeapon;
             _player = player;
             _weaponDistanceFromPlayer = weaponDistanceFromPlayer;
-            isInit = true;
+            _weaponRenderer = renderer;
         }
 
-        private void Awake()
+        public void Update()
         {
-            _renderer = GetComponent<SpriteRenderer>();
-        }
-
-        private void Update()
-        {
-            if (isInit)
-            {
-                RotateWeaponTowardsMouse();
-            }
+            RotateWeaponTowardsMouse();
         }
 
         public void TakeWeapon()
         {
-            _renderer.sprite = _currentWeapon?.WeaponSprite;
+            _weaponRenderer.sprite = _currentWeapon?.WeaponSprite;
         }
 
         private void RotateWeaponTowardsMouse()
         {
-            transform.position = _player.position + GetDirectionPlayerToMouse() * _weaponDistanceFromPlayer;
+            _weaponRenderer.transform.position = _player.position + GetDirectionPlayerToMouse() * _weaponDistanceFromPlayer;
             float angle = Mathf.Atan2(GetDirectionPlayerToMouse().y, GetDirectionPlayerToMouse().x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+            _weaponRenderer.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
         }
 
         private Vector3 GetDirectionPlayerToMouse()

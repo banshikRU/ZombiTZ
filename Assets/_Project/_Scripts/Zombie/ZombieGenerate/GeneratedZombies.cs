@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ZombieGeneratorBehaviour
 {
-    public partial class ZombieFabric : MonoBehaviour
+    public partial class ZombieFabric 
     {
         [Serializable]
         public class GeneratedZombies

@@ -19,6 +19,8 @@ namespace GameStateControl
         [Space(10)]
 
         [SerializeField]
+        private SpriteRenderer _weapon;
+        [SerializeField]
         private GameStateUpdater _gameStateUpdater;
         [SerializeField]
         private ScoresMenu _mainMenuScores;
@@ -26,13 +28,8 @@ namespace GameStateControl
         private ScoresMenu _DeadMenuScores;
         [SerializeField]
         private PlayerBehaviour _playerBehaviour;
-        [SerializeField]
-        private ZombieFabric _zombieFabric;
-        [SerializeField]
-        private ZombieGeneratorParameters _zombieGeneratorParameters;
-        [SerializeField]
-        private WeaponHandler _weaponHandler;
 
+        private ZombieGeneratorParameters _zombieGeneratorParameters;
         private UIController _uiController;
         private PlayerFireControll _playerFireControll;
         private ScoreValueUpdater _scoreValueUpdater;
@@ -40,26 +37,37 @@ namespace GameStateControl
         private SaveGameController _saveGameController;
         private BulletFabric _bulletFabric;
         private InputController _inputHandler;
+        private ZombieFabric _zombieFabric;
+        private WeaponHandler _weaponHandler;
+
+        private bool isInit;
 
         private void Awake()
         {
             GenerateNewObjects();
             InitObjects();
             ActivateObjects();
+            isInit = true;
         }
 
         private void Update()
         {
+            if (!isInit)
+                return;
             _inputHandler.Update();
+            _zombieGeneratorParameters.Update();
+            _weaponHandler.Update();
         }
 
         private void GenerateNewObjects()
         {
-
+            _weaponHandler = new WeaponHandler(_gameSettings.Weapon, _playerBehaviour.transform, _gameSettings.WeaponDistanceFromPlayer,_weapon);
             _saveGameController = new SaveGameController();
             _scoreValueUpdater = new ScoreValueUpdater(_saveGameController, _gameStateUpdater);
             _uiController = new UIController(_mainMenuScores, _DeadMenuScores, _gameStateUpdater, _playerBehaviour);
             _objectPoolOrganizer = new ObjectPoolOrganizer(_gameSettings.poolConfigs);
+            _zombieFabric = new ZombieFabric(_objectPoolOrganizer, _gameSettings._zombiePrefabs, _playerBehaviour.transform, _scoreValueUpdater);
+            _zombieGeneratorParameters = new ZombieGeneratorParameters(_gameSettings.TimeToNewSpawnLevel, _gameSettings.MinimalTimeToSpawn, _gameSettings.BaseTimeToSpawnNewZombie, _gameSettings.ReductionTime, _zombieFabric);
             _bulletFabric = new BulletFabric(_objectPoolOrganizer, _gameSettings.BaseBulletPrefab, _weaponHandler);
             _playerFireControll = new PlayerFireControll(_weaponHandler, _bulletFabric, _gameStateUpdater);
             _inputHandler = new InputController(_playerFireControll);
@@ -70,10 +78,7 @@ namespace GameStateControl
             _mainMenuScores.Init(_scoreValueUpdater);
             _DeadMenuScores.Init(_scoreValueUpdater);
             _gameStateUpdater.Init(_scoreValueUpdater, _saveGameController);
-            _weaponHandler.Init(_gameSettings.Weapon, _playerBehaviour.transform, _gameSettings.WeaponDistanceFromPlayer);
             _playerFireControll.Init();
-            _zombieFabric.Init(_objectPoolOrganizer, _gameSettings._zombiePrefabs, _playerBehaviour.transform, _scoreValueUpdater);
-            _zombieGeneratorParameters.Init(_gameSettings.TimeToNewSpawnLevel, _gameSettings.MinimalTimeToSpawn, _gameSettings.BaseTimeToSpawnNewZombie, _gameSettings.ReductionTime, _gameStateUpdater, _playerBehaviour, _zombieFabric);
 
         }
 
