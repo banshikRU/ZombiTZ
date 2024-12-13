@@ -389,11 +389,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameSettings: {fileID: 11400000, guid: a576bbb454d0fbd4b94d5c15d8bb0d56, type: 2}
+  _weapon: {fileID: 265366850}
   _gameStateUpdater: {fileID: 1833471801}
   _mainMenuScores: {fileID: 1849207694}
   _DeadMenuScores: {fileID: 932228841}
   _playerBehaviour: {fileID: 1138701229}
-  _weaponHandler: {fileID: 0}
 --- !u!4 &262935820
 Transform:
   m_ObjectHideFlags: 0

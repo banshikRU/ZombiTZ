@@ -1,4 +1,3 @@
-using UnityEngine;
 using WeaponControl;
 
 namespace InputControll
@@ -7,10 +6,10 @@ namespace InputControll
     {
         private PlayerFireControll _playerFireControll;
 
-        private bool isDesktop = true;
-        private bool isInit;
+        private bool _isDesktop = true;
+        private bool _isInit;
 
-        public IInput currentInput { get; private set; }
+        public IInput CurrentInput { get; private set; }
 
         public InputController(PlayerFireControll playerFireControll)
         {
@@ -20,24 +19,24 @@ namespace InputControll
   
         public void Update()
         {
-            if (!isInit)
+            if (!_isInit)
                 return;
             TakeInput();
         }
 
         private void CheckPlatform()
         {
-            if (isDesktop )
+            if (_isDesktop )
             {
-                currentInput = new DesktopInput();
-                currentInput.OnShoot += _playerFireControll.Shot;
-                isInit = true;
+                CurrentInput = new DesktopInput();
+                CurrentInput.OnShoot += _playerFireControll.Shot;
+                _isInit = true;
             }
         }
 
         private void TakeInput()
         {
-            currentInput.TakeShoot();
+            CurrentInput.TakeShoot();
         }
 
     }

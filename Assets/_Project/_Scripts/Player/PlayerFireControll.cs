@@ -1,5 +1,4 @@
 using UnityEngine;
-using InputControll;
 using GameStateControl;
 
 namespace WeaponControl
@@ -12,7 +11,6 @@ namespace WeaponControl
 
         private float _shootsInOneSeconds;
         private float _shootInSecond;
-        private float _canShoot;
 
         public PlayerFireControll(WeaponHandler weaponHandler, BulletFabric bulletFabric, GameStateUpdater gameStateUpdater)
         {
@@ -36,12 +34,12 @@ namespace WeaponControl
 
         public void Shot()
         {
-            if (!_gameStateUpdater.isGame)
+            if (!_gameStateUpdater.IsGame)
                 return;
             if (Time.time >= _shootInSecond)
             {
                 _shootInSecond = Time.time + _shootsInOneSeconds;
-                _bulletFabric.Shot(Input.mousePosition);
+                _bulletFabric.Shot();
             }
         }
     }

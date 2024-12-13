@@ -7,7 +7,7 @@ namespace ObjectPoolSystem
     {
         private List<PoolConfig> _poolsConfig;
 
-        private Dictionary<string, ObjectPool> pools;
+        private Dictionary<string, ObjectPool> _pools;
 
         public ObjectPoolOrganizer(List<PoolConfig> poolsConfig)
         {
@@ -18,19 +18,19 @@ namespace ObjectPoolSystem
 
         public void Init()
         {
-            pools = new Dictionary<string, ObjectPool>();
+            _pools = new Dictionary<string, ObjectPool>();
             foreach (var config in _poolsConfig)
             {
                 GameObject poolGameObject = new GameObject(config.prefab.name + " Pool");
                 ObjectPool pool = poolGameObject.AddComponent<ObjectPool>();
                 pool.Init(config.prefab, config.initialSize);
-                pools.Add(config.prefab.name, pool);
+                _pools.Add(config.prefab.name, pool);
             }
         }
 
         public ObjectPool GetPool(string prefabName)
         {
-            if (pools.TryGetValue(prefabName, out ObjectPool pool))
+            if (_pools.TryGetValue(prefabName, out ObjectPool pool))
             {
                 return pool;
             }

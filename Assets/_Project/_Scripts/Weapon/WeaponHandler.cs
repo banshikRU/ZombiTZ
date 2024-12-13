@@ -4,13 +4,12 @@ namespace WeaponControl
 {
     [RequireComponent(typeof(SpriteRenderer))]
 
-    public class WeaponHandler
+    public class WeaponHandler : MonoBehaviour
     {
+        private SpriteRenderer _weapon;
         private Weapon _currentWeapon;
         private Transform _player;
-        private float _weaponDistanceFromPlayer = 0.25f;
-
-        public SpriteRenderer _weaponRenderer { get; private set; }
+        private float _weaponDistanceFromPlayer;
 
         public int BulletDamage
         {
@@ -33,12 +32,16 @@ namespace WeaponControl
 
         }
 
-        public WeaponHandler(Weapon currentWeapon, Transform player, float weaponDistanceFromPlayer, SpriteRenderer renderer)
+        private void Awake()
+        {
+            _weapon = GetComponent<SpriteRenderer>();
+        }
+
+        public void Init(Weapon currentWeapon, Transform player, float weaponDistanceFromPlayer)
         {
             _currentWeapon = currentWeapon;
             _player = player;
             _weaponDistanceFromPlayer = weaponDistanceFromPlayer;
-            _weaponRenderer = renderer;
         }
 
         public void Update()
@@ -48,14 +51,14 @@ namespace WeaponControl
 
         public void TakeWeapon()
         {
-            _weaponRenderer.sprite = _currentWeapon?.WeaponSprite;
+           _weapon.sprite = _currentWeapon?.WeaponSprite;
         }
 
         private void RotateWeaponTowardsMouse()
         {
-            _weaponRenderer.transform.position = _player.position + GetDirectionPlayerToMouse() * _weaponDistanceFromPlayer;
+            _weapon.transform.position = _player.position + GetDirectionPlayerToMouse() * _weaponDistanceFromPlayer;
             float angle = Mathf.Atan2(GetDirectionPlayerToMouse().y, GetDirectionPlayerToMouse().x) * Mathf.Rad2Deg;
-            _weaponRenderer.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+            _weapon.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
         }
 
         private Vector3 GetDirectionPlayerToMouse()

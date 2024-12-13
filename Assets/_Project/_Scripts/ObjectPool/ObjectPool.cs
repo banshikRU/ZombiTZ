@@ -5,14 +5,14 @@ namespace ObjectPoolSystem
 {
     public class ObjectPool : MonoBehaviour
     {
-        private PooledObject objectToPool;
-        private Stack<PooledObject> stack;
+        private PooledObject _objectToPool;
+        private Stack<PooledObject> _stack;
 
         public uint InitPoolSize { get; private set; }
 
         public void Init(PooledObject prefab, uint initialSize)
         {
-            objectToPool = prefab;
+            _objectToPool = prefab;
             InitPoolSize = initialSize;
 
             SetupPool();
@@ -20,52 +20,49 @@ namespace ObjectPoolSystem
 
         private void SetupPool()
         {
-            if (objectToPool == null)
+            if (_objectToPool == null)
             {
                 return;
             }
-
-            stack = new Stack<PooledObject>();
-
-
+            _stack = new Stack<PooledObject>();
             for (int i = 0; i < InitPoolSize; i++)
             {
                 CreateNewInstance();
             }
         }
 
-        private PooledObject CreateNewInstance()
-        {
-            PooledObject instance = Instantiate(objectToPool);
-            instance.Pool = this;
-            instance.gameObject.SetActive(false);
-            stack.Push(instance);
-            return instance;
-        }
-
         public PooledObject GetObject()
         {
-            if (objectToPool == null)
+            if (_objectToPool == null)
             {
                 return null;
             }
 
-            if (stack.Count == 0)
+            if (_stack.Count == 0)
             {
-                PooledObject newInstance = Instantiate(objectToPool);
+                PooledObject newInstance = Instantiate(_objectToPool);
                 newInstance.Pool = this;
                 return newInstance;
             }
 
-            PooledObject nextInstance = stack.Pop();
+            PooledObject nextInstance = _stack.Pop();
             nextInstance.gameObject.SetActive(true);
             return nextInstance;
         }
 
         public void ReturnToPool(PooledObject pooledObject)
         {
-            stack.Push(pooledObject);
+            _stack.Push(pooledObject);
             pooledObject.gameObject.SetActive(false);
+        }
+
+        private PooledObject CreateNewInstance()
+        {
+            PooledObject instance = Instantiate(_objectToPool);
+            instance.Pool = this;
+            instance.gameObject.SetActive(false);
+            _stack.Push(instance);
+            return instance;
         }
     }
 }

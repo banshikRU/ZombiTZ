@@ -15,9 +15,9 @@ namespace WeaponControl
         [SerializeField]
         private float _lifeTime = 1.5f;
 
-        private float removeTimer;
+        private float _removeTimer;
         private int _bulletDamage;
-        private bool isMove;
+        private bool _isMove;
 
         private Vector3 _clickPointPosition;
         private PooledObject _pooledObject;
@@ -29,12 +29,12 @@ namespace WeaponControl
 
         private void Update()
         {
-            if (isMove)
+            if (_isMove)
             {
-                removeTimer -= Time.deltaTime;
-                if (removeTimer <= 0)
+                _removeTimer -= Time.deltaTime;
+                if (_removeTimer <= 0)
                 {
-                    isMove = false;
+                    _isMove = false;
                     DeactivateObject();
                 }
                 BulletMove();
@@ -45,13 +45,13 @@ namespace WeaponControl
         {
             _bulletDamage = bulletDamage;
             _clickPointPosition = _clickPosition;
-            removeTimer = _lifeTime;
-            isMove = true;
+            _removeTimer = _lifeTime;
+            _isMove = true;
         }
 
         private void BulletMove()
         {
-            transform.position += _clickPointPosition * _bulletSpeed * Time.deltaTime;
+            transform.position += _bulletSpeed * Time.deltaTime * _clickPointPosition;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

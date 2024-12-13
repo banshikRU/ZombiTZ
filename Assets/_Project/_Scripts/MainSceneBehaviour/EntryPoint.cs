@@ -28,6 +28,8 @@ namespace GameStateControl
         private ScoresMenu _DeadMenuScores;
         [SerializeField]
         private PlayerBehaviour _playerBehaviour;
+        [SerializeField]
+        private WeaponHandler _weaponHandler;
 
         private ZombieGeneratorParameters _zombieGeneratorParameters;
         private UIController _uiController;
@@ -38,7 +40,6 @@ namespace GameStateControl
         private BulletFabric _bulletFabric;
         private InputController _inputHandler;
         private ZombieFabric _zombieFabric;
-        private WeaponHandler _weaponHandler;
 
         private bool isInit;
 
@@ -56,16 +57,14 @@ namespace GameStateControl
                 return;
             _inputHandler.Update();
             _zombieGeneratorParameters.Update();
-            _weaponHandler.Update();
         }
 
         private void GenerateNewObjects()
         {
-            _weaponHandler = new WeaponHandler(_gameSettings.Weapon, _playerBehaviour.transform, _gameSettings.WeaponDistanceFromPlayer,_weapon);
             _saveGameController = new SaveGameController();
             _scoreValueUpdater = new ScoreValueUpdater(_saveGameController, _gameStateUpdater);
             _uiController = new UIController(_mainMenuScores, _DeadMenuScores, _gameStateUpdater, _playerBehaviour);
-            _objectPoolOrganizer = new ObjectPoolOrganizer(_gameSettings.poolConfigs);
+            _objectPoolOrganizer = new ObjectPoolOrganizer(_gameSettings.PoolConfigs);
             _zombieFabric = new ZombieFabric(_objectPoolOrganizer, _gameSettings._zombiePrefabs, _playerBehaviour.transform, _scoreValueUpdater);
             _zombieGeneratorParameters = new ZombieGeneratorParameters(_gameSettings.TimeToNewSpawnLevel, _gameSettings.MinimalTimeToSpawn, _gameSettings.BaseTimeToSpawnNewZombie, _gameSettings.ReductionTime, _zombieFabric);
             _bulletFabric = new BulletFabric(_objectPoolOrganizer, _gameSettings.BaseBulletPrefab, _weaponHandler);
@@ -75,9 +74,10 @@ namespace GameStateControl
 
         private void InitObjects()
         {
+            _weaponHandler.Init(_gameSettings.Weapon, _playerBehaviour.transform, _gameSettings.WeaponDistanceFromPlayer);
             _mainMenuScores.Init(_scoreValueUpdater);
             _DeadMenuScores.Init(_scoreValueUpdater);
-            _gameStateUpdater.Init(_scoreValueUpdater, _saveGameController);
+            _gameStateUpdater.Init(_scoreValueUpdater);
             _playerFireControll.Init();
 
         }

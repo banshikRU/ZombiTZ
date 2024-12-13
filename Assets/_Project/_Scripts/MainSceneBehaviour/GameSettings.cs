@@ -12,7 +12,7 @@ namespace GameStateControl
     {
         [Header("Object Pool Settings")]
 
-        public List<ObjectPoolOrganizer.PoolConfig> poolConfigs;
+        public List<ObjectPoolOrganizer.PoolConfig> PoolConfigs;
 
         [Space(10)]
 

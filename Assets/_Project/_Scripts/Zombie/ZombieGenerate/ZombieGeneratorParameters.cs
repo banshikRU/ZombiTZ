@@ -10,11 +10,10 @@ namespace ZombieGeneratorBehaviour
         private float _minimalTimeToSpawn ;
         private float _baseTimeToSpawnNewZombie;
         private float _reductionTime ;
-
-        private bool _isMinimalValueReached;
-
         private float _newTimeToNextSpawn;
         private float _timeToNewSpawn;
+
+        private bool _isMinimalValueReached;
 
         public ZombieGeneratorParameters(float timeToNewSpawnLevel, float minimalTimeToSpawn, float baseTimeToSpawnNewZombie, float reductionTime,ZombieFabric zombieFabric)
         {

@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UIControl;
 using PlayerControl;
-using SaveSystem;
 
 namespace GameStateControl
 {
@@ -15,15 +14,13 @@ namespace GameStateControl
         private PlayerBehaviour _player;
 
         private ScoreValueUpdater _scoreUpdater;
-        private SaveGameController _saveGameController;
 
-        public bool isGame { get; private set; }
+        public bool IsGame { get; private set; }
 
-        public void Init(ScoreValueUpdater scoreValueUpdater, SaveGameController saveGameController)
+        public void Init(ScoreValueUpdater scoreValueUpdater)
         {
             _scoreUpdater = scoreValueUpdater;
-            _saveGameController = saveGameController;
-            isGame = false;
+            IsGame = false;
             _scoreUpdater.InitMaxScores();
         }
 
@@ -39,7 +36,7 @@ namespace GameStateControl
 
         public void StartGame()
         {
-            isGame = true;
+            IsGame = true;
             OnGamePlayed?.Invoke();
         }
 
@@ -51,7 +48,7 @@ namespace GameStateControl
 
         private void GameOver()
         {
-            isGame = false;
+            IsGame = false;
         }
     }
 }
