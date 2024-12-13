@@ -9,9 +9,28 @@ public static class Utilities
         return mousePosition;
     }
 
-    public static bool IsPointVisible(Vector2 point)
+    public static Vector3 GetInvisiblePoint()
     {
-        Vector3 viewportPoint = Camera.main.WorldToViewportPoint(new Vector3(point.x, point.y, 0));
-        return viewportPoint.x >= 0 && viewportPoint.x <= 1 && viewportPoint.y >= 0 && viewportPoint.y <= 1;
+        Vector3 topLeft = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, Camera.main.transform.position.z));
+        Vector3 topRight = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, Camera.main.transform.position.z));
+        float randomX;
+        float randomY = topLeft.y; 
+        int side = Random.Range(0, 3);
+        switch (side)
+        {
+            case 0:
+                randomX = topLeft.x - Random.Range(0.5f, 2f);
+                break;
+            case 1:
+                randomX = topRight.x + Random.Range(0.5f, 2f);
+                break;
+            case 2:
+                randomX = Random.Range(topLeft.x, topRight.x);
+                break;
+            default:
+                randomX = Random.Range(topLeft.x, topRight.x);
+                break;
+        }
+        return new Vector3(randomX, randomY, 0);
     }
 }
