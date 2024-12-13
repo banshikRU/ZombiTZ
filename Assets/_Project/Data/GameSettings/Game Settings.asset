@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4230782a8ce86d4488eb82898785808, type: 3}
   m_Name: Game Settings
   m_EditorClassIdentifier: 
-  poolConfigs:
+  PoolConfigs:
   - prefab: {fileID: 5650634105603010964, guid: 20a9870db205982428f6839313c732c8, type: 3}
     initialSize: 25
   - prefab: {fileID: 5092478666059034672, guid: 77aa5fd395ec803439567187e83df0ba, type: 3}
-    initialSize: 7
+    initialSize: 10
   - prefab: {fileID: 5092478666059034672, guid: 08d0f56b519ddc04abac2965f08fdcf8, type: 3}
-    initialSize: 7
+    initialSize: 10
   - prefab: {fileID: 5092478666059034672, guid: b898b147e919d46459af2bebe50f5118, type: 3}
-    initialSize: 7
+    initialSize: 10
   BaseBulletPrefab: {fileID: 8096135253056256665, guid: 20a9870db205982428f6839313c732c8, type: 3}
   Weapon: {fileID: 11400000, guid: 4aee57f7bea7b704dbfadfd2ef66a87c, type: 2}
   Bullet: {fileID: 11400000, guid: f437fa498ca922742bd37a51f767fd9b, type: 2}
@@ -30,7 +30,6 @@ MonoBehaviour:
   MinimalTimeToSpawn: 0.5
   BaseTimeToSpawnNewZombie: 2
   ReductionTime: 0.1
-  SpawnAreas: []
   _zombiePrefabs:
   - ZombiesPrefab: {fileID: 8257117199716956482, guid: 77aa5fd395ec803439567187e83df0ba, type: 3}
     ChanceToSpawn: 60

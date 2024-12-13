@@ -45,10 +45,11 @@ namespace GameStateControl
 
         private void Awake()
         {
+            isInit = false;
             GenerateNewObjects();
             InitObjects();
+            InitEvents();
             ActivateObjects();
-            isInit = true;
         }
 
         private void Update()
@@ -82,9 +83,25 @@ namespace GameStateControl
 
         }
 
+        private void InitEvents()
+        {
+            _playerBehaviour.OnPlayerDeath += GameOver;
+            _gameStateUpdater.OnGamePlayed += StartGame;
+        }
+
         private void ActivateObjects()
         {
             _mainMenuScores.gameObject.SetActive(true);
+        }
+
+        private void StartGame()
+        {
+            isInit = true;
+        }
+
+        private void GameOver()
+        {
+            isInit = false;
         }
     }
 }
