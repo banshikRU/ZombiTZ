@@ -58,6 +58,7 @@ namespace GameStateControl
                 return;
             _inputHandler.Update();
             _zombieGeneratorParameters.Update();
+            _weaponHandler.Update();
         }
 
         private void GenerateNewObjects()
@@ -68,14 +69,15 @@ namespace GameStateControl
             _objectPoolOrganizer = new ObjectPoolOrganizer(_gameSettings.PoolConfigs);
             _zombieFabric = new ZombieFabric(_objectPoolOrganizer, _gameSettings._zombiePrefabs, _playerBehaviour.transform, _scoreValueUpdater);
             _zombieGeneratorParameters = new ZombieGeneratorParameters(_gameSettings.TimeToNewSpawnLevel, _gameSettings.MinimalTimeToSpawn, _gameSettings.BaseTimeToSpawnNewZombie, _gameSettings.ReductionTime, _zombieFabric);
+            _weaponHandler = new WeaponHandler(_gameSettings.Weapon, _playerBehaviour.transform, _gameSettings.WeaponDistanceFromPlayer, _weapon);
             _bulletFabric = new BulletFabric(_objectPoolOrganizer, _gameSettings.BaseBulletPrefab, _weaponHandler);
             _playerFireControll = new PlayerFireControll(_weaponHandler, _bulletFabric, _gameStateUpdater);
             _inputHandler = new InputController(_playerFireControll);
+
         }
 
         private void InitObjects()
         {
-            _weaponHandler.Init(_gameSettings.Weapon, _playerBehaviour.transform, _gameSettings.WeaponDistanceFromPlayer);
             _mainMenuScores.Init(_scoreValueUpdater);
             _DeadMenuScores.Init(_scoreValueUpdater);
             _gameStateUpdater.Init(_scoreValueUpdater);

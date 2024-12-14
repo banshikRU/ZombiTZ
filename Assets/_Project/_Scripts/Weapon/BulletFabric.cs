@@ -31,7 +31,7 @@ namespace WeaponControl
 
         private Vector2 DirectionDefine()
         {
-            return (Utilities.GetWorldMousePosition() - _weaponHandler.transform.position).normalized;
+            return (Utilities.GetWorldMousePosition() - _weaponHandler.Weapon.transform.position).normalized;
         }
 
         private GameObject TakeBulletFromPool()
@@ -45,7 +45,7 @@ namespace WeaponControl
         private void BulletSetUp(GameObject bullet)
         {
             bullet.SetActive(true);
-            bullet.transform.SetPositionAndRotation(_weaponHandler.transform.position, Quaternion.identity);
+            bullet.transform.SetPositionAndRotation(_weaponHandler.Weapon.transform.position, Quaternion.identity);
             BaseBullet baseBullet = bullet.GetComponent<BaseBullet>();
             baseBullet.StartMoveBullet(DirectionDefine(), _weaponHandler.BulletDamage);
         }

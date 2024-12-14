@@ -2,14 +2,13 @@ using UnityEngine;
 
 namespace WeaponControl
 {
-    [RequireComponent(typeof(SpriteRenderer))]
-
-    public class WeaponHandler : MonoBehaviour
+    public class WeaponHandler 
     {
-        private SpriteRenderer _weapon;
         private Weapon _currentWeapon;
         private Transform _player;
         private float _weaponDistanceFromPlayer;
+
+        public SpriteRenderer Weapon { get; private set; }
 
         public int BulletDamage
         {
@@ -32,13 +31,9 @@ namespace WeaponControl
 
         }
 
-        private void Awake()
+        public WeaponHandler(Weapon currentWeapon, Transform player, float weaponDistanceFromPlayer,SpriteRenderer weapon)
         {
-            _weapon = GetComponent<SpriteRenderer>();
-        }
-
-        public void Init(Weapon currentWeapon, Transform player, float weaponDistanceFromPlayer)
-        {
+            Weapon = weapon;
             _currentWeapon = currentWeapon;
             _player = player;
             _weaponDistanceFromPlayer = weaponDistanceFromPlayer;
@@ -51,14 +46,14 @@ namespace WeaponControl
 
         public void TakeWeapon()
         {
-           _weapon.sprite = _currentWeapon?.WeaponSprite;
+           Weapon.sprite = _currentWeapon?.WeaponSprite;
         }
 
         private void RotateWeaponTowardsMouse()
         {
-            _weapon.transform.position = _player.position + GetDirectionPlayerToMouse() * _weaponDistanceFromPlayer;
+            Weapon.transform.position = _player.position + GetDirectionPlayerToMouse() * _weaponDistanceFromPlayer;
             float angle = Mathf.Atan2(GetDirectionPlayerToMouse().y, GetDirectionPlayerToMouse().x) * Mathf.Rad2Deg;
-            _weapon.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+            Weapon.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
         }
 
         private Vector3 GetDirectionPlayerToMouse()
