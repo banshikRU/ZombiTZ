@@ -5,14 +5,14 @@ using ObjectPoolSystem;
 
 namespace ZombieGeneratorBehaviour
 {
-    public partial class ZombieFabric 
+    public partial class ZombieFactory 
     {
         private ObjectPoolOrganizer _objectPoolOrganizer;
         private List<GeneratedZombies> _zombiePrefabs;
         private Transform _player;
         private ScoreValueUpdater _scoreUpdater;
 
-        public ZombieFabric(ObjectPoolOrganizer objectPoolOrganizer, List<GeneratedZombies> zombiesPrefab, Transform player, ScoreValueUpdater scoreValueUpdater)
+        public ZombieFactory(ObjectPoolOrganizer objectPoolOrganizer, List<GeneratedZombies> zombiesPrefab, Transform player, ScoreValueUpdater scoreValueUpdater)
         {
             _objectPoolOrganizer = objectPoolOrganizer;
             _player = player;

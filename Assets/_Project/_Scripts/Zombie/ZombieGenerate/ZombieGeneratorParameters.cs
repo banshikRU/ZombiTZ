@@ -4,7 +4,7 @@ namespace ZombieGeneratorBehaviour
 {
     public class ZombieGeneratorParameters 
     {
-        private ZombieFabric _zombieFabric;
+        private ZombieFactory _zombieFabric;
 
         private float _timeToNewSpawnLevel;
         private float _minimalTimeToSpawn ;
@@ -15,7 +15,7 @@ namespace ZombieGeneratorBehaviour
 
         private bool _isMinimalValueReached;
 
-        public ZombieGeneratorParameters(float timeToNewSpawnLevel, float minimalTimeToSpawn, float baseTimeToSpawnNewZombie, float reductionTime,ZombieFabric zombieFabric)
+        public ZombieGeneratorParameters(float timeToNewSpawnLevel, float minimalTimeToSpawn, float baseTimeToSpawnNewZombie, float reductionTime,ZombieFactory zombieFabric)
         {
             _timeToNewSpawnLevel = timeToNewSpawnLevel;
             _minimalTimeToSpawn = minimalTimeToSpawn;

@@ -3,7 +3,7 @@ using GameStateControl;
 
 namespace WeaponControl
 {
-    public class PlayerFireControll
+    public class PlayerFireControl
     {
         private WeaponHandler _weaponHandler;
         private BulletFabric _bulletFabric;
@@ -12,12 +12,17 @@ namespace WeaponControl
         private float _shootsInOneSeconds;
         private float _shootInSecond;
 
-        public PlayerFireControll(WeaponHandler weaponHandler, BulletFabric bulletFabric, GameStateUpdater gameStateUpdater)
+        public PlayerFireControl(WeaponHandler weaponHandler, BulletFabric bulletFabric, GameStateUpdater gameStateUpdater)
         {
             _weaponHandler = weaponHandler;
             _bulletFabric = bulletFabric;
             _gameStateUpdater = gameStateUpdater;
 
+        }
+
+        public void UnsubcribeEvent()
+        {
+            _gameStateUpdater.OnGamePlayed -= TakeWeapon;
         }
 
         public void Init()

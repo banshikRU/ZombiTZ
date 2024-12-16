@@ -1,5 +1,6 @@
 using GameStateControl;
 using SaveSystem;
+using System.Xml.Serialization;
 
 namespace UIControl
 {
@@ -16,6 +17,11 @@ namespace UIControl
             _gameStateUpdater = gameStateUpdater;
 
             EventInit();
+        }
+
+        public void UnsubcribeEvent()
+        {
+            _gameStateUpdater.OnGamePlayed -= ResetCurrentScores;
         }
 
         public void EventInit()

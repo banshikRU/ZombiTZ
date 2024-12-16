@@ -33,7 +33,7 @@ namespace GameStateControl
         public float BaseTimeToSpawnNewZombie = 2f;
         public float ReductionTime = 0.1f;
 
-        public List<ZombieFabric.GeneratedZombies> _zombiePrefabs;
+        public List<ZombieFactory.GeneratedZombies> _zombiePrefabs;
 
     }
 }

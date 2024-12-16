@@ -20,6 +20,12 @@ namespace UIControl
             EventInit();
         }
 
+        public void UnsubcribeEvent()
+        {
+            _gameStateUpdater.OnGamePlayed -= OffMainMenu;
+            _player.OnPlayerDeath -= OnEndGameMenu;
+        }
+
         private void EventInit()
         {
             _gameStateUpdater.OnGamePlayed += OffMainMenu;
