@@ -4,34 +4,34 @@ namespace InputControll
 {
     public class InputController
     {
-        private PlayerFireControll _playerFireControll;
-
-        private bool _isDesktop = true;
-        private bool _isInit;
+        private PlayerFireControl _playerFireControll;
 
         public IInput CurrentInput { get; private set; }
 
-        public InputController(PlayerFireControll playerFireControll)
+        public InputController(PlayerFireControl playerFireControll)
         {
             _playerFireControll = playerFireControll;
-            CheckPlatform();
         }
-  
+
         public void Update()
         {
-            if (!_isInit)
-                return;
             TakeInput();
         }
 
-        private void CheckPlatform()
+        public void SetUpCurrentInput(IInput CurrentInput)
         {
-            if (_isDesktop )
-            {
-                CurrentInput = new DesktopInput();
-                CurrentInput.OnShoot += _playerFireControll.Shot;
-                _isInit = true;
-            }
+            this.CurrentInput = CurrentInput;
+            SubcribeEvent();
+        }
+
+        public void UnsubcribeEvent()
+        {
+            CurrentInput.OnShoot -= _playerFireControll.Shot;
+        }
+
+        private void SubcribeEvent()
+        {
+            CurrentInput.OnShoot += _playerFireControll.Shot;
         }
 
         private void TakeInput()
@@ -41,4 +41,4 @@ namespace InputControll
 
     }
 }
- 
+
