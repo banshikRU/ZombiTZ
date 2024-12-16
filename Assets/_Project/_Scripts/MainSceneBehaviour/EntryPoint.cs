@@ -6,6 +6,7 @@ using UIControl;
 using PlayerControl;
 using ObjectPoolSystem;
 using SaveSystem;
+using Services;
 
 namespace GameStateControl
 {
@@ -40,6 +41,7 @@ namespace GameStateControl
         private BulletFabric _bulletFabric;
         private InputController _inputController;
         private ZombieFactory _zombieFabric;
+        private CurrentPlatformChecker _currentPlatformChecker;
 
         private bool isInit;
 
@@ -78,6 +80,7 @@ namespace GameStateControl
             _bulletFabric = new BulletFabric(_objectPoolOrganizer, _gameSettings.BaseBulletPrefab, _weaponHandler);
             _playerFireControll = new PlayerFireControl(_weaponHandler, _bulletFabric, _gameStateUpdater);
             _inputController = new InputController(_playerFireControll);
+            _currentPlatformChecker = new CurrentPlatformChecker(_inputController);
 
         }
 
