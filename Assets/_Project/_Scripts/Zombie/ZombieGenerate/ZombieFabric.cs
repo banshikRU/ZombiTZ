@@ -2,11 +2,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UIControl;
 using ObjectPoolSystem;
+using System;
+using Random = UnityEngine.Random;
 
 namespace ZombieGeneratorBehaviour
 {
-    public partial class ZombieFactory 
+    public class ZombieFactory 
     {
+        [Serializable]
+        public class GeneratedZombies
+        {
+            public ZombieBehaviour ZombiesPrefab;
+            public float ChanceToSpawn;
+        }
+
         private ObjectPoolOrganizer _objectPoolOrganizer;
         private List<GeneratedZombies> _zombiePrefabs;
         private Transform _player;

@@ -2,11 +2,21 @@ using UnityEngine;
 
 namespace SaveSystem
 {
-    public partial class SaveGameController
+    public class SaveGameController
     {
+        public class PlayerData
+        {
+            public int MaxScores;
+        }
+
         private const string PLAYER_DATA = "PlayerData";
 
         public PlayerData PlayerDataValues = new();
+
+        public SaveGameController()
+        {
+            Init();
+        }
 
         public void Init()
         {
