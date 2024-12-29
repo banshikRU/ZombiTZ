@@ -1,27 +1,36 @@
 using GameStateControl;
 using PlayerControl;
+using Zenject;
+using ModestTree;
+using System;
 
 namespace UIControl
 {
-    public class UIController
+    public class UIController: IDisposable
     {
-        private ScoresMenu _mainMenu;
-        private ScoresMenu _endGameMenu;
-        private GameStateUpdater _gameStateUpdater;
-        private PlayerBehaviour _player;
+        private readonly ScoresMenu _mainMenu;
+        private readonly ScoresMenu _deathMenu;
+        private readonly GameStateUpdater _gameStateUpdater;
+        private readonly PlayerBehaviour _player;
 
-        public UIController(ScoresMenu mainMenu, ScoresMenu endGameMenu, GameStateUpdater gameStateUpdater, PlayerBehaviour player)
+        public UIController([Inject(Id = ZenjectIds.MainMenu)] ScoresMenu mainMenu, [Inject(Id = ZenjectIds.DeadMenu)] ScoresMenu deathMenu,GameStateUpdater gameStateUpdater, PlayerBehaviour player)
         {
-            _endGameMenu = endGameMenu;
+            _deathMenu = deathMenu;
             _mainMenu = mainMenu;
             _gameStateUpdater = gameStateUpdater;
             _player = player;
-
+            _mainMenu.gameObject.SetActive(true);
             EventInit();
+        }
+
+        public void Dispose()
+        {
+            UnsubcribeEvent();
         }
 
         public void UnsubcribeEvent()
         {
+
             _gameStateUpdater.OnGamePlayed -= OffMainMenu;
             _player.OnPlayerDeath -= OnEndGameMenu;
         }
@@ -39,7 +48,7 @@ namespace UIControl
 
         private void OnEndGameMenu()
         {
-            _endGameMenu.gameObject.SetActive(true);
+            _deathMenu.gameObject.SetActive(true);
         }
 
     }

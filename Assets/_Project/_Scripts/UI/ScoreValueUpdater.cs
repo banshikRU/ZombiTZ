@@ -1,13 +1,12 @@
 using GameStateControl;
 using SaveSystem;
-using System.Xml.Serialization;
 
 namespace UIControl
 {
     public class ScoreValueUpdater
     {
-        private SaveGameController _saveGameController;
-        private GameStateUpdater _gameStateUpdater;
+        private readonly SaveGameController _saveGameController;
+        private readonly GameStateUpdater _gameStateUpdater;
 
         public int CurrentScores { get; private set; }
 
@@ -16,6 +15,7 @@ namespace UIControl
             _saveGameController = saveGameController;
             _gameStateUpdater = gameStateUpdater;
 
+            InitMaxScores();
             EventInit();
         }
 

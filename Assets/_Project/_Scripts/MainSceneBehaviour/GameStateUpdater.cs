@@ -3,25 +3,26 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UIControl;
 using PlayerControl;
+using Zenject;
 
 namespace GameStateControl
 {
-    public class GameStateUpdater : MonoBehaviour
+    public class GameStateUpdater : MonoBehaviour,IInitializable
     {
         public event Action OnGamePlayed;
 
         [SerializeField]
         private PlayerBehaviour _player;
 
-        private ScoreValueUpdater _scoreUpdater;
+        [Inject]
+        private readonly LazyInject<ScoreValueUpdater> _scoreUpdater;
 
         public bool IsGame { get; private set; }
 
-        public void Init(ScoreValueUpdater scoreValueUpdater)
+        public void Initialize()
         {
-            _scoreUpdater = scoreValueUpdater;
             IsGame = false;
-            _scoreUpdater.InitMaxScores();
+            _scoreUpdater.Value.InitMaxScores();
         }
 
         private void OnEnable()
@@ -42,7 +43,7 @@ namespace GameStateControl
 
         public void RestartGame()
         {
-            _scoreUpdater.UpdateMaxScores();
+            _scoreUpdater.Value.UpdateMaxScores();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
@@ -50,6 +51,8 @@ namespace GameStateControl
         {
             IsGame = false;
         }
+
+
     }
 }
 

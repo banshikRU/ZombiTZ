@@ -5,9 +5,9 @@ namespace WeaponControl
 {
     public class BulletFabric
     {
-        private ObjectPoolOrganizer _objectPoolOrganizer;
-        private BaseBullet _bullet;
-        private WeaponHandler _weaponHandler;
+        private readonly ObjectPoolOrganizer _objectPoolOrganizer;
+        private readonly BaseBullet _bullet;
+        private readonly WeaponHandler _weaponHandler;
         private ObjectPool _objectPool;
 
         public BulletFabric(ObjectPoolOrganizer objectPoolOrganizer, BaseBullet bullet, WeaponHandler weaponHandler)

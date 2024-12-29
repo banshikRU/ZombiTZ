@@ -16,10 +16,10 @@ namespace ZombieGeneratorBehaviour
             public float ChanceToSpawn;
         }
 
-        private ObjectPoolOrganizer _objectPoolOrganizer;
-        private List<GeneratedZombies> _zombiePrefabs;
-        private Transform _player;
-        private ScoreValueUpdater _scoreUpdater;
+        private readonly ObjectPoolOrganizer _objectPoolOrganizer;
+        private readonly List<GeneratedZombies> _zombiePrefabs;
+        private readonly Transform _player;
+        private readonly ScoreValueUpdater _scoreUpdater;
 
         public ZombieFactory(ObjectPoolOrganizer objectPoolOrganizer, List<GeneratedZombies> zombiesPrefab, Transform player, ScoreValueUpdater scoreValueUpdater)
         {

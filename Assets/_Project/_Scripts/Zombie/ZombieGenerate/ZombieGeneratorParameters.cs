@@ -1,10 +1,13 @@
 using UnityEngine;
+using Zenject;
+using GameStateControl;
 
 namespace ZombieGeneratorBehaviour
 {
-    public class ZombieGeneratorParameters 
+    public class ZombieGeneratorParameters:ITickable
     {
-        private ZombieFactory _zombieFabric;
+        private readonly ZombieFactory _zombieFabric;
+        private readonly GameStateUpdater _gameStateUpdater;
 
         private float _timeToNewSpawnLevel;
         private float _minimalTimeToSpawn ;
@@ -15,8 +18,10 @@ namespace ZombieGeneratorBehaviour
 
         private bool _isMinimalValueReached;
 
-        public ZombieGeneratorParameters(float timeToNewSpawnLevel, float minimalTimeToSpawn, float baseTimeToSpawnNewZombie, float reductionTime,ZombieFactory zombieFabric)
+        public ZombieGeneratorParameters(GameStateUpdater gameStateUpdater,float timeToNewSpawnLevel, float minimalTimeToSpawn, float baseTimeToSpawnNewZombie, float reductionTime,ZombieFactory zombieFabric)
         {
+            _gameStateUpdater = gameStateUpdater;
+
             _timeToNewSpawnLevel = timeToNewSpawnLevel;
             _minimalTimeToSpawn = minimalTimeToSpawn;
             _baseTimeToSpawnNewZombie = baseTimeToSpawnNewZombie;
@@ -29,24 +34,27 @@ namespace ZombieGeneratorBehaviour
 
         }
 
-        public void Update()
+        public void Tick()
         {
-            _baseTimeToSpawnNewZombie -= Time.deltaTime;
-            if (!_isMinimalValueReached)
+            if (_gameStateUpdater.IsGame)
             {
-                _timeToNewSpawn -= Time.deltaTime;
-            }
-            if (_baseTimeToSpawnNewZombie <= 0)
-            {
-                _baseTimeToSpawnNewZombie = _newTimeToNextSpawn;
-                _zombieFabric.GenerateZombie(Utilities.GetInvisiblePoint());
-            }
-            if (_timeToNewSpawn <= 0 && !_isMinimalValueReached)
-            {
-                _timeToNewSpawn = _timeToNewSpawnLevel;
-                _newTimeToNextSpawn -= _reductionTime;
-                if (_newTimeToNextSpawn <= _minimalTimeToSpawn)
-                { _isMinimalValueReached = true; }
+                _baseTimeToSpawnNewZombie -= Time.deltaTime;
+                if (!_isMinimalValueReached)
+                {
+                    _timeToNewSpawn -= Time.deltaTime;
+                }
+                if (_baseTimeToSpawnNewZombie <= 0)
+                {
+                    _baseTimeToSpawnNewZombie = _newTimeToNextSpawn;
+                    _zombieFabric.GenerateZombie(Utilities.GetInvisiblePoint());
+                }
+                if (_timeToNewSpawn <= 0 && !_isMinimalValueReached)
+                {
+                    _timeToNewSpawn = _timeToNewSpawnLevel;
+                    _newTimeToNextSpawn -= _reductionTime;
+                    if (_newTimeToNextSpawn <= _minimalTimeToSpawn)
+                    { _isMinimalValueReached = true; }
+                }
             }
         }
     }

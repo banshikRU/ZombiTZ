@@ -1,12 +1,13 @@
 using UnityEngine;
+using Zenject;
 
 namespace WeaponControl
 {
-    public class WeaponHandler 
+    public class WeaponHandler :ITickable
     {
-        private Weapon _currentWeapon;
-        private Transform _player;
-        private float _weaponDistanceFromPlayer;
+        private readonly Weapon _currentWeapon;
+        private readonly Transform _player;
+        private readonly float _weaponDistanceFromPlayer;
 
         public SpriteRenderer Weapon { get; private set; }
 
@@ -39,7 +40,7 @@ namespace WeaponControl
             _weaponDistanceFromPlayer = weaponDistanceFromPlayer;
         }
 
-        public void Update()
+        public void Tick()
         {
             RotateWeaponTowardsMouse();
         }

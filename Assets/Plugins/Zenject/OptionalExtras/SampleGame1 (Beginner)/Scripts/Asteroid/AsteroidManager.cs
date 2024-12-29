@@ -25,6 +25,7 @@ namespace Zenject.Asteroids
         public AsteroidManager(
             Settings settings, Asteroid.Factory asteroidFactory, LevelHelper level)
         {
+            Debug.Log("a");
             _settings = settings;
             _timeIntervalBetweenSpawns = _settings.maxSpawnTime / (_settings.maxSpawns - _settings.startingSpawns);
             _timeToNextSpawn = _timeIntervalBetweenSpawns;

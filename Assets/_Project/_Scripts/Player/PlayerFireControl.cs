@@ -1,33 +1,35 @@
 using UnityEngine;
 using GameStateControl;
+using Zenject;
 
 namespace WeaponControl
 {
-    public class PlayerFireControl
+    public class PlayerFireControl : IInitializable
     {
-        private WeaponHandler _weaponHandler;
-        private BulletFabric _bulletFabric;
-        private GameStateUpdater _gameStateUpdater;
+        private readonly WeaponHandler _weaponHandler;
+        private readonly BulletFabric _bulletFabric;
+        private readonly GameStateUpdater _gameStateUpdater;
 
         private float _shootsInOneSeconds;
         private float _shootInSecond;
 
-        public PlayerFireControl(WeaponHandler weaponHandler, BulletFabric bulletFabric, GameStateUpdater gameStateUpdater)
+        public PlayerFireControl(WeaponHandler weaponHandler, BulletFabric bulletFabric, GameStateUpdater gameStateUpdater,float fireRate)
         {
+            _shootsInOneSeconds = fireRate; 
             _weaponHandler = weaponHandler;
             _bulletFabric = bulletFabric;
             _gameStateUpdater = gameStateUpdater;
 
         }
 
+        public void Initialize()
+        {
+            _gameStateUpdater.OnGamePlayed += TakeWeapon;
+        }
+
         public void UnsubcribeEvent()
         {
             _gameStateUpdater.OnGamePlayed -= TakeWeapon;
-        }
-
-        public void Init()
-        {
-            _gameStateUpdater.OnGamePlayed += TakeWeapon;
         }
 
         private void TakeWeapon()
@@ -47,6 +49,7 @@ namespace WeaponControl
                 _bulletFabric.Shot();
             }
         }
+
     }
 }
 

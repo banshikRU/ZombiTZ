@@ -1,10 +1,11 @@
 using InputControll;
+using UnityEngine;
 
 namespace Services
 {
     public class CurrentPlatformChecker
     {
-        private InputController _inputController;
+        private readonly InputController _inputController;
 
         private string _platformName = "Desktop"; // условна€ переменна€ обозначающа€ платформу
 

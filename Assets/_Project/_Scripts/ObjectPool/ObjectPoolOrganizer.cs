@@ -5,7 +5,7 @@ namespace ObjectPoolSystem
 {
     public partial class ObjectPoolOrganizer
     {
-        private List<PoolConfig> _poolsConfig;
+        private readonly List<PoolConfig> _poolsConfig;
 
         private Dictionary<string, ObjectPool> _pools;
 

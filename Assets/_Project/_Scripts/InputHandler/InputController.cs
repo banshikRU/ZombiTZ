@@ -1,10 +1,11 @@
 using WeaponControl;
+using Zenject;
 
 namespace InputControll
 {
-    public class InputController
+    public class InputController:ITickable
     {
-        private PlayerFireControl _playerFireControll;
+        private readonly PlayerFireControl _playerFireControll;
 
         public IInput CurrentInput { get; private set; }
 
@@ -13,7 +14,7 @@ namespace InputControll
             _playerFireControll = playerFireControll;
         }
 
-        public void Update()
+        public void Tick()
         {
             TakeInput();
         }
@@ -36,7 +37,7 @@ namespace InputControll
 
         private void TakeInput()
         {
-            CurrentInput.TakeShoot();
+            CurrentInput?.TakeShoot();
         }
 
     }

@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using Zenject;
 
 namespace UIControl
 {
@@ -10,7 +11,8 @@ namespace UIControl
 
         private ScoreValueUpdater _scoreValueUpdater;
 
-        public void Init(ScoreValueUpdater scoreValueUpdater)
+        [Inject]
+        public void Construct(ScoreValueUpdater scoreValueUpdater)
         {
             _scoreValueUpdater = scoreValueUpdater;
         }

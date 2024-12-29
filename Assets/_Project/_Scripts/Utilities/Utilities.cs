@@ -19,10 +19,10 @@ public static class Utilities
         switch (side)
         {
             case 0:
-                randomX = topLeft.x - Random.Range(0.5f, 2f);
+                randomX = topLeft.x - Random.Range(0.5f, 1f);
                 break;
             case 1:
-                randomX = topRight.x + Random.Range(0.5f, 2f);
+                randomX = topRight.x + Random.Range(0.5f, 1f);
                 break;
             case 2:
                 randomX = Random.Range(topLeft.x, topRight.x);
