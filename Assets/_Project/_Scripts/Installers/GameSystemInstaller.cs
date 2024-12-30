@@ -11,7 +11,7 @@ namespace GameSystem
     {
         public override void InstallBindings()
         {
-            Container.Bind<CurrentPlatformChecker>().AsSingle().NonLazy();
+           // Container.Bind<CurrentPlatformChecker>().AsSingle().NonLazy();
         }
     }
 }
