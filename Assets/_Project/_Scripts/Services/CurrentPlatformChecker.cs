@@ -12,7 +12,7 @@ namespace Services
         public CurrentPlatformChecker(InputController inputController)
         {
             _inputController = inputController;
-            _inputController.SetUpCurrentInput(SetUpCurrentPlatform(_platformName));
+           _inputController.SetUpCurrentInput(SetUpCurrentPlatform(_platformName));
         }
 
         private IInput SetUpCurrentPlatform(string platformName)

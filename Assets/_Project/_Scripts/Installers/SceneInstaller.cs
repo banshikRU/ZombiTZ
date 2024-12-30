@@ -11,7 +11,7 @@ using ZombieGeneratorBehaviour;
 
 namespace GameStateControl
 {
-    public class EntryPoint : MonoInstaller
+    public class SceneInstaller : MonoInstaller
     {
         [Header("Game Settings!")]
 
