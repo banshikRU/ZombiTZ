@@ -17,7 +17,15 @@ namespace GameStateControl
         [Inject]
         private readonly LazyInject<ScoreValueUpdater> _scoreUpdater;
 
+        private AnalyticServiceManager _analyticServiceManager;
+
         public bool IsGame { get; private set; }
+
+        [Inject]
+        public void Contstruct(AnalyticServiceManager analyticServiceManager)
+        {
+            _analyticServiceManager = analyticServiceManager;
+        }
 
         public void Initialize()
         {
@@ -38,6 +46,7 @@ namespace GameStateControl
         public void StartGame()
         {
             IsGame = true;
+            _analyticServiceManager.LogEvent();
             OnGamePlayed?.Invoke();
         }
 

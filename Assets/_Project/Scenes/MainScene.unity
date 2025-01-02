@@ -1578,7 +1578,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93298be72dcc56f4d8be1d2f6c241549, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentScores: {fileID: 0}
+  _currentScores: {fileID: 951431944}
 --- !u!1 &951431942
 GameObject:
   m_ObjectHideFlags: 0
@@ -1941,6 +1941,37 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.27, y: 0.39}
   m_EdgeRadius: 0
+--- !u!1 &1212053366
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1212053367}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1212053367
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212053366}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 6.06748, y: -1.4034486, z: -0.09252185}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1690912507
 GameObject:
   m_ObjectHideFlags: 0
@@ -2578,3 +2609,4 @@ SceneRoots:
   - {fileID: 1833471802}
   - {fileID: 1138701227}
   - {fileID: 216686107}
+  - {fileID: 1212053367}
