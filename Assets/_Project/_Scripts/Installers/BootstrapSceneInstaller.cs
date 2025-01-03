@@ -1,10 +1,14 @@
 using Zenject;
 
-public class BootstrapSceneInstaller : MonoInstaller
+namespace GameSystem
 {
-    public override void InstallBindings()
+    public class BootstrapSceneInstaller : MonoInstaller
     {
-        Container.Bind<MainSceneLoader>().AsSingle().NonLazy();
-        Container.Bind<GooglePlayRequirementsCheck>().AsSingle().NonLazy();
+        public override void InstallBindings()
+        {
+            Container.Bind<MainSceneLoader>().AsSingle().NonLazy();
+            Container.Bind<FirebaseDependendeciesCheck>().AsSingle().NonLazy();
+        }
     }
 }
+

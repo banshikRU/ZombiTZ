@@ -1,5 +1,11 @@
-public interface IAnalyticsService 
+using System.Collections.Generic;
+
+namespace Firebase
 {
-    void LogEvent(string eventName, string parameter);
-    void LogEventStartGame();
+    public interface IAnalyticsService
+    {
+        public void LogEvent(string eventName, Dictionary<string, int> parameters);
+        public void LogEventStartGame();
+    }
 }
+

@@ -1,16 +1,28 @@
 using Firebase.Analytics;
-using UnityEngine;
+using System.Collections.Generic;
 
-public class FirebaseAnalyticsService : IAnalyticsService
+namespace Firebase
 {
-    public void LogEvent(string eventName, string parameter)
+    public class FirebaseAnalyticsService : IAnalyticsService
     {
-       
-    }
+        public void LogEventStartGame()
+        {
+            FirebaseAnalytics.LogEvent(FirebaseAnalytics.EventAppOpen);
+        }
 
-    public void LogEventStartGame()
-    {
-        Debug.Log("Start Game event");
-        FirebaseAnalytics.LogEvent(FirebaseAnalytics.EventAppOpen);
+        public void LogEvent(string eventName, Dictionary<string, int> parameters)
+        {
+            var firebaseParams = new Parameter[parameters.Count];
+            int index = 0;
+
+            foreach (var param in parameters)
+            {
+                firebaseParams[index++] = new Parameter(param.Key, param.Value.ToString());
+            }
+
+            FirebaseAnalytics.LogEvent(eventName, firebaseParams);
+        }
+
     }
 }
+

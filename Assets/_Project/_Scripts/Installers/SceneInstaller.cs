@@ -8,8 +8,9 @@ using UnityEngine;
 using WeaponControl;
 using Zenject;
 using ZombieGeneratorBehaviour;
+using GameStateControl;
 
-namespace GameStateControl
+namespace GameSystem
 {
     public class SceneInstaller : MonoInstaller
     {

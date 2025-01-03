@@ -1,5 +1,6 @@
 using UnityEngine;
 using ObjectPoolSystem;
+using Firebase;
 
 namespace WeaponControl
 {
@@ -8,13 +9,16 @@ namespace WeaponControl
         private readonly ObjectPoolOrganizer _objectPoolOrganizer;
         private readonly BaseBullet _bullet;
         private readonly WeaponHandler _weaponHandler;
+        private readonly AnalyticsDataCollector _analyticsDataCollector;
+
         private ObjectPool _objectPool;
 
-        public BulletFabric(ObjectPoolOrganizer objectPoolOrganizer, BaseBullet bullet, WeaponHandler weaponHandler)
+        public BulletFabric(ObjectPoolOrganizer objectPoolOrganizer, BaseBullet bullet, WeaponHandler weaponHandler, AnalyticsDataCollector analyticsDataCollector)
         {
             _objectPoolOrganizer = objectPoolOrganizer;
             _bullet = bullet;
             _weaponHandler = weaponHandler;
+            _analyticsDataCollector = analyticsDataCollector;
 
             Init();
         }
@@ -26,6 +30,7 @@ namespace WeaponControl
 
         public void Shot()
         {
+            _analyticsDataCollector.AddAnalizedParameterValue(_bullet.name, 1);
             BulletSetUp(TakeBulletFromPool());
         }
 

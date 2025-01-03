@@ -1,20 +1,19 @@
 using Firebase.Extensions;
+using UnityEngine;
 
-public class GooglePlayRequirementsCheck 
+public class FirebaseDependendeciesCheck 
 {
-    private Firebase.FirebaseApp app;
-
-    public GooglePlayRequirementsCheck()
+    public FirebaseDependendeciesCheck()
     {
         Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task => {
             var dependencyStatus = task.Result;
             if (dependencyStatus == Firebase.DependencyStatus.Available)
             {
-                app = Firebase.FirebaseApp.DefaultInstance;
+                Debug.Log("All Dependencies Sync");
             }
             else
             {
-                UnityEngine.Debug.LogError(System.String.Format(
+                Debug.LogError(System.String.Format(
                   "Could not resolve all Firebase dependencies: {0}", dependencyStatus));
             }
         });

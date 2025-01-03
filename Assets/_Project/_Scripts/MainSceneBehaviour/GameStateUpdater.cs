@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using UIControl;
 using PlayerControl;
 using Zenject;
+using Firebase;
 
 namespace GameStateControl
 {
@@ -46,7 +47,7 @@ namespace GameStateControl
         public void StartGame()
         {
             IsGame = true;
-            _analyticServiceManager.LogEvent();
+            _analyticServiceManager.LogEventStartGame();
             OnGamePlayed?.Invoke();
         }
 
@@ -58,6 +59,7 @@ namespace GameStateControl
 
         private void GameOver()
         {
+            _analyticServiceManager.LogEventEndGame();
             IsGame = false;
         }
 

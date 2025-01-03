@@ -4,10 +4,11 @@ using UIControl;
 using ObjectPoolSystem;
 using System;
 using Random = UnityEngine.Random;
+using Firebase;
 
 namespace ZombieGeneratorBehaviour
 {
-    public class ZombieFactory 
+    public class ZombieFactory
     {
         [Serializable]
         public class GeneratedZombies
@@ -20,9 +21,11 @@ namespace ZombieGeneratorBehaviour
         private readonly List<GeneratedZombies> _zombiePrefabs;
         private readonly Transform _player;
         private readonly ScoreValueUpdater _scoreUpdater;
+        private readonly AnalyticsDataCollector _analyticsDataCollector;
 
-        public ZombieFactory(ObjectPoolOrganizer objectPoolOrganizer, List<GeneratedZombies> zombiesPrefab, Transform player, ScoreValueUpdater scoreValueUpdater)
+        public ZombieFactory(ObjectPoolOrganizer objectPoolOrganizer, List<GeneratedZombies> zombiesPrefab, Transform player, ScoreValueUpdater scoreValueUpdater,AnalyticsDataCollector analyticsDataCollector)
         {
+            _analyticsDataCollector = analyticsDataCollector;
             _objectPoolOrganizer = objectPoolOrganizer;
             _player = player;
             _scoreUpdater = scoreValueUpdater;
@@ -35,6 +38,7 @@ namespace ZombieGeneratorBehaviour
             zombie.transform.position = zombiePosition;
             zombie.GetComponent<ZombieBehaviour>().Init(_player, _scoreUpdater);
             zombie.SetActive(true);
+            _analyticsDataCollector.AddAnalizedParameterValue(zombie.name, 1);
 
         }
 
@@ -58,6 +62,7 @@ namespace ZombieGeneratorBehaviour
             ObjectPool objectPool = _objectPoolOrganizer.GetPool(zombie.gameObject.name);
             return objectPool.GetObject().gameObject;
         }
+
     }
 }
 

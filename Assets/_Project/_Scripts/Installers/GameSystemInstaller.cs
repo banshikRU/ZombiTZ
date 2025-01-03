@@ -1,7 +1,6 @@
-using InputControll;
-using Services;
 using UnityEngine;
 using Zenject;
+using Firebase;
 
 namespace GameSystem
 {
@@ -11,6 +10,7 @@ namespace GameSystem
     {
         public override void InstallBindings()
         {
+            Container.Bind<AnalyticsDataCollector>().AsSingle();
             Container.Bind<AnalyticServiceManager>().AsSingle().NonLazy();
         }
     }
