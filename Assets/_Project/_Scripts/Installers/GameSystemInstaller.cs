@@ -1,6 +1,7 @@
 using UnityEngine;
 using Zenject;
 using Firebase;
+using GameStateControl;
 
 namespace GameSystem
 {
@@ -8,10 +9,15 @@ namespace GameSystem
 
     public class GameSystemInstaller : ScriptableObjectInstaller
     {
+        [SerializeField]
+        private GameSettings _gameSettings;
+
         public override void InstallBindings()
         {
             Container.Bind<AnalyticsDataCollector>().AsSingle();
             Container.Bind<AnalyticServiceManager>().AsSingle().NonLazy();
+            Container.Bind<RemoteConfigManager>().AsSingle().NonLazy();
+            Container.Bind<UsingRemoteConfigCheck>().AsSingle().WithArguments(_gameSettings).NonLazy();
         }
     }
 }

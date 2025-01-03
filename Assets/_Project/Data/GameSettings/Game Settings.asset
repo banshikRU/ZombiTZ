@@ -24,9 +24,9 @@ MonoBehaviour:
   BaseBulletPrefab: {fileID: 8096135253056256665, guid: 20a9870db205982428f6839313c732c8, type: 3}
   Weapon: {fileID: 11400000, guid: 4aee57f7bea7b704dbfadfd2ef66a87c, type: 2}
   Bullet: {fileID: 11400000, guid: f437fa498ca922742bd37a51f767fd9b, type: 2}
-  FireRate: 10
-  WeaponDistanceFromPlayer: 0.5
-  TimeToNewSpawnLevel: 10
+  FireRate: 0
+  WeaponDistanceFromPlayer: 0
+  TimeToNewSpawnLevel: 0
   MinimalTimeToSpawn: 0.5
   BaseTimeToSpawnNewZombie: 2
   ReductionTime: 0.1

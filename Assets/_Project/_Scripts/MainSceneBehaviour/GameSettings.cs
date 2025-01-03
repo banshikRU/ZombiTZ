@@ -28,10 +28,10 @@ namespace GameStateControl
 
         [Header("Zombie Spawn Parameters")]
 
-        public float TimeToNewSpawnLevel = 10;
-        public float MinimalTimeToSpawn = 0.5f;
-        public float BaseTimeToSpawnNewZombie = 2f;
-        public float ReductionTime = 0.1f;
+        public float TimeToNewSpawnLevel;
+        public float MinimalTimeToSpawn ;
+        public float BaseTimeToSpawnNewZombie;
+        public float ReductionTime;
 
         public List<ZombieFactory.GeneratedZombies> _zombiePrefabs;
 

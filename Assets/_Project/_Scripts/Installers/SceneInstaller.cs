@@ -17,6 +17,9 @@ namespace GameSystem
         [Header("Game Settings!")]
 
         [SerializeField]
+        private bool _useRemoteConfig;
+
+        [SerializeField]
         private GameSettings _gameSettings;
 
         [Space(10)]
