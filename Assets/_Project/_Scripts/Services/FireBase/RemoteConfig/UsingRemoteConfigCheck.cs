@@ -24,7 +24,6 @@ public class UsingRemoteConfigCheck
 
     private void SetUpNewGameSettings()
     {
-        Debug.Log(_remoteConfigManager.gameSettingsValues.WeaponDistanceFromPlayer);
         _gameSettings.TimeToNewSpawnLevel = _remoteConfigManager.gameSettingsValues.TimeToNewSpawnLevel;
         _gameSettings.WeaponDistanceFromPlayer = _remoteConfigManager.gameSettingsValues.WeaponDistanceFromPlayer;
         _gameSettings.FireRate = _remoteConfigManager.gameSettingsValues.FireRate;

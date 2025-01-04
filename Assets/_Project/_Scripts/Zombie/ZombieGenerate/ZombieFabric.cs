@@ -5,10 +5,12 @@ using ObjectPoolSystem;
 using System;
 using Random = UnityEngine.Random;
 using Firebase;
+using Unity.VisualScripting;
+using Zenject;
 
 namespace ZombieGeneratorBehaviour
 {
-    public class ZombieFactory
+    public class ZombieFactory: IDisposable
     {
         [Serializable]
         public class GeneratedZombies
@@ -22,24 +24,60 @@ namespace ZombieGeneratorBehaviour
         private readonly Transform _player;
         private readonly ScoreValueUpdater _scoreUpdater;
         private readonly AnalyticsDataCollector _analyticsDataCollector;
+        private readonly AdsRewardGiver _adsRewardGiver;
 
-        public ZombieFactory(ObjectPoolOrganizer objectPoolOrganizer, List<GeneratedZombies> zombiesPrefab, Transform player, ScoreValueUpdater scoreValueUpdater,AnalyticsDataCollector analyticsDataCollector)
+        private List<ZombieBehaviour> _geratedActiveZombies;
+
+        public ZombieFactory(ObjectPoolOrganizer objectPoolOrganizer, List<GeneratedZombies> zombiesPrefab, Transform player, ScoreValueUpdater scoreValueUpdater,AnalyticsDataCollector analyticsDataCollector,AdsRewardGiver adsRewardGiver)
         {
+            _adsRewardGiver = adsRewardGiver;
+            _geratedActiveZombies = new List<ZombieBehaviour>();
             _analyticsDataCollector = analyticsDataCollector;
             _objectPoolOrganizer = objectPoolOrganizer;
             _player = player;
             _scoreUpdater = scoreValueUpdater;
             _zombiePrefabs = zombiesPrefab;
+            EventInit();
+        }
+
+        public void EventInit()
+        {
+            _adsRewardGiver.OnGiveSecondChance += DeactivateAllZombies;
+        }
+
+        public void UnsubcribeEvent()
+        {
+            _adsRewardGiver.OnGiveSecondChance -= DeactivateAllZombies;
+        }
+
+        public void Dispose()
+        {
+            UnsubcribeEvent();
         }
 
         public void GenerateZombie(Vector2 zombiePosition)
         {
             GameObject zombie = GetZombieByChance();
             zombie.transform.position = zombiePosition;
-            zombie.GetComponent<ZombieBehaviour>().Init(_player, _scoreUpdater);
+            ZombieBehaviour zombieBehaviour = zombie.GetComponent<ZombieBehaviour>();
+            zombieBehaviour.Init(_player, _scoreUpdater, this);
+            _geratedActiveZombies.Add(zombieBehaviour);
             zombie.SetActive(true);
             _analyticsDataCollector.AddAnalizedParameterValue(zombie.name, 1);
 
+        }
+
+        public void DeleteFromZombieList(ZombieBehaviour zombieBehaviour)
+        {
+            _geratedActiveZombies.Remove(zombieBehaviour);
+        }
+
+        public void DeactivateAllZombies()
+        {
+            for (int i = 0; i < _geratedActiveZombies.Count; i++)
+            {
+                _geratedActiveZombies[i].DeactivateObject();
+            }
         }
 
         private GameObject GetZombieByChance()

@@ -35,6 +35,11 @@ namespace GameSystem
         [SerializeField]
         private PlayerBehaviour _playerBehaviour;
 
+        [SerializeField]
+        private AdsButton _rewardedAdsButton;
+        [SerializeField]
+        private AdsButton _interstitialAdsButton;
+
         public override void InstallBindings()
         {
             Container.Bind<PlayerBehaviour>().FromInstance(_playerBehaviour).AsSingle();
@@ -52,6 +57,10 @@ namespace GameSystem
             Container.BindInterfacesAndSelfTo<PlayerFireControl>().AsSingle().WithArguments(_gameSettings.FireRate);
             Container.BindInterfacesAndSelfTo<InputController>().AsSingle();
             Container.Bind<CurrentPlatformChecker>().AsSingle().NonLazy();
+
+            Container.Bind<AdsButton>().FromInstance(_rewardedAdsButton).AsCached().NonLazy();
+            Container.Bind<AdsButton>().FromInstance(_interstitialAdsButton).AsCached().NonLazy();
+
         }
     }
 }

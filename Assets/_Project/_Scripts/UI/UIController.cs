@@ -1,8 +1,8 @@
 using GameStateControl;
 using PlayerControl;
 using Zenject;
-using ModestTree;
 using System;
+using UnityEngine;
 
 namespace UIControl
 {
@@ -12,9 +12,11 @@ namespace UIControl
         private readonly ScoresMenu _deathMenu;
         private readonly GameStateUpdater _gameStateUpdater;
         private readonly PlayerBehaviour _player;
+        private readonly AdsRewardGiver _dsRewardGiver;
 
-        public UIController([Inject(Id = ZenjectIds.MainMenu)] ScoresMenu mainMenu, [Inject(Id = ZenjectIds.DeadMenu)] ScoresMenu deathMenu,GameStateUpdater gameStateUpdater, PlayerBehaviour player)
+        public UIController([Inject(Id = ZenjectIds.MainMenu)] ScoresMenu mainMenu, [Inject(Id = ZenjectIds.DeadMenu)] ScoresMenu deathMenu,GameStateUpdater gameStateUpdater, PlayerBehaviour player,AdsRewardGiver adsRewardGiver)
         {
+            _dsRewardGiver = adsRewardGiver;
             _deathMenu = deathMenu;
             _mainMenu = mainMenu;
             _gameStateUpdater = gameStateUpdater;
@@ -30,13 +32,14 @@ namespace UIControl
 
         public void UnsubcribeEvent()
         {
-
+            _dsRewardGiver.OnGiveSecondChance -= OffEndGameMenu;
             _gameStateUpdater.OnGamePlayed -= OffMainMenu;
             _player.OnPlayerDeath -= OnEndGameMenu;
         }
 
         private void EventInit()
         {
+            _dsRewardGiver.OnGiveSecondChance += OffEndGameMenu;
             _gameStateUpdater.OnGamePlayed += OffMainMenu;
             _player.OnPlayerDeath += OnEndGameMenu;
         }
@@ -48,8 +51,14 @@ namespace UIControl
 
         private void OnEndGameMenu()
         {
-            _deathMenu.gameObject.SetActive(true);
+             _deathMenu.gameObject.SetActive(true);
         }
+
+        private void OffEndGameMenu()
+        {
+            _deathMenu.gameObject.SetActive(false);
+        }
+
 
     }
 }

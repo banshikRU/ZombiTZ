@@ -1,0 +1,60 @@
+using System.Collections.Generic;
+using UnityEngine.UI;
+using Zenject;
+
+public class AdsServiceManager 
+{
+    private readonly IAdsService _adsService;
+    private Button _button;
+    private Dictionary<string, int> _rewardIdDictionary = new Dictionary<string, int>();
+    private AdsRewardGiver _rewardGiver;
+    
+    public AdsServiceManager(UnityAdsService adsController,AdsRewardGiver adsRewardGiver)
+    {
+        _rewardGiver = adsRewardGiver;
+        _adsService = adsController;
+    }
+
+    public void ShowAd(string adsId)
+    {
+        _adsService.ShowAd(adsId);
+    }
+
+    public void AdInit(Button button,string adId,int rewardId = -1)
+    {
+
+        _button = button;
+        LoadAd(adId);
+        AddNewRewardId(adId, rewardId);
+        _adsService.OnRewardAdsShowed += GiveReward;
+        ActivateButton();
+    }
+
+    private void LoadAd(string adId)
+    {
+        _adsService.LoadAd(adId);
+    }
+
+    private void ActivateButton()
+    {
+        _button.interactable = true;
+    }
+
+    private void GiveReward(string adsId)
+    {
+        _rewardGiver.GiveReward(GiveRewardId(adsId));
+    }
+
+    private void AddNewRewardId(string adsId,int rewardId)
+    {
+        if (_rewardIdDictionary.ContainsKey(adsId))
+            return;
+        _rewardIdDictionary.Add(adsId, rewardId);
+    }
+
+    private int GiveRewardId(string adsId)
+    {
+        return _rewardIdDictionary[adsId];
+    }
+
+}

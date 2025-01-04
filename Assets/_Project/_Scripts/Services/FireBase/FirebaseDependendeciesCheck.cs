@@ -9,7 +9,7 @@ public class FirebaseDependendeciesCheck
             var dependencyStatus = task.Result;
             if (dependencyStatus == Firebase.DependencyStatus.Available)
             {
-                Debug.Log("All Dependencies Sync");
+//Debug.Log("All Dependencies Sync");
             }
             else
             {

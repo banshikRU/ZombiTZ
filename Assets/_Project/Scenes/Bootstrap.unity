@@ -199,6 +199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f8678eed3cd53d42908a414221da048, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _androidGameId: 5768103
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

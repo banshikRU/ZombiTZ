@@ -19,12 +19,14 @@ namespace GameStateControl
         private readonly LazyInject<ScoreValueUpdater> _scoreUpdater;
 
         private AnalyticServiceManager _analyticServiceManager;
+        private AdsRewardGiver _adsRewardGiver;
 
         public bool IsGame { get; private set; }
 
         [Inject]
-        public void Contstruct(AnalyticServiceManager analyticServiceManager)
+        public void Contstruct(AnalyticServiceManager analyticServiceManager,AdsRewardGiver adsRewardGiver)
         {
+            _adsRewardGiver = adsRewardGiver;
             _analyticServiceManager = analyticServiceManager;
         }
 
@@ -36,11 +38,13 @@ namespace GameStateControl
 
         private void OnEnable()
         {
+            _adsRewardGiver.OnGiveSecondChance += StartGame;
             _player.OnPlayerDeath += GameOver;
         }
 
         private void OnDisable()
         {
+            _adsRewardGiver.OnGiveSecondChance -= StartGame;
             _player.OnPlayerDeath -= GameOver;
         }
 

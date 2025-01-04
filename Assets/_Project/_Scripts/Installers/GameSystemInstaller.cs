@@ -18,6 +18,12 @@ namespace GameSystem
             Container.Bind<AnalyticServiceManager>().AsSingle().NonLazy();
             Container.Bind<RemoteConfigManager>().AsSingle().NonLazy();
             Container.Bind<UsingRemoteConfigCheck>().AsSingle().WithArguments(_gameSettings).NonLazy();
+
+            Container.BindInterfacesAndSelfTo<UnityAdsService>().AsSingle();
+            Container.Bind<AdsRewardGiver>().AsSingle();
+            Container.Bind<AdsServiceManager>().AsSingle();
+
+
         }
     }
 }
