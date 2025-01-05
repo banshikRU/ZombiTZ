@@ -33,7 +33,13 @@ namespace GameStateControl
         public float BaseTimeToSpawnNewZombie;
         public float ReductionTime;
 
-        public List<ZombieFactory.GeneratedZombies> _zombiePrefabs;
+        public List<ZombieFactory.GeneratedZombies> ZombiePrefabs;
+
+        [Space(10)]
+
+        [Header("VFX Settings")]
+
+        public List<VFXBehaviour> VFXPrefabs;
 
     }
 }

@@ -40,8 +40,13 @@ namespace GameSystem
         [SerializeField]
         private AdsButton _interstitialAdsButton;
 
+
+
+
         public override void InstallBindings()
         {
+            Container.Bind<VFXManager>().AsSingle().WithArguments(_gameSettings.VFXPrefabs).NonLazy();
+
             Container.Bind<PlayerBehaviour>().FromInstance(_playerBehaviour).AsSingle();
             Container.BindInterfacesAndSelfTo<GameStateUpdater>().FromInstance(_gameStateUpdater).AsSingle();
             Container.Bind<SaveGameController>().AsSingle();
@@ -50,7 +55,7 @@ namespace GameSystem
             Container.Bind<ScoresMenu>().WithId(ZenjectIds.DeadMenu).FromInstance(_deadMenuScores).AsCached();
             Container.BindInterfacesAndSelfTo<UIController>().AsSingle().NonLazy();
             Container.Bind<ObjectPoolOrganizer>().AsSingle().WithArguments(_gameSettings.PoolConfigs);
-            Container.Bind<ZombieFactory>().AsSingle().WithArguments(_gameSettings._zombiePrefabs, _playerBehaviour.transform);
+            Container.Bind<ZombieFactory>().AsSingle().WithArguments(_gameSettings.ZombiePrefabs, _playerBehaviour.transform);
             Container.BindInterfacesAndSelfTo<ZombieGeneratorParameters>().AsSingle().WithArguments(_gameSettings.TimeToNewSpawnLevel, _gameSettings.MinimalTimeToSpawn, _gameSettings.BaseTimeToSpawnNewZombie, _gameSettings.ReductionTime).NonLazy();
             Container.BindInterfacesAndSelfTo<WeaponHandler>().AsSingle().WithArguments(_gameSettings.Weapon, _playerBehaviour.transform, _gameSettings.WeaponDistanceFromPlayer, _weapon);
             Container.Bind<BulletFabric>().AsSingle().WithArguments(_gameSettings.BaseBulletPrefab);
@@ -60,6 +65,9 @@ namespace GameSystem
 
             Container.Bind<AdsButton>().FromInstance(_rewardedAdsButton).AsCached().NonLazy();
             Container.Bind<AdsButton>().FromInstance(_interstitialAdsButton).AsCached().NonLazy();
+
+            Container.Bind<VFXEventManager>().AsSingle();
+
 
         }
     }

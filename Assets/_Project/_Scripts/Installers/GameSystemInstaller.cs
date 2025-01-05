@@ -23,8 +23,8 @@ namespace GameSystem
             Container.Bind<AdsRewardGiver>().AsSingle();
             Container.Bind<AdsServiceManager>().AsSingle();
 
-          //  Container.BindInterfacesAndSelfTo<InAppStore>().AsSingle().NonLazy();
-          //  Container.Bind<UnityServiceInitializer>().AsSingle().NonLazy();
+            //  Container.BindInterfacesAndSelfTo<InAppStore>().AsSingle().NonLazy();
+            //  Container.Bind<UnityServiceInitializer>().AsSingle().NonLazy();
 
 
         }

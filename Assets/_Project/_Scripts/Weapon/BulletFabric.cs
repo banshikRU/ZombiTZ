@@ -1,16 +1,18 @@
 using UnityEngine;
 using ObjectPoolSystem;
 using Firebase;
+using System;
 
 namespace WeaponControl
 {
     public class BulletFabric
     {
+        public event Action<VFXEvent> OnBulletShot;
+
         private readonly ObjectPoolOrganizer _objectPoolOrganizer;
         private readonly BaseBullet _bullet;
         private readonly WeaponHandler _weaponHandler;
         private readonly AnalyticsDataCollector _analyticsDataCollector;
-
         private ObjectPool _objectPool;
 
         public BulletFabric(ObjectPoolOrganizer objectPoolOrganizer, BaseBullet bullet, WeaponHandler weaponHandler, AnalyticsDataCollector analyticsDataCollector)
@@ -30,6 +32,7 @@ namespace WeaponControl
 
         public void Shot()
         {
+            OnBulletShot.Invoke(new VFXEvent(_weaponHandler.Weapon.transform.position, Quaternion.identity, VFXTypes.BulletFire));
             _analyticsDataCollector.AddAnalizedParameterValue(_bullet.name, 1);
             BulletSetUp(TakeBulletFromPool());
         }

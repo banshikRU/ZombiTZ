@@ -28,6 +28,7 @@ namespace ZombieGeneratorBehaviour
         private PooledObject _pooledObject;
         private ZombieFactory _zombieFactory;
 
+
         protected bool _isInit;
         private int _currentHealPoint;
 
@@ -39,6 +40,7 @@ namespace ZombieGeneratorBehaviour
 
         public virtual void Init(Transform player, ScoreValueUpdater gameManager,ZombieFactory zombieFactory)
         {
+
             _zombieFactory = zombieFactory;
             _currentHealPoint = _healPoint;
             _scoreUpdater = gameManager;
