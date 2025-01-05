@@ -3,11 +3,13 @@ using PlayerControl;
 using Zenject;
 using System;
 using UnityEngine;
+using DG.Tweening;
 
 namespace UIControl
 {
     public class UIController: IDisposable
     {
+
         private readonly ScoresMenu _mainMenu;
         private readonly ScoresMenu _deathMenu;
         private readonly GameStateUpdater _gameStateUpdater;
@@ -46,16 +48,19 @@ namespace UIControl
 
         private void OffMainMenu()
         {
+            
             _mainMenu.gameObject.SetActive(false);
         }
 
         private void OnEndGameMenu()
         {
-             _deathMenu.gameObject.SetActive(true);
+            _deathMenu.gameObject.transform.DOScale(new Vector3(1,1,1),3);
+            _deathMenu.gameObject.SetActive(true);
         }
 
         private void OffEndGameMenu()
         {
+            _deathMenu.gameObject.transform.DOScale(new Vector3(0, 0, 0), 3);
             _deathMenu.gameObject.SetActive(false);
         }
 
