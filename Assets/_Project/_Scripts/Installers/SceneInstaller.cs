@@ -9,6 +9,7 @@ using WeaponControl;
 using Zenject;
 using ZombieGeneratorBehaviour;
 using GameStateControl;
+using System.Collections.Generic;
 
 namespace GameSystem
 {
@@ -40,12 +41,13 @@ namespace GameSystem
         [SerializeField]
         private AdsButton _interstitialAdsButton;
 
-
-
+        [SerializeField]
+        private List<AudioSource> _audioSources;
 
         public override void InstallBindings()
         {
-            Container.Bind<VFXManager>().AsSingle().WithArguments(_gameSettings.VFXPrefabs).NonLazy();
+            Container.Bind<SfxPlayer>().AsSingle().WithArguments(_audioSources[0], _audioSources[1], _audioSources[2],_gameSettings.UsableSFX).NonLazy();
+            Container.Bind<VFXGenerator>().AsSingle().WithArguments(_gameSettings.VFXPrefabs).NonLazy();
 
             Container.Bind<PlayerBehaviour>().FromInstance(_playerBehaviour).AsSingle();
             Container.BindInterfacesAndSelfTo<GameStateUpdater>().FromInstance(_gameStateUpdater).AsSingle();
@@ -66,7 +68,8 @@ namespace GameSystem
             Container.Bind<AdsButton>().FromInstance(_rewardedAdsButton).AsCached().NonLazy();
             Container.Bind<AdsButton>().FromInstance(_interstitialAdsButton).AsCached().NonLazy();
 
-            Container.Bind<VFXEventManager>().AsSingle();
+            Container.Bind<VFXEventCatcher>().AsSingle();
+            Container.Bind<SfxEventCatcher>().AsSingle();
 
 
         }

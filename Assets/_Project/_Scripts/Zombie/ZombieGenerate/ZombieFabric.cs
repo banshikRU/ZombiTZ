@@ -19,7 +19,7 @@ namespace ZombieGeneratorBehaviour
             public float ChanceToSpawn;
         }
 
-        public event Action<VFXEvent> OnZombieDie;
+        public event Action<VFXEvent,SFXType> OnZombieDie;
 
         private readonly ObjectPoolOrganizer _objectPoolOrganizer;
         private readonly List<GeneratedZombies> _zombiePrefabs;
@@ -71,7 +71,7 @@ namespace ZombieGeneratorBehaviour
 
         public void DeleteFromZombieList(ZombieBehaviour zombieBehaviour)
         {
-            OnZombieDie.Invoke(new VFXEvent(zombieBehaviour.gameObject.transform.position, Quaternion.identity, VFXTypes.ZombieDie));
+            OnZombieDie.Invoke(new VFXEvent(zombieBehaviour.gameObject.transform.position, Quaternion.identity,VFXTypes.ZombieDie),SFXType.ZombieDie );
             _geratedActiveZombies.Remove(zombieBehaviour);
 
         }

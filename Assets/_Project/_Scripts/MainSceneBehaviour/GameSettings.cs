@@ -41,6 +41,12 @@ namespace GameStateControl
 
         public List<VFXBehaviour> VFXPrefabs;
 
+        [Space(10)]
+
+        [Header("SFX Settings")]
+
+        public List<UsableSFX> UsableSFX;
+
     }
 }
 

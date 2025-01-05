@@ -7,7 +7,7 @@ namespace WeaponControl
 {
     public class BulletFabric
     {
-        public event Action<VFXEvent> OnBulletShot;
+        public event Action<VFXEvent,SFXType> OnBulletShot;
 
         private readonly ObjectPoolOrganizer _objectPoolOrganizer;
         private readonly BaseBullet _bullet;
@@ -32,7 +32,7 @@ namespace WeaponControl
 
         public void Shot()
         {
-            OnBulletShot.Invoke(new VFXEvent(_weaponHandler.Weapon.transform.position, Quaternion.identity, VFXTypes.BulletFire));
+            OnBulletShot.Invoke(new VFXEvent(_weaponHandler.Weapon.transform.position, Quaternion.identity, VFXTypes.BulletFire),SFXType.PistolShot);
             _analyticsDataCollector.AddAnalizedParameterValue(_bullet.name, 1);
             BulletSetUp(TakeBulletFromPool());
         }
