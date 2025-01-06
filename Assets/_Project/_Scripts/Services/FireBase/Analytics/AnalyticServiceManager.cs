@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using UnityEngine;
 
-namespace Firebase 
+namespace Firebase.Analytics
 {
     public class AnalyticServiceManager
     {
@@ -16,7 +15,6 @@ namespace Firebase
 
         public void LogEventStartGame()
         {
-            Debug.Log("Start Game event");
             _analyticsService.LogEventStartGame();
         }
 
@@ -29,7 +27,7 @@ namespace Firebase
         {
             foreach (var parameter in _dataCollector.AnalizedParameters)
             {
-                Debug.Log($"key: {parameter.Key}  value: {parameter.Value}");
+               // Debug.Log($"key: {parameter.Key}  value: {parameter.Value}");
             }
             LogEvent("End Game", _dataCollector.AnalizedParameters);
         }

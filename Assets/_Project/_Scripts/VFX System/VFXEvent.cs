@@ -1,15 +1,18 @@
 using UnityEngine;
 
-public class VFXEvent
+namespace VFXSystem
 {
-    public Vector3 Position { get; }
-    public Quaternion Rotation { get; }
-    public VFXTypes VFXType { get; }
-
-    public VFXEvent(Vector3 position, Quaternion rotation, VFXTypes vfxType)
+    public class VFXEvent
     {
-        Position = position;
-        Rotation = rotation;
-        VFXType = vfxType;
+        public Vector3 Position { get; }
+        public Quaternion Rotation { get; }
+        public VFXTypes VFXType { get; }
+
+        public VFXEvent(Vector3 position, Quaternion rotation, VFXTypes vfxType)
+        {
+            Position = position;
+            Rotation = rotation;
+            VFXType = vfxType;
+        }
     }
 }

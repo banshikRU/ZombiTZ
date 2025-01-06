@@ -3,6 +3,8 @@ using UnityEngine;
 using ZombieGeneratorBehaviour;
 using WeaponControl;
 using ObjectPoolSystem;
+using SFXSystem;
+using VFXSystem;
 
 namespace GameStateControl
 {
@@ -40,12 +42,6 @@ namespace GameStateControl
         [Header("VFX Settings")]
 
         public List<VFXBehaviour> VFXPrefabs;
-
-        [Space(10)]
-
-        [Header("SFX Settings")]
-
-        public List<UsableSFX> UsableSFX;
 
     }
 }

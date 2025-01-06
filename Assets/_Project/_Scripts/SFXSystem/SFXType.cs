@@ -1,6 +1,8 @@
-public enum SFXType
+namespace SFXSystem
 {
-    ZombieDie,
-    PistolShot,
-    BackgroundSound
+    public enum SFXType
+    {
+        ZombieDie,
+        PistolShot
+    }
 }

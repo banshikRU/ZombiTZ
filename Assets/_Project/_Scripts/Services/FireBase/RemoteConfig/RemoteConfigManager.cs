@@ -1,65 +1,94 @@
-using Firebase.RemoteConfig;
 using System;
 using UnityEngine;
 using System.Collections.Generic;
+using GameStateControl;
 
-public class RemoteConfigManager
+namespace Firebase.RemoteConfig
 {
-    [Serializable]
-    public class GameSettingsValues
+    public class RemoteConfigManager 
     {
-        public int FireRate;
-        public int WeaponDistanceFromPlayer;
-        public int TimeToNewSpawnLevel;
-    }
-
-    public GameSettingsValues gameSettingsValues { get;private set; }
-
-    public RemoteConfigManager()
-    {
-        gameSettingsValues = new GameSettingsValues();
-        SetDefaultValues();
-        FetchRemoteConfig();
-    }
-
-    private void FetchRemoteConfig()
-    {
-        FirebaseRemoteConfig.DefaultInstance.FetchAsync(TimeSpan.Zero).ContinueWith(fetchTask => {
-            if (fetchTask.IsCompleted)
-            {
-                FirebaseRemoteConfig.DefaultInstance.ActivateAsync();
-                LoadRemoteConfig();
-            }
-            else
-            {
-                Debug.LogError("Load Data Error,Load Default Values");
-                LoadDefalultValues();
-            }
-        });
-    }
-
-    private void LoadRemoteConfig()
-    {
-        string jsonString = FirebaseRemoteConfig.DefaultInstance.GetValue("Game_Settings").StringValue;
-        gameSettingsValues = JsonUtility.FromJson<GameSettingsValues>(jsonString);
-    }
-
-    private void SetDefaultValues()
-    {
-        TextAsset jsonFile = Resources.Load<TextAsset>("Game_Settings");
-        string jsonString = jsonFile != null ? jsonFile.text : "{}"; 
-        var defaults = new Dictionary<string, object>
+        public class RemoteGameSettingsValues
         {
+            public int FireRate;
+            public int WeaponDistanceFromPlayer;
+            public int TimeToNewSpawnLevel;
+        }
+
+        private readonly bool _useRemoteConfig;
+        private readonly GameSettings _gameSettings;
+
+        public RemoteGameSettingsValues GameSettingsParameters { get; private set; }
+        public RemoteGameSettingsValues TempGameSettings {  get; private set; } 
+
+        public RemoteConfigManager(GameSettings gameSettings, bool useRemoteConfig)
+        {
+            _useRemoteConfig = useRemoteConfig;
+            _gameSettings = gameSettings;
+            GameSettingsParameters = new RemoteGameSettingsValues();
+
+            SetDefaultValues();
+            FetchRemoteConfig();
+        }
+
+        private void FetchRemoteConfig()
+        {
+            FirebaseRemoteConfig.DefaultInstance.FetchAsync(TimeSpan.Zero).ContinueWith(fetchTask => {
+                if (fetchTask.IsCompleted)
+                {
+                    FirebaseRemoteConfig.DefaultInstance.ActivateAsync();
+                    LoadRemoteConfig();
+                    IsRemoteConfigUsed();
+                }
+                else
+                {
+                    Debug.LogError("Load Data Error,Load Default Values");
+                    LoadDefalultValues();
+                }
+            });
+        }
+
+        private void LoadRemoteConfig()
+        {
+            string jsonString = FirebaseRemoteConfig.DefaultInstance.GetValue("Game_Settings").StringValue;
+            GameSettingsParameters = JsonUtility.FromJson<RemoteGameSettingsValues>(jsonString);
+        }
+
+        private void SetDefaultValues()
+        {
+            TextAsset jsonFile = Resources.Load<TextAsset>("Game_Settings");
+            string jsonString = jsonFile != null ? jsonFile.text : "{}";
+            var defaults = new Dictionary<string, object>
+            {
             { "Game_Settings", jsonString }
-        };
+            };
 
-        FirebaseRemoteConfig.DefaultInstance.SetDefaultsAsync(defaults);
+            FirebaseRemoteConfig.DefaultInstance.SetDefaultsAsync(defaults);
+        }
+
+        private void LoadDefalultValues()
+        {
+            var jsonString = Resources.Load<TextAsset>("GameSettings")?.text ?? "{}";
+            GameSettingsParameters = JsonUtility.FromJson<RemoteGameSettingsValues>(jsonString);
+
+        }
+
+        private void IsRemoteConfigUsed()
+        {
+            if (_useRemoteConfig)
+            {
+                SetUpNewGameSettings();
+            }
+        }
+
+        private void SetUpNewGameSettings()
+        {
+            _gameSettings.TimeToNewSpawnLevel = GameSettingsParameters.TimeToNewSpawnLevel;
+            _gameSettings.WeaponDistanceFromPlayer = GameSettingsParameters.WeaponDistanceFromPlayer;
+            _gameSettings.FireRate = GameSettingsParameters.FireRate;
+        }
+
     }
 
-    private void LoadDefalultValues()
-    {
-        var jsonString = Resources.Load<TextAsset>("GameSettings")?.text ?? "{}";
-        gameSettingsValues = JsonUtility.FromJson<GameSettingsValues>(jsonString);
-    }
+
 }
 

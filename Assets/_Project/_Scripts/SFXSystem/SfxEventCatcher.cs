@@ -1,35 +1,42 @@
 using System;
 using WeaponControl;
 using ZombieGeneratorBehaviour;
+using UnityEngine;
+using VFXSystem;
 
-public class SfxEventCatcher : IDisposable
+namespace SFXSystem
 {
-    public event Action<SFXType> OnsSFXRequested;
-
-    private readonly BulletFabric _bulletFabric;
-    private readonly ZombieFactory _zombieFactory;
-
-    public SfxEventCatcher(BulletFabric bulletFabric, ZombieFactory zombieFactory)
+    public class SfxEventCatcher : IDisposable
     {
-        _zombieFactory = zombieFactory;
-        _bulletFabric = bulletFabric;
-        EventInit();
-    }
+        public event Action<SFXType> OnsSFXRequested;
 
-    public void Dispose()
-    {
-        _bulletFabric.OnBulletShot -= RequestSFX;
-        _zombieFactory.OnZombieDie += RequestSFX;
-    }
+        private readonly BulletFabric _bulletFabric;
+        private readonly ZombieFactory _zombieFactory;
 
-    public void RequestSFX(VFXEvent vFX,SFXType SfxEvent)
-    {
-        OnsSFXRequested?.Invoke(SfxEvent);
-    }
+        public SfxEventCatcher(BulletFabric bulletFabric, ZombieFactory zombieFactory)
+        {
+            _zombieFactory = zombieFactory;
+            _bulletFabric = bulletFabric;
+            EventInit();
+        }
 
-    private void EventInit()
-    {
-        _zombieFactory.OnZombieDie += RequestSFX;
-        _bulletFabric.OnBulletShot += RequestSFX;
+        private void EventInit()
+        {
+            _zombieFactory.OnZombieDie += RequestSFX;
+            _bulletFabric.OnBulletShot += RequestSFX;
+        }
+
+        public void Dispose()
+        {
+            _bulletFabric.OnBulletShot -= RequestSFX;
+            _zombieFactory.OnZombieDie -= RequestSFX;
+        }
+
+        public void RequestSFX(VFXEvent vFX, SFXType SfxEvent)
+        {
+            OnsSFXRequested?.Invoke(SfxEvent);
+        }
+
     }
 }
+

@@ -1,10 +1,13 @@
 using System;
 using UnityEngine;
 
-[Serializable]
-public class UsableSFX 
+namespace SFXSystem
 {
-    public AudioClip AudioClip;
-    public SFXType SFXType;
-    
+    [Serializable]
+    public class UsableSFX
+    {
+        public AudioClip AudioClip;
+        public SFXType SFXType;
+
+    }
 }

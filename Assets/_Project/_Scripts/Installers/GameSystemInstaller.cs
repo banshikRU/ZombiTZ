@@ -1,7 +1,9 @@
 using UnityEngine;
 using Zenject;
-using Firebase;
-using GameStateControl;
+using Firebase.Analytics;
+using SaveSystem;
+using Services;
+using InAppPurchase;
 
 namespace GameSystem
 {
@@ -9,21 +11,16 @@ namespace GameSystem
 
     public class GameSystemInstaller : ScriptableObjectInstaller
     {
-        [SerializeField]
-        private GameSettings _gameSettings;
-
         public override void InstallBindings()
         {
+            Container.Bind<SaveGameController>().AsSingle();
             Container.Bind<AnalyticsDataCollector>().AsSingle();
-            Container.Bind<AnalyticServiceManager>().AsSingle().NonLazy();
-            Container.Bind<RemoteConfigManager>().AsSingle().NonLazy();
-            Container.Bind<UsingRemoteConfigCheck>().AsSingle().WithArguments(_gameSettings).NonLazy();
-
-            Container.BindInterfacesAndSelfTo<UnityAdsService>().AsSingle();
+            Container.Bind<AnalyticServiceManager>().AsSingle();
+            Container.Bind<UnityAdsService>().AsSingle();
             Container.Bind<AdsRewardGiver>().AsSingle();
             Container.Bind<AdsServiceManager>().AsSingle();
-
-
+            Container.Bind<InAppStore>().AsSingle().NonLazy();
+            Container.Bind<NoAdsController>().AsSingle(); 
         }
     }
 }

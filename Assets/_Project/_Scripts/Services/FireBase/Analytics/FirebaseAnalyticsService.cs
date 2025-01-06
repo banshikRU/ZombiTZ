@@ -1,7 +1,6 @@
-using Firebase.Analytics;
 using System.Collections.Generic;
 
-namespace Firebase
+namespace Firebase.Analytics
 {
     public class FirebaseAnalyticsService : IAnalyticsService
     {

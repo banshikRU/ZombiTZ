@@ -1,9 +1,13 @@
 using System;
 
-[Serializable]
-public class GameSettingsValues
+namespace GameStateControl
 {
-    public int FireRate;
-    public int WeaponDistanceFromPlayer;
-    public int TimeToNewSpawnLevel;
+    [Serializable]
+    public class GameSettingsValues
+    {
+        public int FireRate;
+        public int WeaponDistanceFromPlayer;
+        public int TimeToNewSpawnLevel;
+    }
 }
+

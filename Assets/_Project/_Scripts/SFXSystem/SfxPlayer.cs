@@ -1,65 +1,81 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 using Random = UnityEngine.Random;
 
-public class SfxPlayer : IDisposable
+namespace SFXSystem
 {
-    private readonly List<UsableSFX> _usableSfx;
-    private readonly AudioSource _backGroundSound;
-    private readonly AudioSource _sfxSource_1;
-    private readonly AudioSource _sfxSource_2;
-    private readonly SfxEventCatcher _sfxEventCatcher;
-
-    public SfxPlayer (AudioSource backGroundSound, AudioSource sfxSource_1, AudioSource sfxSource_2,List<UsableSFX> usableSfx,SfxEventCatcher sfxEventCatcher)
+    public class SfxPlayer : MonoBehaviour
     {
-        _sfxEventCatcher = sfxEventCatcher;
-        _usableSfx = usableSfx;
-        _backGroundSound = backGroundSound;
-        _sfxSource_1 = sfxSource_1;
-        _sfxSource_2 = sfxSource_2;
-        EventInit();
-    }
+        [SerializeField]
+        private AudioSource _audioSourcePrefab;
+        [SerializeField]
+        private List<UsableSFX> _usableSfx;
 
-    private void EventInit()
-    {
-        _sfxEventCatcher.OnsSFXRequested += ChoseFreeSource;
-    }
+        private Queue<AudioSource> _audioSources;
+        private SfxEventCatcher _sfxEventCatcher;
 
-    public void Dispose()
-    {
-        _sfxEventCatcher.OnsSFXRequested -= ChoseFreeSource;
-    }
-
-    private void ChoseFreeSource(SFXType sfxtype)
-    {
-        if (_sfxSource_1.isPlaying)
+        [Inject]
+        public void Construct(SfxEventCatcher sfxEventCatcher)
         {
-            PlaySfx(_sfxSource_2,sfxtype);
+            _sfxEventCatcher = sfxEventCatcher;
+            EventInit();
+            Initialize();
         }
-        else
+
+        public void Initialize()
         {
-            PlaySfx(_sfxSource_1, sfxtype);
+            _audioSources = new Queue<AudioSource>();
+
+            for (int i = 0; i < 30; i++)
+            {
+                var audioSource = Instantiate(_audioSourcePrefab);
+                audioSource.transform.parent = transform;
+                _audioSources.Enqueue(audioSource);
+
+            }
         }
-    }
 
-    private void PlaySfx(AudioSource audioSource,SFXType sfxtype)
-    {
-        float randomPitch = Random.Range(0.95f, 0.98f);
-        audioSource.pitch = randomPitch;
-        audioSource.clip = GetSFX(sfxtype).AudioClip;
-        audioSource.Play();
-    }
-
-    private UsableSFX GetSFX(SFXType sfxType)
-    {
-        foreach (UsableSFX clip in _usableSfx)
+        private void EventInit()
         {
-            if (clip.SFXType == sfxType)
-                return clip;
+            _sfxEventCatcher.OnsSFXRequested += PlaySfx;
         }
-        return null;
+
+        public void OnDisable()
+        {
+            _sfxEventCatcher.OnsSFXRequested -= PlaySfx;
+        }
+
+        private void PlaySfx(SFXType sfxtype)
+        {
+            if (_audioSources.Count > 0)
+            {
+                float randomPitch = Random.Range(0.95f, 0.98f);
+                var audioSource = _audioSources.Dequeue();
+                audioSource.pitch = randomPitch;
+                audioSource.clip = GetSFX(sfxtype).AudioClip;
+                audioSource.Play();
+                StartCoroutine(ReturnToPool(audioSource));
+            }
+
+        }
+
+        private IEnumerator ReturnToPool(AudioSource audioSource)
+        {
+            yield return new WaitWhile(() => audioSource.isPlaying);
+            _audioSources.Enqueue(audioSource);
+        }
+
+        private UsableSFX GetSFX(SFXType sfxType)
+        {
+            foreach (UsableSFX clip in _usableSfx)
+            {
+                if (clip.SFXType == sfxType)
+                    return clip;
+            }
+            return null;
+        }
     }
-
-
 }
+

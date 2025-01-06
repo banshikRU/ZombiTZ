@@ -1,7 +1,9 @@
 using UnityEngine;
 using ObjectPoolSystem;
-using Firebase;
+using Firebase.Analytics;
 using System;
+using SFXSystem;
+using VFXSystem;
 
 namespace WeaponControl
 {
@@ -32,7 +34,7 @@ namespace WeaponControl
 
         public void Shot()
         {
-            OnBulletShot.Invoke(new VFXEvent(_weaponHandler.Weapon.transform.position, Quaternion.identity, VFXTypes.BulletFire),SFXType.PistolShot);
+            OnBulletShot?.Invoke(new VFXEvent(_weaponHandler.Weapon.transform.position, Quaternion.identity, VFXTypes.BulletFire),SFXType.PistolShot);
             _analyticsDataCollector.AddAnalizedParameterValue(_bullet.name, 1);
             BulletSetUp(TakeBulletFromPool());
         }

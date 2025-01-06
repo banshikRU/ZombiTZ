@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using UIControl;
 using PlayerControl;
 using Zenject;
-using Firebase;
+using Firebase.Analytics;
 
 namespace GameStateControl
 {
@@ -36,18 +36,6 @@ namespace GameStateControl
             _scoreUpdater.Value.InitMaxScores();
         }
 
-        private void OnEnable()
-        {
-            _adsRewardGiver.OnGiveSecondChance += StartGame;
-            _player.OnPlayerDeath += GameOver;
-        }
-
-        private void OnDisable()
-        {
-            _adsRewardGiver.OnGiveSecondChance -= StartGame;
-            _player.OnPlayerDeath -= GameOver;
-        }
-
         public void StartGame()
         {
             IsGame = true;
@@ -61,13 +49,23 @@ namespace GameStateControl
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
+        private void OnEnable()
+        {
+            _adsRewardGiver.OnGiveSecondChance += StartGame;
+            _player.OnPlayerDeath += GameOver;
+        }
+
+        private void OnDisable()
+        {
+            _adsRewardGiver.OnGiveSecondChance -= StartGame;
+            _player.OnPlayerDeath -= GameOver;
+        }
+
         private void GameOver()
         {
             _analyticServiceManager.LogEventEndGame();
             IsGame = false;
         }
-
-
     }
 }
 

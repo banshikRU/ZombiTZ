@@ -1,7 +1,11 @@
 using System;
 
-public interface IVFXEventManager 
+namespace VFXSystem
 {
-    public event Action<VFXEvent> OnVFXRequested;
-    public void RequestVFX(VFXEvent vfxEvent);
+    public interface IVFXEventManager
+    {
+        public event Action<VFXEvent> OnVFXRequested;
+        public void RequestVFX(VFXEvent vfxEvent);
+    }
+
 }

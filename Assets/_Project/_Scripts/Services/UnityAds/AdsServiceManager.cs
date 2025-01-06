@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
-using Zenject;
 
 public class AdsServiceManager 
 {

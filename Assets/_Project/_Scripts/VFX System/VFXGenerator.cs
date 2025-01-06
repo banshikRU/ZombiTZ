@@ -2,37 +2,41 @@ using System;
 using System.Collections.Generic;
 using Object = UnityEngine.Object;
 
-public class VFXGenerator:IDisposable
+namespace VFXSystem
 {
-    private readonly List<VFXBehaviour> _vfxPrefabs;
-    private readonly VFXEventCatcher _vfxEventManager;
-
-    public VFXGenerator(VFXEventCatcher vfxEventManager,List<VFXBehaviour> vfxPrefabs)
+    public class VFXGenerator : IDisposable
     {
-        _vfxPrefabs = vfxPrefabs;
-        _vfxEventManager = vfxEventManager;
-        EventInit();
-    }
+        private readonly List<VFXBehaviour> _vfxPrefabs;
+        private readonly VFXEventCatcher _vfxEventManager;
 
-    public void Dispose()
-    {
-        _vfxEventManager.OnVFXRequested -= PlayVFX;
-    }
-
-    public void PlayVFX(VFXEvent vfxEvent)
-    {
-        foreach (VFXBehaviour VFX in _vfxPrefabs)
+        public VFXGenerator(VFXEventCatcher vfxEventManager, List<VFXBehaviour> vfxPrefabs)
         {
-            if (VFX.VFXType == vfxEvent.VFXType)
+            _vfxPrefabs = vfxPrefabs;
+            _vfxEventManager = vfxEventManager;
+            EventInit();
+        }
+
+        private void EventInit()
+        {
+            _vfxEventManager.OnVFXRequested += PlayVFX;
+        }
+
+        public void Dispose()
+        {
+            _vfxEventManager.OnVFXRequested -= PlayVFX;
+        }
+
+        public void PlayVFX(VFXEvent vfxEvent)
+        {
+            foreach (VFXBehaviour VFX in _vfxPrefabs)
             {
-                Object.Instantiate(VFX, vfxEvent.Position, vfxEvent.Rotation);
-                break;
+                if (VFX.VFXType == vfxEvent.VFXType)
+                {
+                    Object.Instantiate(VFX, vfxEvent.Position, vfxEvent.Rotation);
+                    break;
+                }
             }
         }
-    }
 
-    private void EventInit()
-    {
-        _vfxEventManager.OnVFXRequested += PlayVFX;
     }
 }

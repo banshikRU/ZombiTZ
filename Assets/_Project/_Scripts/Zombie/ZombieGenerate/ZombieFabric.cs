@@ -4,9 +4,9 @@ using UIControl;
 using ObjectPoolSystem;
 using System;
 using Random = UnityEngine.Random;
-using Firebase;
-using Unity.VisualScripting;
-using Zenject;
+using Firebase.Analytics;
+using SFXSystem;
+using VFXSystem;
 
 namespace ZombieGeneratorBehaviour
 {
@@ -71,7 +71,7 @@ namespace ZombieGeneratorBehaviour
 
         public void DeleteFromZombieList(ZombieBehaviour zombieBehaviour)
         {
-            OnZombieDie.Invoke(new VFXEvent(zombieBehaviour.gameObject.transform.position, Quaternion.identity,VFXTypes.ZombieDie),SFXType.ZombieDie );
+             OnZombieDie?.Invoke(new VFXEvent(zombieBehaviour.gameObject.transform.position, Quaternion.identity,VFXTypes.ZombieDie),SFXType.ZombieDie );
             _geratedActiveZombies.Remove(zombieBehaviour);
 
         }

@@ -1,7 +1,6 @@
 using InputControll;
 using ObjectPoolSystem;
 using PlayerControl;
-using SaveSystem;
 using Services;
 using UIControl;
 using UnityEngine;
@@ -10,15 +9,14 @@ using Zenject;
 using ZombieGeneratorBehaviour;
 using GameStateControl;
 using System.Collections.Generic;
+using SFXSystem;
+using VFXSystem;
 
 namespace GameSystem
 {
     public class SceneInstaller : MonoInstaller
     {
         [Header("Game Settings!")]
-
-        [SerializeField]
-        private bool _useRemoteConfig;
 
         [SerializeField]
         private GameSettings _gameSettings;
@@ -28,48 +26,31 @@ namespace GameSystem
         [SerializeField]
         private SpriteRenderer _weapon;
         [SerializeField]
-        private GameStateUpdater _gameStateUpdater;
-        [SerializeField]
-        private ScoresMenu _mainMenuScores;
-        [SerializeField]
-        private ScoresMenu _deadMenuScores;
-        [SerializeField]
         private PlayerBehaviour _playerBehaviour;
-
         [SerializeField]
-        private AdsButton _rewardedAdsButton;
-        [SerializeField]
-        private AdsButton _interstitialAdsButton;
-
-        [SerializeField]
-        private List<AudioSource> _audioSources;
+        private AudioSource _audioSource;
 
         public override void InstallBindings()
         {
-            Container.Bind<SfxPlayer>().AsSingle().WithArguments(_audioSources[0], _audioSources[1], _audioSources[2],_gameSettings.UsableSFX).NonLazy();
+            Container.Bind<SfxPlayer>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.Bind<VFXGenerator>().AsSingle().WithArguments(_gameSettings.VFXPrefabs).NonLazy();
-
-            Container.Bind<PlayerBehaviour>().FromInstance(_playerBehaviour).AsSingle();
-            Container.BindInterfacesAndSelfTo<GameStateUpdater>().FromInstance(_gameStateUpdater).AsSingle();
-            Container.Bind<SaveGameController>().AsSingle();
+            Container.Bind<VFXEventCatcher>().AsSingle();
+            Container.Bind<SfxEventCatcher>().AsSingle();
+            Container.Bind<PlayerBehaviour>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<GameStateUpdater>().FromComponentInHierarchy().AsSingle();
             Container.Bind<ScoreValueUpdater>().AsSingle();
-            Container.Bind<ScoresMenu>().WithId(ZenjectIds.MainMenu).FromInstance(_mainMenuScores).AsCached();
-            Container.Bind<ScoresMenu>().WithId(ZenjectIds.DeadMenu).FromInstance(_deadMenuScores).AsCached();
-            Container.BindInterfacesAndSelfTo<UIController>().AsSingle().NonLazy();
+            
             Container.Bind<ObjectPoolOrganizer>().AsSingle().WithArguments(_gameSettings.PoolConfigs);
             Container.Bind<ZombieFactory>().AsSingle().WithArguments(_gameSettings.ZombiePrefabs, _playerBehaviour.transform);
             Container.BindInterfacesAndSelfTo<ZombieGeneratorParameters>().AsSingle().WithArguments(_gameSettings.TimeToNewSpawnLevel, _gameSettings.MinimalTimeToSpawn, _gameSettings.BaseTimeToSpawnNewZombie, _gameSettings.ReductionTime).NonLazy();
             Container.BindInterfacesAndSelfTo<WeaponHandler>().AsSingle().WithArguments(_gameSettings.Weapon, _playerBehaviour.transform, _gameSettings.WeaponDistanceFromPlayer, _weapon);
             Container.Bind<BulletFabric>().AsSingle().WithArguments(_gameSettings.BaseBulletPrefab);
             Container.BindInterfacesAndSelfTo<PlayerFireControl>().AsSingle().WithArguments(_gameSettings.FireRate);
-            Container.BindInterfacesAndSelfTo<InputController>().AsSingle();
+
             Container.Bind<CurrentPlatformChecker>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<InputController>().AsSingle();
 
-            Container.Bind<AdsButton>().FromInstance(_rewardedAdsButton).AsCached().NonLazy();
-            Container.Bind<AdsButton>().FromInstance(_interstitialAdsButton).AsCached().NonLazy();
 
-            Container.Bind<VFXEventCatcher>().AsSingle();
-            Container.Bind<SfxEventCatcher>().AsSingle();
 
 
         }

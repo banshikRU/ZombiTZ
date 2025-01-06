@@ -1,14 +1,18 @@
 using UnityEngine.SceneManagement;
 
-public class MainSceneLoader
+namespace GameSystem
 {
-    public MainSceneLoader()
+    public class MainSceneLoader
     {
-        LoadMainScene();
-    }
+        public MainSceneLoader()
+        {
+            LoadMainScene();
+        }
 
-    private void LoadMainScene()
-    {
-        SceneManager.LoadScene("MainScene");
+        private void LoadMainScene()
+        {
+            SceneManager.LoadScene("MainScene");
+        }
     }
 }
+

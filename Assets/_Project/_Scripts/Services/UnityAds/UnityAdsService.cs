@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.Advertisements;
+using Zenject;
 
 public class UnityAdsService :IUnityAdsLoadListener, IUnityAdsShowListener,IAdsService
 {
@@ -30,7 +31,7 @@ public class UnityAdsService :IUnityAdsLoadListener, IUnityAdsShowListener,IAdsS
     {
         if (adUnitId.Equals(adUnitId) && showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
         {
-            OnRewardAdsShowed.Invoke(adUnitId);
+            OnRewardAdsShowed?.Invoke(adUnitId);
         }
     }
 

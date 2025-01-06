@@ -1,5 +1,7 @@
+using GameStateControl;
 using UnityEngine;
 using Zenject;
+using Firebase.RemoteConfig;
 
 namespace GameSystem
 {
@@ -7,15 +9,17 @@ namespace GameSystem
     {
         [SerializeField]
         private string _androidGameId;
+        [SerializeField]
+        private bool _useRemoteConfig;
+        [SerializeField]
+        private GameSettings _gameSettings;
 
         public override void InstallBindings()
         {
             Container.Bind<FirebaseDependendeciesCheck>().AsSingle().NonLazy();
             Container.Bind<AdsInitializer>().AsSingle().WithArguments(_androidGameId).NonLazy();
-
+            Container.Bind<RemoteConfigManager>().AsSingle().WithArguments(_gameSettings,_useRemoteConfig).NonLazy();
             Container.Bind<MainSceneLoader>().AsSingle().NonLazy();
-
-
         }
     }
 }

@@ -2,10 +2,12 @@ using UnityEngine;
 
 namespace SaveSystem
 {
-    public class SaveGameController
-    {
+    public class SaveGameController 
+    { 
+
         public class PlayerData
         {
+            public bool NoAdsPurchased;
             public int MaxScores;
         }
 

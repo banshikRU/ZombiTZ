@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public class VFXBehaviour : MonoBehaviour
+namespace VFXSystem
 {
-    public VFXTypes VFXType;
+    public class VFXBehaviour : MonoBehaviour
+    {
+        public VFXTypes VFXType;
+    }
 }
