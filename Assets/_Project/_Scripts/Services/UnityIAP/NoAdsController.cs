@@ -1,6 +1,7 @@
 using InAppPurchase;
 using SaveSystem;
 using System;
+using UnityEngine;
 
 namespace Services
 {
@@ -35,12 +36,14 @@ namespace Services
         private void IsNoAdsPurchasedCheck()
         {
             IsAdsPurchased = _saveGameController.LoadData().NoAdsPurchased;
+            Debug.Log(IsAdsPurchased);
         }
 
         private void SetNoAdsPurchase(string Id)
         {
             if (Id == NO_ADS_ID)
             {
+                Debug.Log("set");
                 _saveGameController.PlayerDataValues.NoAdsPurchased = true;
                 _saveGameController.SaveData();
                 IsNoAdsPurchasedCheck();

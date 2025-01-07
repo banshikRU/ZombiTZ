@@ -41,7 +41,7 @@ namespace GameSystem
             Container.Bind<ScoreValueUpdater>().AsSingle();
             
             Container.Bind<ObjectPoolOrganizer>().AsSingle().WithArguments(_gameSettings.PoolConfigs);
-            Container.Bind<ZombieFactory>().AsSingle().WithArguments(_gameSettings.ZombiePrefabs, _playerBehaviour.transform);
+            Container.BindInterfacesAndSelfTo<ZombieFactory>().AsSingle().WithArguments(_gameSettings.ZombiePrefabs, _playerBehaviour.transform);
             Container.BindInterfacesAndSelfTo<ZombieGeneratorParameters>().AsSingle().WithArguments(_gameSettings.TimeToNewSpawnLevel, _gameSettings.MinimalTimeToSpawn, _gameSettings.BaseTimeToSpawnNewZombie, _gameSettings.ReductionTime).NonLazy();
             Container.BindInterfacesAndSelfTo<WeaponHandler>().AsSingle().WithArguments(_gameSettings.Weapon, _playerBehaviour.transform, _gameSettings.WeaponDistanceFromPlayer, _weapon);
             Container.Bind<BulletFabric>().AsSingle().WithArguments(_gameSettings.BaseBulletPrefab);

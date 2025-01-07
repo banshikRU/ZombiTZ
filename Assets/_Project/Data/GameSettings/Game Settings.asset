@@ -24,9 +24,9 @@ MonoBehaviour:
   BaseBulletPrefab: {fileID: 8096135253056256665, guid: 20a9870db205982428f6839313c732c8, type: 3}
   Weapon: {fileID: 11400000, guid: 4aee57f7bea7b704dbfadfd2ef66a87c, type: 2}
   Bullet: {fileID: 11400000, guid: f437fa498ca922742bd37a51f767fd9b, type: 2}
-  FireRate: 0
+  FireRate: 15
   WeaponDistanceFromPlayer: 0
-  TimeToNewSpawnLevel: 0
+  TimeToNewSpawnLevel: 10
   MinimalTimeToSpawn: 0.5
   BaseTimeToSpawnNewZombie: 2
   ReductionTime: 0.1
@@ -39,11 +39,4 @@ MonoBehaviour:
     ChanceToSpawn: 10
   VFXPrefabs:
   - {fileID: -7086299658406540783, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
-  - {fileID: 1161726927419607988, guid: 83036083a4ebcd34f98131bd3cf6f4d2, type: 3}
-  UsableSFX:
-  - AudioClip: {fileID: 8300000, guid: ecc9688107344184eae84bc1b9fb0235, type: 3}
-    SFXType: 2
-  - AudioClip: {fileID: 8300000, guid: dffd9510cf50cc94e88cd07f68f46f6c, type: 3}
-    SFXType: 0
-  - AudioClip: {fileID: 8300000, guid: 3c81e9a23d0174440af89c080b04023a, type: 3}
-    SFXType: 1
+  - {fileID: -5431786883051574734, guid: 5c755f9bc5253ea418e919994537dcc7, type: 3}

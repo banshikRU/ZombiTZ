@@ -200,6 +200,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _androidGameId: 5768103
+  _useRemoteConfig: 1
+  _gameSettings: {fileID: 11400000, guid: a576bbb454d0fbd4b94d5c15d8bb0d56, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -1,9 +1,10 @@
+using UnityEngine;
 using WeaponControl;
 using Zenject;
 
 namespace InputControll
 {
-    public class InputController:ITickable
+    public class InputController : ITickable
     {
         private readonly PlayerFireControl _playerFireControll;
 
@@ -17,6 +18,7 @@ namespace InputControll
         public void Tick()
         {
             TakeInput();
+            CheckForAplicationQuit();
         }
 
         public void SetUpCurrentInput(IInput CurrentInput)
@@ -40,6 +42,13 @@ namespace InputControll
             CurrentInput?.TakeShoot();
         }
 
+        private void CheckForAplicationQuit()
+        {
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                Application.Quit();
+            }
+        }
     }
 }
 
