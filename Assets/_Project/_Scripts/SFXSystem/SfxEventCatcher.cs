@@ -1,7 +1,6 @@
 using System;
 using WeaponControl;
 using ZombieGeneratorBehaviour;
-using UnityEngine;
 using VFXSystem;
 
 namespace SFXSystem

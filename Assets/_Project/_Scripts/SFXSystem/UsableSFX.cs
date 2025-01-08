@@ -8,6 +8,5 @@ namespace SFXSystem
     {
         public AudioClip AudioClip;
         public SFXType SFXType;
-
     }
 }

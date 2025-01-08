@@ -17,7 +17,7 @@ namespace GameSystem
         public override void InstallBindings()
         {
             Container.Bind<FirebaseDependendeciesCheck>().AsSingle().NonLazy();
-            Container.Bind<AdsInitializer>().AsSingle().WithArguments(_androidGameId).NonLazy();
+            Container.BindInterfacesAndSelfTo<AdsInitializer>().AsSingle().WithArguments(_androidGameId).NonLazy();
             Container.Bind<RemoteConfigManager>().AsSingle().WithArguments(_gameSettings,_useRemoteConfig).NonLazy();
             Container.Bind<MainSceneLoader>().AsSingle().NonLazy();
         }

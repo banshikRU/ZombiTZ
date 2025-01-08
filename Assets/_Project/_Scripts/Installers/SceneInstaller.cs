@@ -33,11 +33,11 @@ namespace GameSystem
         public override void InstallBindings()
         {
             Container.Bind<SfxPlayer>().FromComponentInHierarchy().AsSingle().NonLazy();
-            Container.Bind<VFXGenerator>().AsSingle().WithArguments(_gameSettings.VFXPrefabs).NonLazy();
-            Container.Bind<VFXEventCatcher>().AsSingle();
-            Container.Bind<SfxEventCatcher>().AsSingle();
+            Container.BindInterfacesAndSelfTo<VFXGenerator>().AsSingle().WithArguments(_gameSettings.VFXPrefabs).NonLazy();
+            Container.BindInterfacesAndSelfTo<VFXEventCatcher>().AsSingle();
+            Container.BindInterfacesAndSelfTo<SfxEventCatcher>().AsSingle();
             Container.Bind<PlayerBehaviour>().FromComponentInHierarchy().AsSingle();
-            Container.Bind<GameStateUpdater>().FromComponentInHierarchy().AsSingle();
+            Container.BindInterfacesAndSelfTo<GameStateUpdater>().FromComponentInHierarchy().AsSingle();
             Container.Bind<ScoreValueUpdater>().AsSingle();
             
             Container.Bind<ObjectPoolOrganizer>().AsSingle().WithArguments(_gameSettings.PoolConfigs);

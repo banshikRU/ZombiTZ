@@ -46,6 +46,7 @@ namespace InputControll
         {
             if (Input.GetKeyDown(KeyCode.Q))
             {
+                Debug.Log("a");
                 Application.Quit();
             }
         }

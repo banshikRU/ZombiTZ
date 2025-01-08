@@ -16,11 +16,11 @@ namespace GameSystem
             Container.Bind<SaveGameController>().AsSingle();
             Container.Bind<AnalyticsDataCollector>().AsSingle();
             Container.Bind<AnalyticServiceManager>().AsSingle();
-            Container.Bind<UnityAdsService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<UnityAdsService>().AsSingle();
             Container.Bind<AdsRewardGiver>().AsSingle();
             Container.Bind<AdsServiceManager>().AsSingle();
-            Container.Bind<InAppStore>().AsSingle().NonLazy();
-            Container.Bind<NoAdsController>().AsSingle(); 
+            Container.BindInterfacesAndSelfTo<InAppStore>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<NoAdsController>().AsSingle(); 
         }
     }
 }

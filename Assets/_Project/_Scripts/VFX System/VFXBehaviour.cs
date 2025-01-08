@@ -4,6 +4,6 @@ namespace VFXSystem
 {
     public class VFXBehaviour : MonoBehaviour
     {
-        public VFXTypes VFXType;
+        public VFXType VFXType;
     }
 }
