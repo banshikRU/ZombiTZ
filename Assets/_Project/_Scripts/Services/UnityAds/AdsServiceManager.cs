@@ -1,59 +1,63 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class AdsServiceManager 
+namespace Advertisements
 {
-    private readonly IAdsService _adsService;
-    private Button _button;
-    private Dictionary<string, int> _rewardIdDictionary = new Dictionary<string, int>();
-    private AdsRewardGiver _rewardGiver;
-    
-    public AdsServiceManager(UnityAdsService adsController,AdsRewardGiver adsRewardGiver)
+    public class AdsServiceManager
     {
-        _rewardGiver = adsRewardGiver;
-        _adsService = adsController;
-    }
+        private readonly IAdsService _adsService;
+        private Button _button;
+        private Dictionary<string, int> _rewardIdDictionary = new Dictionary<string, int>();
+        private AdsRewardGiver _rewardGiver;
 
-    public void ShowAd(string adsId)
-    {
-        _adsService.ShowAd(adsId);
-    }
+        public AdsServiceManager(UnityAdsService adsController, AdsRewardGiver adsRewardGiver)
+        {
+            _rewardGiver = adsRewardGiver;
+            _adsService = adsController;
+        }
 
-    public void AdInit(Button button,string adId,int rewardId = -1)
-    {
+        public void ShowAd(string adsId)
+        {
+            _adsService.ShowAd(adsId);
+        }
 
-        _button = button;
-        LoadAd(adId);
-        AddNewRewardId(adId, rewardId);
-        _adsService.OnRewardAdsShowed += GiveReward;
-        ActivateButton();
-    }
+        public void AdInit(Button button, string adId, int rewardId = -1)
+        {
 
-    private void LoadAd(string adId)
-    {
-        _adsService.LoadAd(adId);
-    }
+            _button = button;
+            LoadAd(adId);
+            AddNewRewardId(adId, rewardId);
+            _adsService.OnRewardAdsShowed += GiveReward;
+            ActivateButton();
+        }
 
-    private void ActivateButton()
-    {
-        _button.interactable = true;
-    }
+        private void LoadAd(string adId)
+        {
+            _adsService.LoadAd(adId);
+        }
 
-    private void GiveReward(string adsId)
-    {
-        _rewardGiver.GiveReward(GiveRewardId(adsId));
-    }
+        private void ActivateButton()
+        {
+            _button.interactable = true;
+        }
 
-    private void AddNewRewardId(string adsId,int rewardId)
-    {
-        if (_rewardIdDictionary.ContainsKey(adsId))
-            return;
-        _rewardIdDictionary.Add(adsId, rewardId);
-    }
+        private void GiveReward(string adsId)
+        {
+            _rewardGiver.GiveReward(GiveRewardId(adsId));
+        }
 
-    private int GiveRewardId(string adsId)
-    {
-        return _rewardIdDictionary[adsId];
+        private void AddNewRewardId(string adsId, int rewardId)
+        {
+            if (_rewardIdDictionary.ContainsKey(adsId))
+                return;
+            _rewardIdDictionary.Add(adsId, rewardId);
+        }
+
+        private int GiveRewardId(string adsId)
+        {
+            return _rewardIdDictionary[adsId];
+        }
+
     }
 
 }

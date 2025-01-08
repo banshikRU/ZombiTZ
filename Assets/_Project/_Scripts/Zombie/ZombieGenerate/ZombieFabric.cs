@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 using Firebase.Analytics;
 using SFXSystem;
 using VFXSystem;
+using Advertisements;
 
 namespace ZombieGeneratorBehaviour
 {

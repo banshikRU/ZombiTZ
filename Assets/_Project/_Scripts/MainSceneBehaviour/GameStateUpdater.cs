@@ -5,6 +5,7 @@ using UIControl;
 using PlayerControl;
 using Zenject;
 using Firebase.Analytics;
+using Advertisements;
 
 namespace GameStateControl
 {

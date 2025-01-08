@@ -1,46 +1,48 @@
 using System;
 using UnityEngine;
 using UnityEngine.Advertisements;
-using Zenject;
 
-public class UnityAdsService :IUnityAdsLoadListener, IUnityAdsShowListener,IAdsService
+namespace Advertisements
 {
-    public event Action<string> OnRewardAdsShowed;
-
-    public void ShowAd(string adUnitId)
+    public class UnityAdsService : IUnityAdsLoadListener, IUnityAdsShowListener, IAdsService
     {
-        Advertisement.Show(adUnitId, this);
-    }
+        public event Action<string> OnRewardAdsShowed;
 
-    public void LoadAd(string adUnitId)
-    {
-        Advertisement.Load(adUnitId, this);
-    }
-
-    public void OnUnityAdsFailedToLoad(string adUnitId, UnityAdsLoadError error, string message)
-    {
-        Debug.Log($"Error loading Ad Unit {adUnitId}: {error.ToString()} - {message}");
-    }
-
-    public void OnUnityAdsShowFailure(string adUnitId, UnityAdsShowError error, string message)
-    {
-        Debug.Log($"Error showing Ad Unit {adUnitId}: {error.ToString()} - {message}");
-    }
-
-    public void OnUnityAdsShowComplete(string adUnitId, UnityAdsShowCompletionState showCompletionState)
-    {
-        if (adUnitId.Equals(adUnitId) && showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
+        public void ShowAd(string adUnitId)
         {
-            OnRewardAdsShowed?.Invoke(adUnitId);
+            Advertisement.Show(adUnitId, this);
         }
+
+        public void LoadAd(string adUnitId)
+        {
+            Advertisement.Load(adUnitId, this);
+        }
+
+        public void OnUnityAdsFailedToLoad(string adUnitId, UnityAdsLoadError error, string message)
+        {
+            Debug.Log($"Error loading Ad Unit {adUnitId}: {error.ToString()} - {message}");
+        }
+
+        public void OnUnityAdsShowFailure(string adUnitId, UnityAdsShowError error, string message)
+        {
+            Debug.Log($"Error showing Ad Unit {adUnitId}: {error.ToString()} - {message}");
+        }
+
+        public void OnUnityAdsShowComplete(string adUnitId, UnityAdsShowCompletionState showCompletionState)
+        {
+            if (adUnitId.Equals(adUnitId) && showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
+            {
+                OnRewardAdsShowed?.Invoke(adUnitId);
+            }
+        }
+
+        public void OnUnityAdsAdLoaded(string adUnitId)
+        {
+            Debug.Log("Ad Loaded: " + adUnitId);
+        }
+
+        public void OnUnityAdsShowStart(string adUnitId) { }
+        public void OnUnityAdsShowClick(string adUnitId) { }
     }
-
-    public void OnUnityAdsAdLoaded(string adUnitId)
-    {
-        Debug.Log("Ad Loaded: " + adUnitId);
-    }
-
-    public void OnUnityAdsShowStart(string adUnitId) { }
-    public void OnUnityAdsShowClick(string adUnitId) { }
-
 }
+

@@ -2,6 +2,8 @@ using GameStateControl;
 using UnityEngine;
 using Zenject;
 using Firebase.RemoteConfig;
+using Advertisements;
+using Firebase;
 
 namespace GameSystem
 {

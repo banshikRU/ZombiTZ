@@ -4,6 +4,7 @@ using Firebase.Analytics;
 using SaveSystem;
 using Services;
 using InAppPurchase;
+using Advertisements;
 
 namespace GameSystem
 {

@@ -1,10 +1,13 @@
 using System;
-using UnityEngine.UI;
 
-public interface IAdsService
+namespace Advertisements
 {
-    public event Action<string> OnRewardAdsShowed;
+    public interface IAdsService
+    {
+        public event Action<string> OnRewardAdsShowed;
 
-    public void ShowAd(string adsId);
-    public void LoadAd(string adsId);
+        public void ShowAd(string adsId);
+        public void LoadAd(string adsId);
+    }
 }
+

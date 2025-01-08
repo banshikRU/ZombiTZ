@@ -1,23 +1,27 @@
 using System;
 
-public class AdsRewardGiver 
+namespace Advertisements
 {
-    public event Action OnGiveSecondChance;
-
-    public void GiveReward(int rewardId)
+    public class AdsRewardGiver
     {
-        switch (rewardId)
+        public event Action OnGiveSecondChance;
+
+        public void GiveReward(int rewardId)
         {
-            case 0:
-                GiveSecondChance();
-                break;
-            default:
-                break;
+            switch (rewardId)
+            {
+                case 0:
+                    GiveSecondChance();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void GiveSecondChance()
+        {
+            OnGiveSecondChance?.Invoke();
         }
     }
-
-    private void GiveSecondChance()
-    {
-        OnGiveSecondChance?.Invoke();
-    }
 }
+

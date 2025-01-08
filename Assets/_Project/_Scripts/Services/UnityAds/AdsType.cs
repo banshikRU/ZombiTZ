@@ -1,5 +1,9 @@
-public enum AdsType 
+namespace Advertisements
 {
-    Rewarded,
-    Interstitial
+    public enum AdsType
+    {
+        Rewarded,
+        Interstitial
+    }
 }
+

@@ -4,6 +4,7 @@ using Zenject;
 using System;
 using UnityEngine;
 using DG.Tweening;
+using Advertisements;
 
 namespace UIControl
 {
