@@ -4912,7 +4912,6 @@ GameObject:
   - component: {fileID: 2504214343621411456}
   - component: {fileID: 2504214343621411457}
   - component: {fileID: 4741991464754137355}
-  - component: {fileID: -7086299658406540783}
   m_Layer: 0
   m_Name: BulletShotVfx
   m_TagString: Untagged
@@ -9949,19 +9948,6 @@ MonoBehaviour:
     perlinColor: 0
     perlinColorSpeed: 1
   fadeOutReference: {fileID: 2504214343621411456}
---- !u!114 &-7086299658406540783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2504214343621411470}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eed1ad99349771e419f5278c1168d5d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  VFXType: 0
 --- !u!1 &6484188613129301618
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,24 +3,18 @@ using UnityEngine;
 using UIControl;
 using ObjectPoolSystem;
 using System;
+using _Project._Scripts.FXSystem;
 using Random = UnityEngine.Random;
 using Firebase.Analytics;
-using SFXSystem;
+using SfxSystem;
 using VFXSystem;
 using Advertisements;
 
 namespace ZombieGeneratorBehaviour
 {
-    public class ZombieFactory: IDisposable
+    public class ZombieFactory: IDisposable , IFXEventSender
     {
-        [Serializable]
-        public class GeneratedZombies
-        {
-            public ZombieBehaviour ZombiesPrefab;
-            public float ChanceToSpawn;
-        }
-
-        public event Action<VFXEvent,SFXType> OnZombieDie;
+        public event Action<FXType, Vector3> OnFXEvent;
 
         private readonly ObjectPoolOrganizer _objectPoolOrganizer;
         private readonly List<GeneratedZombies> _zombiePrefabs;
@@ -43,19 +37,19 @@ namespace ZombieGeneratorBehaviour
             EventInit();
         }
 
-        public void EventInit()
+        private void EventInit()
         {
             _adsRewardGiver.OnGiveSecondChance += DeactivateAllZombies;
         }
 
-        public void UnsubcribeEvent()
+        private void UnsubscribeEvent()
         {
             _adsRewardGiver.OnGiveSecondChance -= DeactivateAllZombies;
         }
 
         public void Dispose()
         {
-            UnsubcribeEvent();
+            UnsubscribeEvent();
         }
 
         public void GenerateZombie(Vector2 zombiePosition)
@@ -66,18 +60,18 @@ namespace ZombieGeneratorBehaviour
             zombieBehaviour.Init(_player, _scoreUpdater, this);
             _geratedActiveZombies.Add(zombieBehaviour);
             zombie.SetActive(true);
-            _analyticsDataCollector.AddAnalizedParameterValue(zombie.name, 1);
+            _analyticsDataCollector.AddAnalyzedParameterValue(zombie.name, 1);
 
         }
 
         public void DeleteFromZombieList(ZombieBehaviour zombieBehaviour)
         {
-             OnZombieDie?.Invoke(new VFXEvent(zombieBehaviour.gameObject.transform.position, Quaternion.identity,VFXType.ZombieDie),SFXType.ZombieDie );
+             OnFXEvent?.Invoke(FXType.ZombieDie,zombieBehaviour.gameObject.transform.position);
             _geratedActiveZombies.Remove(zombieBehaviour);
 
         }
 
-        public void DeactivateAllZombies()
+        private void DeactivateAllZombies()
         {
             for (int i = 0; i < _geratedActiveZombies.Count; i++)
             {
@@ -105,6 +99,7 @@ namespace ZombieGeneratorBehaviour
             ObjectPool objectPool = _objectPoolOrganizer.GetPool(zombie.gameObject.name);
             return objectPool.GetObject().gameObject;
         }
+
 
     }
 }

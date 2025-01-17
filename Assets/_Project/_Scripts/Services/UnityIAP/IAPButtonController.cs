@@ -5,7 +5,7 @@ using Zenject;
 
 namespace InAppPurchase
 { 
-    public class IAPButtonController : MonoBehaviour
+    public class IAPButtonController : MonoBehaviour,IInitializable
     {
         private Button _button;
         private CodelessIAPButton _codelessIAPButton;
@@ -15,17 +15,13 @@ namespace InAppPurchase
         public void Construct(InAppStore inAppStore)
         {
             _inAppStore = inAppStore;
-
-            Initialize();
-
-            _button.onClick.AddListener(BuyProduct);
-            _codelessIAPButton.onPurchaseComplete.AddListener(OnPurchaseComplete);
         }
 
         public void Initialize()
         {
             _button = GetComponent<Button>();
             _codelessIAPButton = GetComponent<CodelessIAPButton>();
+            AddListeners();
         }
 
         public void BuyProduct()
@@ -36,6 +32,12 @@ namespace InAppPurchase
         public void OnPurchaseComplete(Product product)
         {
             Debug.Log(product + "Purchased");
+        }
+
+        private void AddListeners()
+        {
+            _button.onClick.AddListener(BuyProduct);
+            _codelessIAPButton.onPurchaseComplete.AddListener(OnPurchaseComplete);
         }
 
     }

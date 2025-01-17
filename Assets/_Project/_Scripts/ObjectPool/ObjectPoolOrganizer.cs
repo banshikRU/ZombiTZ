@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace ObjectPoolSystem 
 {
-    public partial class ObjectPoolOrganizer
+    public partial class ObjectPoolOrganizer: IInitializable
     {
         private readonly List<PoolConfig> _poolsConfig;
 
@@ -12,11 +13,14 @@ namespace ObjectPoolSystem
         public ObjectPoolOrganizer(List<PoolConfig> poolsConfig)
         {
             _poolsConfig = poolsConfig;
-
-            Init();
         }
 
-        public void Init()
+        public void Initialize()
+        {
+            FirstPoolsInit();
+        }
+
+        public void FirstPoolsInit()
         {
             _pools = new Dictionary<string, ObjectPool>();
             foreach (var config in _poolsConfig)
@@ -36,6 +40,7 @@ namespace ObjectPoolSystem
             }
             return null;
         }
+
     }
 }
 

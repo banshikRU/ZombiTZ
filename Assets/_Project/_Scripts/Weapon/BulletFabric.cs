@@ -2,14 +2,16 @@ using UnityEngine;
 using ObjectPoolSystem;
 using Firebase.Analytics;
 using System;
-using SFXSystem;
+using _Project._Scripts.FXSystem;
+using SfxSystem;
 using VFXSystem;
+using Zenject;
 
 namespace WeaponControl
 {
-    public class BulletFabric
+    public class BulletFabric: IInitializable,IFXEventSender
     {
-        public event Action<VFXEvent,SFXType> OnBulletShot;
+        public event Action<FXType, Vector3> OnFXEvent;
 
         private readonly ObjectPoolOrganizer _objectPoolOrganizer;
         private readonly BaseBullet _bullet;
@@ -23,19 +25,17 @@ namespace WeaponControl
             _bullet = bullet;
             _weaponHandler = weaponHandler;
             _analyticsDataCollector = analyticsDataCollector;
-
-            Init();
         }
 
-        public void Init()
+        public void Initialize()
         {
             _objectPool = _objectPoolOrganizer.GetPool(_bullet.gameObject.name);
         }
 
         public void Shot()
         {
-            OnBulletShot?.Invoke(new VFXEvent(_weaponHandler.Weapon.transform.position, Quaternion.identity, VFXType.BulletFire),SFXType.PistolShot);
-            _analyticsDataCollector.AddAnalizedParameterValue(_bullet.name, 1);
+            OnFXEvent?.Invoke(FXType.BulletShot, _weaponHandler.Weapon.transform.position);
+            _analyticsDataCollector.AddAnalyzedParameterValue(_bullet.name, 1);
             BulletSetUp(TakeBulletFromPool());
         }
 
@@ -55,10 +55,11 @@ namespace WeaponControl
         private void BulletSetUp(GameObject bullet)
         {
             bullet.SetActive(true);
-            bullet.transform.SetPositionAndRotation(_weaponHandler.Weapon.transform.position, Quaternion.identity);
             BaseBullet baseBullet = bullet.GetComponent<BaseBullet>();
-            baseBullet.StartMoveBullet(DirectionDefine(), _weaponHandler.BulletDamage);
+            baseBullet.StartMoveBullet(_weaponHandler.Weapon.transform.position,DirectionDefine(), _weaponHandler.BulletDamage);
         }
+
+
     }
 }
 

@@ -1,26 +1,16 @@
 using UnityEngine;
+using PlayerControl;
+using Zenject;
 
 namespace SaveSystem
 {
-    public class SaveGameController 
+    public class SaveGameController: IInitializable
     { 
-
-        public class PlayerData
-        {
-            public bool NoAdsPurchased;
-            public int MaxScores;
-        }
-
         private const string PLAYER_DATA = "PlayerData";
 
         public PlayerData PlayerDataValues = new();
 
-        public SaveGameController()
-        {
-            Init();
-        }
-
-        public void Init()
+        public void Initialize()
         {
             if (!PlayerPrefs.HasKey(PLAYER_DATA))
             {
@@ -41,6 +31,7 @@ namespace SaveSystem
             string jsonData = PlayerPrefs.GetString(PLAYER_DATA);
             return JsonUtility.FromJson<PlayerData>(jsonData);
         }
+
     }
 }
 

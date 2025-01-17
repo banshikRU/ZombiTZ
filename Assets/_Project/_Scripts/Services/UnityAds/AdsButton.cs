@@ -5,7 +5,7 @@ using Services;
 
 namespace Advertisements
 {
-    public class AdsButton : MonoBehaviour
+    public class AdsButton : MonoBehaviour, IInitializable
     {
         [SerializeField]
         private Button _showAdButton;
@@ -23,8 +23,12 @@ namespace Advertisements
         public void Construct(AdsServiceManager adsServiceManager, NoAdsController noAdsController)
         {
             _noAdsController = noAdsController;
-            _showAdButton.interactable = false;
             _adsServiceManager = adsServiceManager;
+        }
+
+        public void Initialize()
+        {
+            _showAdButton.interactable = false;
             _adsServiceManager.AdInit(_showAdButton, _adsUnitId, _rewardId);
         }
 

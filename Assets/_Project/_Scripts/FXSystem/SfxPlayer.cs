@@ -1,28 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
-namespace SFXSystem
+namespace SfxSystem
 {
-    public class SfxPlayer : MonoBehaviour
+    public class SfxPlayer : MonoBehaviour,IInitializable
     {
         [SerializeField]
         private AudioSource _audioSourcePrefab;
         [SerializeField]
-        private List<UsableSFX> _usableSfx;
+        private float _minimalRandomPitch = 0.96f;
+        [SerializeField]
+        private float _maximumRandomPitch = 0.99f;
 
         private Queue<AudioSource> _audioSources;
-        private SfxEventCatcher _sfxEventCatcher;
-
-        [Inject]
-        public void Construct(SfxEventCatcher sfxEventCatcher)
-        {
-            _sfxEventCatcher = sfxEventCatcher;
-            EventInit();
-            Initialize();
-        }
 
         public void Initialize()
         {
@@ -37,24 +31,14 @@ namespace SFXSystem
             }
         }
 
-        private void EventInit()
-        {
-            _sfxEventCatcher.OnsSFXRequested += PlaySfx;
-        }
-
-        public void OnDisable()
-        {
-            _sfxEventCatcher.OnsSFXRequested -= PlaySfx;
-        }
-
-        private void PlaySfx(SFXType sfxtype)
+        public void PlaySfx(AudioClip clip)
         {
             if (_audioSources.Count > 0)
             {
-                float randomPitch = Random.Range(0.95f, 0.98f);
+                float randomPitch = Random.Range(_minimalRandomPitch,_maximumRandomPitch);
                 var audioSource = _audioSources.Dequeue();
                 audioSource.pitch = randomPitch;
-                audioSource.clip = GetSFX(sfxtype).AudioClip;
+                audioSource.clip = clip;
                 audioSource.Play();
                 StartCoroutine(ReturnToPool(audioSource));
             }
@@ -67,15 +51,6 @@ namespace SFXSystem
             _audioSources.Enqueue(audioSource);
         }
 
-        private UsableSFX GetSFX(SFXType sfxType)
-        {
-            foreach (UsableSFX clip in _usableSfx)
-            {
-                if (clip.SFXType == sfxType)
-                    return clip;
-            }
-            return null;
-        }
     }
 }
 

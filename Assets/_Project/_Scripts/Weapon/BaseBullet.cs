@@ -41,12 +41,18 @@ namespace WeaponControl
             }
         }
 
-        public void StartMoveBullet(Vector3 _clickPosition, int bulletDamage)
+        public void StartMoveBullet(Vector3 startPosition,Vector3 clickPosition, int bulletDamage)
         {
+            SetUpBaseState(startPosition);
             _bulletDamage = bulletDamage;
-            _clickPointPosition = _clickPosition;
+            _clickPointPosition = clickPosition;
             _removeTimer = _lifeTime;
             _isMove = true;
+        }
+
+        private void SetUpBaseState(Vector3 basePosition)
+        {
+            transform.SetPositionAndRotation(basePosition, Quaternion.identity);
         }
 
         private void BulletMove()

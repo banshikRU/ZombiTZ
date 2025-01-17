@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace ObjectPoolSystem
 {
-    public class ObjectPool : MonoBehaviour
+    public class ObjectPool : MonoBehaviour 
     {
         private PooledObject _objectToPool;
         private Stack<PooledObject> _stack;
@@ -64,6 +65,7 @@ namespace ObjectPoolSystem
             _stack.Push(instance);
             return instance;
         }
+
     }
 }
 

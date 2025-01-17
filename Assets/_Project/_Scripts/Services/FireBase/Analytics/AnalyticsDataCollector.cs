@@ -11,7 +11,7 @@ namespace Firebase.Analytics
             AnalizedParameters = new Dictionary<string, int>();
         }
 
-        public void AddAnalizedParameterValue(string parameterName, int parameterValue)
+        public void AddAnalyzedParameterValue(string parameterName, int parameterValue)
         {
             if (AnalizedParameters.ContainsKey(parameterName))
             {

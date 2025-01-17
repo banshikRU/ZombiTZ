@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using _Project._Scripts.FXSystem;
 using UnityEngine;
 using ZombieGeneratorBehaviour;
 using WeaponControl;
 using ObjectPoolSystem;
-using SFXSystem;
+using SfxSystem;
 using VFXSystem;
 
 namespace GameStateControl
@@ -35,14 +36,15 @@ namespace GameStateControl
         public float BaseTimeToSpawnNewZombie;
         public float ReductionTime;
 
-        public List<ZombieFactory.GeneratedZombies> ZombiePrefabs;
+        public List<GeneratedZombies> ZombiePrefabs;
 
         [Space(10)]
 
-        [Header("VFX Settings")]
-
-        public List<VFXBehaviour> VFXPrefabs;
+        [Header("FX Settings")]
+        
+        public List<FXBehaviour> FXPrefab;
 
     }
+
 }
 

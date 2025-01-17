@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 using WeaponControl;
 using Zenject;
 
 namespace InputControll
 {
-    public class InputController : ITickable
+    public class InputController : ITickable,IDisposable
     {
         private readonly PlayerFireControl _playerFireControll;
 
@@ -32,6 +33,11 @@ namespace InputControll
             CurrentInput.OnShoot -= _playerFireControll.Shot;
         }
 
+        public void Dispose()
+        {
+            UnsubcribeEvent();
+        }
+
         private void SubcribeEvent()
         {
             CurrentInput.OnShoot += _playerFireControll.Shot;
@@ -49,6 +55,8 @@ namespace InputControll
                 Application.Quit();
             }
         }
+
+        
     }
 }
 
