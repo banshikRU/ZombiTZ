@@ -17,10 +17,25 @@ namespace GameSystem
 
         public override void InstallBindings()
         {
-            Container.Bind<ScoresMenu>().WithId(ZenjectIds.MainMenu).FromInstance(_mainMenuScores).AsCached();
-            Container.Bind<ScoresMenu>().WithId(ZenjectIds.DeadMenu).FromInstance(_deadMenuScores).AsCached();
-            Container.BindInterfacesAndSelfTo<UIController>().AsSingle().NonLazy();
-            Container.BindInterfacesTo<IAPButtonController>().FromInstance(_iapButton).AsSingle().NonLazy();
+            Container
+                .Bind<ScoresMenu>()
+                .WithId(ZenjectIds.MainMenu)
+                .FromInstance(_mainMenuScores)
+                .AsCached();
+            Container
+                .Bind<ScoresMenu>()
+                .WithId(ZenjectIds.DeadMenu)
+                .FromInstance(_deadMenuScores)
+                .AsCached();
+            Container
+                .BindInterfacesAndSelfTo<UIController>()
+                .AsSingle()
+                .NonLazy();
+            Container
+                .BindInterfacesTo<IAPButtonController>()
+                .FromInstance(_iapButton)
+                .AsSingle()
+                .NonLazy();
         }
     }
 }

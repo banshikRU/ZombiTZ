@@ -37,6 +37,10 @@ MonoBehaviour:
     ChanceToSpawn: 30
   - ZombiesPrefab: {fileID: 8257117199716956482, guid: b898b147e919d46459af2bebe50f5118, type: 3}
     ChanceToSpawn: 10
-  VFXPrefabs:
-  - {fileID: -7086299658406540783, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
-  - {fileID: -5431786883051574734, guid: 5c755f9bc5253ea418e919994537dcc7, type: 3}
+  FXPrefab:
+  - VfxPrefab: {fileID: 4021103657954561961, guid: 5c755f9bc5253ea418e919994537dcc7, type: 3}
+    SfxSound: {fileID: 8300000, guid: dffd9510cf50cc94e88cd07f68f46f6c, type: 3}
+    FXType: 1
+  - VfxPrefab: {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+    SfxSound: {fileID: 8300000, guid: 3c81e9a23d0174440af89c080b04023a, type: 3}
+    FXType: 0

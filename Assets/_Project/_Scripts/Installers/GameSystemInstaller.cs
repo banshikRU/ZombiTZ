@@ -14,14 +14,30 @@ namespace GameSystem
     {
         public override void InstallBindings()
         {
-            Container.Bind<SaveGameController>().AsSingle();
-            Container.Bind<AnalyticsDataCollector>().AsSingle();
-            Container.Bind<AnalyticServiceManager>().AsSingle();
-            Container.BindInterfacesAndSelfTo<UnityAdsService>().AsSingle();
-            Container.Bind<AdsRewardGiver>().AsSingle();
-            Container.Bind<AdsServiceManager>().AsSingle();
-            Container.BindInterfacesAndSelfTo<InAppStore>().AsSingle().NonLazy();
-            Container.BindInterfacesAndSelfTo<NoAdsController>().AsSingle(); 
+            Container
+                .Bind<SaveGameController>()
+                .AsSingle();
+            Container
+                .Bind<AnalyticsDataCollector>()
+                .AsSingle();
+            Container
+                .Bind<AnalyticServiceManager>()
+                .AsSingle();
+            Container
+                .BindInterfacesAndSelfTo<UnityAdsService>()
+                .AsSingle();
+            Container
+                .Bind<AdsRewardGiver>()
+                .AsSingle();
+            Container.Bind<AdsServiceManager>()
+                .AsSingle();
+            Container
+                .BindInterfacesAndSelfTo<InAppStore>()
+                .AsSingle()
+                .NonLazy();
+            Container
+                .BindInterfacesAndSelfTo<NoAdsController>()
+                .AsSingle(); 
         }
     }
 }

@@ -26,7 +26,6 @@ public class FXEventCatcher
         _sfxPlayer = sfxPlayer;
         _gameSettings = gameSettings;
         EventInit();
-        Debug.Log(fxEventSenders.Count);
     }
 
     private void EventInit()

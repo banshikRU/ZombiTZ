@@ -1,10 +1,13 @@
 using GameStateControl;
 using SaveSystem;
+using System;
 
 namespace UIControl
 {
     public class ScoreValueUpdater
     {
+        public event Action<int> OnScoreValueUpdate;
+        
         private readonly SaveGameController _saveGameController;
         private readonly GameStateUpdater _gameStateUpdater;
 
@@ -37,6 +40,7 @@ namespace UIControl
         public void AddScores(int scores)
         {
             CurrentScores += scores;
+            OnScoreValueUpdate.Invoke(CurrentScores);
         }
 
         public void InitMaxScores()
