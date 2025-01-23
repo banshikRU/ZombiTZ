@@ -19,20 +19,20 @@ namespace ZombieGeneratorBehaviour
         private readonly ObjectPoolOrganizer _objectPoolOrganizer;
         private readonly List<GeneratedZombies> _zombiePrefabs;
         private readonly Transform _player;
-        private readonly ScoreValueUpdater _scoreUpdater;
+        private readonly ScoreValueModel _scoreModel;
         private readonly AnalyticsDataCollector _analyticsDataCollector;
         private readonly AdsRewardGiver _adsRewardGiver;
 
         private List<ZombieBehaviour> _geratedActiveZombies;
 
-        public ZombieFactory(ObjectPoolOrganizer objectPoolOrganizer, List<GeneratedZombies> zombiesPrefab, Transform player, ScoreValueUpdater scoreValueUpdater,AnalyticsDataCollector analyticsDataCollector,AdsRewardGiver adsRewardGiver)
+        public ZombieFactory(ObjectPoolOrganizer objectPoolOrganizer, List<GeneratedZombies> zombiesPrefab, Transform player, ScoreValueModel scoreValueModel,AnalyticsDataCollector analyticsDataCollector,AdsRewardGiver adsRewardGiver)
         {
             _adsRewardGiver = adsRewardGiver;
             _geratedActiveZombies = new List<ZombieBehaviour>();
             _analyticsDataCollector = analyticsDataCollector;
             _objectPoolOrganizer = objectPoolOrganizer;
             _player = player;
-            _scoreUpdater = scoreValueUpdater;
+            _scoreModel = scoreValueModel;
             _zombiePrefabs = zombiesPrefab;
             EventInit();
         }
@@ -57,7 +57,7 @@ namespace ZombieGeneratorBehaviour
             GameObject zombie = GetZombieByChance();
             zombie.transform.position = zombiePosition;
             ZombieBehaviour zombieBehaviour = zombie.GetComponent<ZombieBehaviour>();
-            zombieBehaviour.Init(_player, _scoreUpdater, this);
+            zombieBehaviour.Init(_player, _scoreModel, this);
             _geratedActiveZombies.Add(zombieBehaviour);
             zombie.SetActive(true);
             _analyticsDataCollector.AddAnalyzedParameterValue(zombie.name, 1);

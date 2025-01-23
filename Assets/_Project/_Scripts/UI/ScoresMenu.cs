@@ -9,17 +9,17 @@ namespace UIControl
         [SerializeField]
         private TextMeshProUGUI _currentScores;
 
-        private ScoreValueUpdater _scoreValueUpdater;
+        private ScoreValueModel _scoreValueModel;
 
         [Inject]
-        public void Construct(ScoreValueUpdater scoreValueUpdater)
+        public void Construct(ScoreValueModel scoreValueModel)
         {
-            _scoreValueUpdater = scoreValueUpdater;
+            _scoreValueModel = scoreValueModel;
         }
 
         private void OnEnable()
         {
-            _currentScores.text = _scoreValueUpdater.CurrentScores.ToString(); ;
+            _currentScores.text = _scoreValueModel.CurrentScores.ToString(); ;
         }
     }
 }

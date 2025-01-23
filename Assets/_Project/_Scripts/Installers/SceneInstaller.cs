@@ -49,10 +49,6 @@ namespace GameSystem
                 .FromComponentInHierarchy()
                 .AsSingle();
             Container
-                .Bind<ScoreValueUpdater>()
-                .AsSingle();
-            
-            Container
                 .BindInterfacesAndSelfTo<ObjectPoolOrganizer>()
                 .AsSingle()
                 .WithArguments(_gameSettings.PoolConfigs);

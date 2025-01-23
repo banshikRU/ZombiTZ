@@ -24,7 +24,7 @@ namespace ZombieGeneratorBehaviour
 
         protected Transform _player;
         protected SpriteRenderer _sprite;
-        protected ScoreValueUpdater _scoreUpdater;
+        protected ScoreValueModel ScoreModel;
         private PooledObject _pooledObject;
         private ZombieFactory _zombieFactory;
 
@@ -38,12 +38,12 @@ namespace ZombieGeneratorBehaviour
             _sprite = gameObject.GetComponent<SpriteRenderer>();
         }
 
-        public virtual void Init(Transform player, ScoreValueUpdater gameManager,ZombieFactory zombieFactory)
+        public virtual void Init(Transform player, ScoreValueModel gameManager,ZombieFactory zombieFactory)
         {
 
             _zombieFactory = zombieFactory;
             _currentHealPoint = _healPoint;
-            _scoreUpdater = gameManager;
+            ScoreModel = gameManager;
             _player = player;
             _isInit = true;
             _sprite.sprite = _zombieSprite;
@@ -54,7 +54,7 @@ namespace ZombieGeneratorBehaviour
             _currentHealPoint -= damage;
             if (_currentHealPoint <= 0)
             {
-                _scoreUpdater.AddScores(_scoresByDeath);
+                ScoreModel.AddScores(_scoresByDeath);
                 DeactivateObject();
             }
         }

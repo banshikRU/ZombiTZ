@@ -18,6 +18,9 @@ namespace GameSystem
         public override void InstallBindings()
         {
             Container
+                .Bind<ScoreValueModel>()
+                .AsSingle();
+            Container
                 .Bind<ScoresMenu>()
                 .WithId(ZenjectIds.MainMenu)
                 .FromInstance(_mainMenuScores)
@@ -27,6 +30,9 @@ namespace GameSystem
                 .WithId(ZenjectIds.DeadMenu)
                 .FromInstance(_deadMenuScores)
                 .AsCached();
+            Container
+                .BindInterfacesAndSelfTo<ScoreViewModel>()
+                .AsSingle();
             Container
                 .BindInterfacesAndSelfTo<UIController>()
                 .AsSingle()

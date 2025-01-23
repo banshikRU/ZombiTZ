@@ -12,6 +12,7 @@ namespace WeaponControl
     public class BulletFabric: IInitializable,IFXEventSender
     {
         public event Action<FXType, Vector3> OnFXEvent;
+        public event Action OnShot;
 
         private readonly ObjectPoolOrganizer _objectPoolOrganizer;
         private readonly BaseBullet _bullet;
@@ -34,6 +35,7 @@ namespace WeaponControl
 
         public void Shot()
         {
+            OnShot?.Invoke();   
             OnFXEvent?.Invoke(FXType.BulletShot, _weaponHandler.Weapon.transform.position);
             _analyticsDataCollector.AddAnalyzedParameterValue(_bullet.name, 1);
             BulletSetUp(TakeBulletFromPool());

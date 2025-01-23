@@ -17,7 +17,7 @@ namespace GameStateControl
         private PlayerBehaviour _player;
 
         [Inject]
-        private readonly LazyInject<ScoreValueUpdater> _scoreUpdater;
+        private readonly LazyInject<ScoreValueModel> _scoreUpdater;
 
         private AnalyticServiceManager _analyticServiceManager;
         private AdsRewardGiver _adsRewardGiver;

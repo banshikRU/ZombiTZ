@@ -1,19 +1,19 @@
 using GameStateControl;
 using SaveSystem;
 using System;
+using UniRx;
+using UnityEngine;
 
 namespace UIControl
 {
-    public class ScoreValueUpdater
+    public class ScoreValueModel : IDisposable
     {
-        public event Action<int> OnScoreValueUpdate;
-        
         private readonly SaveGameController _saveGameController;
         private readonly GameStateUpdater _gameStateUpdater;
 
-        public int CurrentScores { get; private set; }
+        public readonly ReactiveProperty<int> CurrentScores = new();
 
-        public ScoreValueUpdater(SaveGameController saveGameController, GameStateUpdater gameStateUpdater)
+        public ScoreValueModel(SaveGameController saveGameController, GameStateUpdater gameStateUpdater)
         {
             _saveGameController = saveGameController;
             _gameStateUpdater = gameStateUpdater;
@@ -27,34 +27,39 @@ namespace UIControl
             _gameStateUpdater.OnGamePlayed -= ResetCurrentScores;
         }
 
-        public void EventInit()
+        private void EventInit()
         {
             _gameStateUpdater.OnGamePlayed += ResetCurrentScores;
         }
 
         private void ResetCurrentScores()
         {
-            CurrentScores = 0;
+            CurrentScores.Value = 0;
         }
 
         public void AddScores(int scores)
         {
-            CurrentScores += scores;
-            OnScoreValueUpdate.Invoke(CurrentScores);
+            CurrentScores.Value += scores;
+            Debug.Log(CurrentScores + "ScoreModel");
         }
 
         public void InitMaxScores()
         {
-            CurrentScores = _saveGameController.LoadData().MaxScores;
+            CurrentScores.Value = _saveGameController.LoadData().MaxScores;
         }
 
         public void UpdateMaxScores()
         {
-            if (_saveGameController.LoadData().MaxScores < CurrentScores)
+            if (_saveGameController.LoadData().MaxScores < CurrentScores.Value)
             {
-                _saveGameController.PlayerDataValues.MaxScores = CurrentScores;
+                _saveGameController.PlayerDataValues.MaxScores = CurrentScores.Value;
                 _saveGameController.SaveData();
             }
+        }
+
+        public void Dispose()
+        {
+            UnsubcribeEvent();
         }
     }
 

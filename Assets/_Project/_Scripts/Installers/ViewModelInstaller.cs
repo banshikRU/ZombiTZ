@@ -10,7 +10,7 @@ namespace GameSystem
         public override void InstallBindings()
         {
             Container
-                .BindInterfacesAndSelfTo<MoneyViewModel>()
+                .BindInterfacesAndSelfTo<ScoreViewModel>()
                 .AsSingle()
                 .NonLazy();
                 
