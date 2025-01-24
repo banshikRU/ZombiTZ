@@ -4,6 +4,7 @@ using Zenject;
 using InAppPurchase;
 using Advertisements;
 using UIControl.MVVM.Bullets;
+using UIControl.MVVM.HealthBar;
 
 namespace GameSystem
 {
@@ -15,6 +16,11 @@ namespace GameSystem
         private ScoresMenu _mainMenuScores;
         [SerializeField]
         private IAPButtonController _iapButton;
+        [SerializeField] 
+        private GameObject _canvas;
+        [SerializeField]
+        private HealthBarView _healthBarView;
+        
 
         public override void InstallBindings()
         {
@@ -48,6 +54,11 @@ namespace GameSystem
                 .BindInterfacesTo<IAPButtonController>()
                 .FromInstance(_iapButton)
                 .AsSingle()
+                .NonLazy();
+            Container
+                .BindInterfacesTo<HealthBarFabric>()
+                .AsSingle()
+                .WithArguments(_healthBarView,_canvas)
                 .NonLazy();
         }
     }

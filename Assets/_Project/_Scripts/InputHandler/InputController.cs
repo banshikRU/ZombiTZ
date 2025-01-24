@@ -11,23 +11,19 @@ namespace InputControll
 
         public IInput CurrentInput { get; private set; }
 
-        public InputController(PlayerFireControl playerFireControll)
+        public InputController(PlayerFireControl playerFireControll, IInput input)
         {
+            CurrentInput = input;
             _playerFireControll = playerFireControll;
+            
+            SubcribeEvent();
         }
 
         public void Tick()
         {
             TakeInput();
-            CheckForAplicationQuit();
         }
-
-        public void SetUpCurrentInput(IInput CurrentInput)
-        {
-            this.CurrentInput = CurrentInput;
-            SubcribeEvent();
-        }
-
+        
         public void UnsubcribeEvent()
         {
             CurrentInput.OnShoot -= _playerFireControll.Shot;
@@ -47,15 +43,6 @@ namespace InputControll
         {
             CurrentInput?.TakeShoot();
         }
-
-        private void CheckForAplicationQuit()
-        {
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                Application.Quit();
-            }
-        }
-
         
     }
 }

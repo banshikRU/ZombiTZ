@@ -73,15 +73,10 @@ namespace GameSystem
                 .BindInterfacesAndSelfTo<PlayerFireControl>()
                 .AsSingle()
                 .WithArguments(_gameSettings.FireRate);
-
-            Container
-                .Bind<CurrentPlatformChecker>()
-                .AsSingle()
-                .NonLazy();
             Container
                 .BindInterfacesAndSelfTo<InputController>()
-                .AsSingle();
-            
+                .AsSingle()
+                .NonLazy();
             Container
                 .Bind<FXEventCatcher>()
                 .AsSingle()

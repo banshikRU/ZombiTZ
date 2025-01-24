@@ -782,6 +782,8 @@ MonoBehaviour:
   _deadMenuScores: {fileID: 932228841}
   _mainMenuScores: {fileID: 1849207694}
   _iapButton: {fileID: 1088990094}
+  _canvas: {fileID: 47028877}
+  _healthBarView: {fileID: 9017824928038346423, guid: 69693ddc91478ec42ac85719a20410ef, type: 3}
 --- !u!1 &265366848
 GameObject:
   m_ObjectHideFlags: 0

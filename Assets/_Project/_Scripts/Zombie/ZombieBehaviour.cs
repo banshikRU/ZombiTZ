@@ -1,6 +1,8 @@
+using System;
 using UnityEngine;
 using UIControl;
 using ObjectPoolSystem;
+using Unity.VisualScripting;
 
 namespace ZombieGeneratorBehaviour
 {
@@ -11,6 +13,8 @@ namespace ZombieGeneratorBehaviour
 
     public class ZombieBehaviour : MonoBehaviour
     {
+        public event Action<int,int> OnZombieTakeDamage;
+        
         [Header("Zombie Stats")]
 
         [SerializeField]
@@ -52,6 +56,7 @@ namespace ZombieGeneratorBehaviour
         public virtual void TakeDamage(int damage)
         {
             _currentHealPoint -= damage;
+            OnZombieTakeDamage?.Invoke(_currentHealPoint,_healPoint);
             if (_currentHealPoint <= 0)
             {
                 ScoreModel.AddScores(_scoresByDeath);
@@ -65,6 +70,7 @@ namespace ZombieGeneratorBehaviour
             _pooledObject.ReturnToPool();
             gameObject.SetActive(false);
         }
+        
     }
 }
 

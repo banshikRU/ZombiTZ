@@ -5,6 +5,7 @@ using SaveSystem;
 using Services;
 using InAppPurchase;
 using Advertisements;
+using InputControll;
 
 namespace GameSystem
 {
@@ -14,6 +15,9 @@ namespace GameSystem
     {
         public override void InstallBindings()
         {
+            Container
+                .BindInterfacesAndSelfTo<DesktopInput>()
+                .AsSingle();
             Container
                 .Bind<SaveGameController>()
                 .AsSingle();

@@ -15,6 +15,8 @@ namespace ZombieGeneratorBehaviour
     public class ZombieFactory: IDisposable , IFXEventSender
     {
         public event Action<FXType, Vector3> OnFXEvent;
+        public event Action <ZombieBehaviour> OnZombieSpawned;
+        public event Action <ZombieBehaviour> OnZombieDestroyed;
 
         private readonly ObjectPoolOrganizer _objectPoolOrganizer;
         private readonly List<GeneratedZombies> _zombiePrefabs;
@@ -60,12 +62,14 @@ namespace ZombieGeneratorBehaviour
             zombieBehaviour.Init(_player, _scoreModel, this);
             _geratedActiveZombies.Add(zombieBehaviour);
             zombie.SetActive(true);
+            OnZombieSpawned.Invoke(zombieBehaviour);
             _analyticsDataCollector.AddAnalyzedParameterValue(zombie.name, 1);
 
         }
 
         public void DeleteFromZombieList(ZombieBehaviour zombieBehaviour)
         {
+            OnZombieDestroyed.Invoke(zombieBehaviour);
              OnFXEvent?.Invoke(FXType.ZombieDie,zombieBehaviour.gameObject.transform.position);
             _geratedActiveZombies.Remove(zombieBehaviour);
 
