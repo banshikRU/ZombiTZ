@@ -40,7 +40,6 @@ namespace UIControl
         public void AddScores(int scores)
         {
             CurrentScores.Value += scores;
-            Debug.Log(CurrentScores + "ScoreModel");
         }
 
         public void InitMaxScores()

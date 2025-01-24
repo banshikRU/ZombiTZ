@@ -3,6 +3,7 @@ using UnityEngine;
 using Zenject;
 using InAppPurchase;
 using Advertisements;
+using UIControl.MVVM.Bullets;
 
 namespace GameSystem
 {
@@ -18,7 +19,13 @@ namespace GameSystem
         public override void InstallBindings()
         {
             Container
-                .Bind<ScoreValueModel>()
+                .BindInterfacesAndSelfTo<ScoreValueModel>()
+                .AsSingle();
+            Container 
+                .BindInterfacesAndSelfTo<BulletValueModel>()
+                .AsSingle();
+            Container
+                .BindInterfacesAndSelfTo<BulletViewModel>()
                 .AsSingle();
             Container
                 .Bind<ScoresMenu>()

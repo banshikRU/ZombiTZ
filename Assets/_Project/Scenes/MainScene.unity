@@ -504,9 +504,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 126452267}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35dc759cbdac40547a7752ff7cce68a7, type: 3}
+  m_Script: {fileID: 11500000, guid: f839fa4e65204766897889d45c5ff50a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _currentBulletValue: {fileID: 126452269}
 --- !u!1 &216686105
 GameObject:
   m_ObjectHideFlags: 0

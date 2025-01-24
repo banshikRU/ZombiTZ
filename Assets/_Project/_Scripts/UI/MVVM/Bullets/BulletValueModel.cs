@@ -1,11 +1,12 @@
-﻿using UniRx;
+﻿using System;
+using UniRx;
 using WeaponControl;
 
 namespace UIControl.MVVM.Bullets
 {
-    public class BulletValueModel
+    public class BulletValueModel: IDisposable
     {
-        private BulletFabric _bulletFabric;
+        private readonly BulletFabric _bulletFabric;
 
         public readonly ReactiveProperty<int> Bullets = new();
 
@@ -24,6 +25,11 @@ namespace UIControl.MVVM.Bullets
         private void OnShot()
         {
             Bullets.Value++;
+        }
+
+        public void Dispose()
+        {
+            _bulletFabric.OnShot -= OnShot;
         }
     }
 }
