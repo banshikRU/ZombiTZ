@@ -5,7 +5,7 @@ using SaveSystem;
 using Services;
 using InAppPurchase;
 using Advertisements;
-using InputControll;
+using InputControl;
 
 namespace GameSystem
 {

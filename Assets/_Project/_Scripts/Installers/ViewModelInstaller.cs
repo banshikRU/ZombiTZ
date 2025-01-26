@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-using UIControl;
-using UnityEngine;
+﻿using UIControl;
 using Zenject;
 
 namespace GameSystem

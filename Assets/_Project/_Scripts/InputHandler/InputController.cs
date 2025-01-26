@@ -1,22 +1,23 @@
 using System;
-using UnityEngine;
 using WeaponControl;
 using Zenject;
 
-namespace InputControll
+namespace InputControl
 {
-    public class InputController : ITickable,IDisposable
+    public class InputController : ITickable,IDisposable,IInitializable
     {
-        private readonly PlayerFireControl _playerFireControll;
+        private readonly PlayerFireControl _playerFireControl;
+        private readonly IInput _currentInput;
 
-        public IInput CurrentInput { get; private set; }
-
-        public InputController(PlayerFireControl playerFireControll, IInput input)
+        public InputController(PlayerFireControl playerFireControl, IInput input)
         {
-            CurrentInput = input;
-            _playerFireControll = playerFireControll;
-            
-            SubcribeEvent();
+            _currentInput = input;
+            _playerFireControl = playerFireControl;
+        }
+        
+        public void Initialize()
+        {
+            SubscribeEvent();
         }
 
         public void Tick()
@@ -24,26 +25,25 @@ namespace InputControll
             TakeInput();
         }
         
-        public void UnsubcribeEvent()
+        private void UnsubscribeEvent()
         {
-            CurrentInput.OnShoot -= _playerFireControll.Shot;
+            _currentInput.OnShoot -= _playerFireControl.Shot;
         }
 
         public void Dispose()
         {
-            UnsubcribeEvent();
+            UnsubscribeEvent();
         }
 
-        private void SubcribeEvent()
+        private void SubscribeEvent()
         {
-            CurrentInput.OnShoot += _playerFireControll.Shot;
+            _currentInput.OnShoot += _playerFireControl.Shot;
         }
 
         private void TakeInput()
         {
-            CurrentInput?.TakeShoot();
+            _currentInput?.TakeShoot();
         }
-        
     }
 }
 

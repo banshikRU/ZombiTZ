@@ -8,15 +8,13 @@ namespace SaveSystem
     { 
         private const string PLAYER_DATA = "PlayerData";
 
-        public PlayerData PlayerDataValues = new();
+        public readonly PlayerData PlayerDataValues = new();
 
         public void Initialize()
         {
-            if (!PlayerPrefs.HasKey(PLAYER_DATA))
-            {
-                PlayerDataValues.MaxScores = 0;
-                SaveData();
-            }
+            if (PlayerPrefs.HasKey(PLAYER_DATA)) return;
+            PlayerDataValues.MaxScores = 0;
+            SaveData();
         }
 
         public void SaveData()

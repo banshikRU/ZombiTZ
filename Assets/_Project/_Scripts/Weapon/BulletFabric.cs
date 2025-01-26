@@ -3,8 +3,6 @@ using ObjectPoolSystem;
 using Firebase.Analytics;
 using System;
 using _Project._Scripts.FXSystem;
-using SfxSystem;
-using VFXSystem;
 using Zenject;
 
 namespace WeaponControl

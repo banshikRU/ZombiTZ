@@ -1,6 +1,6 @@
 using System;
 
-namespace InputControll
+namespace InputControl
 {
     public interface IInput
     {

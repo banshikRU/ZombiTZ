@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace InputControll
+namespace InputControl
 {
     public class DesktopInput : IInput
     {

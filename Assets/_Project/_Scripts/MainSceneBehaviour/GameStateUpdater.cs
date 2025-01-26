@@ -25,7 +25,7 @@ namespace GameStateControl
         public bool IsGame { get; private set; }
 
         [Inject]
-        public void Contstruct(AnalyticServiceManager analyticServiceManager,AdsRewardGiver adsRewardGiver)
+        public void Construct(AnalyticServiceManager analyticServiceManager,AdsRewardGiver adsRewardGiver)
         {
             _adsRewardGiver = adsRewardGiver;
             _analyticServiceManager = analyticServiceManager;

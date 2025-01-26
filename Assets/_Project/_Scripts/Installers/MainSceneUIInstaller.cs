@@ -2,7 +2,6 @@ using UIControl;
 using UnityEngine;
 using Zenject;
 using InAppPurchase;
-using Advertisements;
 using UIControl.MVVM.Bullets;
 using UIControl.MVVM.HealthBar;
 

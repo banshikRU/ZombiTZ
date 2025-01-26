@@ -1,17 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
 using System;
+using System.Collections.Generic;
+using UnityEngine;
 using _Project._Scripts.FXSystem;
 using GameStateControl;
 using SfxSystem;
 using Unity.Mathematics;
 using VFXSystem;
-using WeaponControl;
-using ZombieGeneratorBehaviour;
+using Zenject;
 
-public class FXEventCatcher 
+public class FXEventCatcher : IInitializable,IDisposable
 {
     private readonly GameSettings _gameSettings;
     private readonly SfxPlayer _sfxPlayer;
@@ -25,7 +22,17 @@ public class FXEventCatcher
         _vfxGenerator = vfxGenerator;
         _sfxPlayer = sfxPlayer;
         _gameSettings = gameSettings;
+        
+    }
+    
+    public void Initialize()
+    {
         EventInit();
+    }
+    
+    public void Dispose()
+    {
+        UnsubscribeEvents();
     }
 
     private void EventInit()
@@ -64,4 +71,7 @@ public class FXEventCatcher
 
         return null;
     }
+
+
+
 }

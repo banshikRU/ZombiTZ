@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
 
 namespace ObjectPoolSystem
 {
@@ -9,12 +8,12 @@ namespace ObjectPoolSystem
         private PooledObject _objectToPool;
         private Stack<PooledObject> _stack;
 
-        public uint InitPoolSize { get; private set; }
+        private uint _initPoolSize;
 
         public void Init(PooledObject prefab, uint initialSize)
         {
             _objectToPool = prefab;
-            InitPoolSize = initialSize;
+            _initPoolSize = initialSize;
 
             SetupPool();
         }
@@ -26,7 +25,7 @@ namespace ObjectPoolSystem
                 return;
             }
             _stack = new Stack<PooledObject>();
-            for (int i = 0; i < InitPoolSize; i++)
+            for (int i = 0; i < _initPoolSize; i++)
             {
                 CreateNewInstance();
             }

@@ -4,8 +4,6 @@ using UnityEngine;
 using ZombieGeneratorBehaviour;
 using WeaponControl;
 using ObjectPoolSystem;
-using SfxSystem;
-using VFXSystem;
 
 namespace GameStateControl
 {
@@ -23,7 +21,6 @@ namespace GameStateControl
 
         public BaseBullet BaseBulletPrefab;
         public Weapon Weapon;
-        public Bullet Bullet;
         public float FireRate;
         public float WeaponDistanceFromPlayer;
 

@@ -1,14 +1,11 @@
-using InputControll;
+using InputControl;
 using ObjectPoolSystem;
 using PlayerControl;
-using Services;
-using UIControl;
 using UnityEngine;
 using WeaponControl;
 using Zenject;
 using ZombieGeneratorBehaviour;
 using GameStateControl;
-using System.Collections.Generic;
 using SfxSystem;
 using VFXSystem;
 
@@ -78,7 +75,7 @@ namespace GameSystem
                 .AsSingle()
                 .NonLazy();
             Container
-                .Bind<FXEventCatcher>()
+                .BindInterfacesAndSelfTo<FXEventCatcher>()
                 .AsSingle()
                 .WithArguments(_gameSettings)
                 .NonLazy();
