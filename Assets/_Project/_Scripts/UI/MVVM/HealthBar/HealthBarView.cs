@@ -2,7 +2,6 @@
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
-using Zenject;
 
 namespace UIControl.MVVM.HealthBar
 {
@@ -16,10 +15,9 @@ namespace UIControl.MVVM.HealthBar
         public void Init(HealthBarViewModel healthBarViewModel)
         {
             _healthBarViewModel = healthBarViewModel;
-            
             SubscribeEvent();
         }
-
+        
         private void SubscribeEvent()
         {
             _healthBarViewModel.ZombieHealth.Subscribe(HealthBarValueUpdate);

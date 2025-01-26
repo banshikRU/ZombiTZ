@@ -16,21 +16,13 @@ public static class Utilities
         float randomX;
         float randomY = topLeft.y; 
         int side = Random.Range(0, 3);
-        switch (side)
+        randomX = side switch
         {
-            case 0:
-                randomX = topLeft.x - Random.Range(0.5f, 1f);
-                break;
-            case 1:
-                randomX = topRight.x + Random.Range(0.5f, 1f);
-                break;
-            case 2:
-                randomX = Random.Range(topLeft.x, topRight.x);
-                break;
-            default:
-                randomX = Random.Range(topLeft.x, topRight.x);
-                break;
-        }
+            0 => topLeft.x - Random.Range(0.5f, 1f),
+            1 => topRight.x + Random.Range(0.5f, 1f),
+            2 => Random.Range(topLeft.x, topRight.x),
+            _ => Random.Range(topLeft.x, topRight.x)
+        };
         return new Vector3(randomX, randomY, 0);
     }
 }

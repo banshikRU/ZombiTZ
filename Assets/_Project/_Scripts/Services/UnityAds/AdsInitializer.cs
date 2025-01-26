@@ -1,9 +1,10 @@
 using UnityEngine;
 using UnityEngine.Advertisements;
+using Zenject;
 
 namespace Advertisements
 {
-    public class AdsInitializer : IUnityAdsInitializationListener
+    public class AdsInitializer : IUnityAdsInitializationListener, IInitializable
     {
         private readonly string _androidGameId;
         private readonly bool _testMode = true;
@@ -12,9 +13,13 @@ namespace Advertisements
         public AdsInitializer(string androidGameId)
         {
             _androidGameId = androidGameId;
+        }
+        
+        public void Initialize()
+        {
             InitializeAds();
         }
-
+        
         private void InitializeAds()
         {
 #if UNITY_ANDROID

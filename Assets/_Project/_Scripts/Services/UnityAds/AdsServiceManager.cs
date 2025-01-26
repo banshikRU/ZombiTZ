@@ -48,9 +48,8 @@ namespace Advertisements
 
         private void AddNewRewardId(string adsId, int rewardId)
         {
-            if (_rewardIdDictionary.ContainsKey(adsId))
+            if (!_rewardIdDictionary.TryAdd(adsId, rewardId))
                 return;
-            _rewardIdDictionary.Add(adsId, rewardId);
         }
 
         private int GiveRewardId(string adsId)

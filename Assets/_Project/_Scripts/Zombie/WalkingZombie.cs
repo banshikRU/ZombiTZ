@@ -4,7 +4,7 @@ namespace ZombieGeneratorBehaviour
 {
     public class WalkingZombie : ZombieBehaviour
     {
-        private void MoveToPlyer()
+        private void MoveToPlayer()
         {
             Vector3 direction = (_player.position - transform.position).normalized;
             float step = _speed * Time.deltaTime;
@@ -15,7 +15,7 @@ namespace ZombieGeneratorBehaviour
         {
             if (_isInit)
             {
-                MoveToPlyer();
+                MoveToPlayer();
             }
         }
     }

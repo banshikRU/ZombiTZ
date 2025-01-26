@@ -17,7 +17,10 @@ namespace UIControl.MVVM.Bullets
         public void Construct(BulletViewModel bulletViewModel)
         {
             _bulletViewModel = bulletViewModel;
-            
+        }
+
+        private void Awake()
+        {
             SubscribeEvents();
         }
 

@@ -20,7 +20,7 @@ namespace ObjectPoolSystem
             FirstPoolsInit();
         }
 
-        public void FirstPoolsInit()
+        private void FirstPoolsInit()
         {
             _pools = new Dictionary<string, ObjectPool>();
             foreach (var config in _poolsConfig)
@@ -34,11 +34,7 @@ namespace ObjectPoolSystem
 
         public ObjectPool GetPool(string prefabName)
         {
-            if (_pools.TryGetValue(prefabName, out ObjectPool pool))
-            {
-                return pool;
-            }
-            return null;
+            return _pools.GetValueOrDefault(prefabName);
         }
 
     }

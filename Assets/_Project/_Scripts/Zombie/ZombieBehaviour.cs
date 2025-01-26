@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using UIControl;
 using ObjectPoolSystem;
-using Unity.VisualScripting;
 
 namespace ZombieGeneratorBehaviour
 {
@@ -27,8 +26,8 @@ namespace ZombieGeneratorBehaviour
         protected Sprite _zombieSprite;
 
         protected Transform _player;
-        protected SpriteRenderer _sprite;
-        protected ScoreValueModel ScoreModel;
+        private SpriteRenderer _sprite;
+        private ScoreValueModel _scoreModel;
         private PooledObject _pooledObject;
         private ZombieFactory _zombieFactory;
 
@@ -44,10 +43,9 @@ namespace ZombieGeneratorBehaviour
 
         public virtual void Init(Transform player, ScoreValueModel gameManager,ZombieFactory zombieFactory)
         {
-
             _zombieFactory = zombieFactory;
             _currentHealPoint = _healPoint;
-            ScoreModel = gameManager;
+            _scoreModel = gameManager;
             _player = player;
             _isInit = true;
             _sprite.sprite = _zombieSprite;
@@ -57,11 +55,10 @@ namespace ZombieGeneratorBehaviour
         {
             _currentHealPoint -= damage;
             OnZombieTakeDamage?.Invoke(_currentHealPoint,_healPoint);
-            if (_currentHealPoint <= 0)
-            {
-                ScoreModel.AddScores(_scoresByDeath);
-                DeactivateObject();
-            }
+            if (_currentHealPoint > 0)
+                return;
+            _scoreModel.AddScores(_scoresByDeath);
+            DeactivateObject();
         }
 
         public void DeactivateObject()

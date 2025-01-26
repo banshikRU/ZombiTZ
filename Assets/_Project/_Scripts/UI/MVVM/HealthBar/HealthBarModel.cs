@@ -1,13 +1,14 @@
 ﻿using System;
 using UniRx;
 using UnityEngine;
+using Zenject;
 using ZombieGeneratorBehaviour;
 
 namespace UIControl.MVVM.HealthBar
 {
     public class HealthBarModel : IDisposable
     {
-        private ZombieBehaviour _zombieBehaviour;
+        private readonly ZombieBehaviour _zombieBehaviour;
         
         public readonly ReactiveProperty<float> ZombieHealth = new();
         public readonly ReactiveProperty<Vector3> ZombiePosition = new();
@@ -16,6 +17,11 @@ namespace UIControl.MVVM.HealthBar
         {
             _zombieBehaviour = zombieBehaviour;
             
+            Initialize();
+        }
+        
+        public void Initialize()
+        {
             SubscribeEvent();
         }
 

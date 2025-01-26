@@ -1,6 +1,4 @@
-using System;
 using TMPro;
-using UIControl.BaseMVVM;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -17,8 +15,11 @@ namespace  UIControl
         [Inject]
         public void Construct(ScoreViewModel scoreViewModel)
         {
-            this._scoreViewModel = scoreViewModel;
-            
+            _scoreViewModel = scoreViewModel;
+        }
+
+        private void Awake()
+        {
             SubscribeEvents();
         }
 

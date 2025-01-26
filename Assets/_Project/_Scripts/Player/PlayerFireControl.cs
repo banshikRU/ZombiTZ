@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 using GameStateControl;
 using Zenject;
 
 namespace WeaponControl
 {
-    public class PlayerFireControl : IInitializable
+    public class PlayerFireControl : IInitializable,IDisposable
     {
         private readonly WeaponHandler _weaponHandler;
         private readonly BulletFabric _bulletFabric;
@@ -24,10 +25,20 @@ namespace WeaponControl
 
         public void Initialize()
         {
+            SubscribeEvents();
+        }
+        
+        public void Dispose()
+        {
+            UnsubscribeEvent();
+        }
+
+        private void SubscribeEvents()
+        {
             _gameStateUpdater.OnGamePlayed += TakeWeapon;
         }
 
-        public void UnsubcribeEvent()
+        private void UnsubscribeEvent()
         {
             _gameStateUpdater.OnGamePlayed -= TakeWeapon;
         }
@@ -43,13 +54,13 @@ namespace WeaponControl
         {
             if (!_gameStateUpdater.IsGame)
                 return;
-            if (Time.time >= _shootInSecond)
-            {
-                _shootInSecond = Time.time + _shootsInOneSeconds;
-                _bulletFabric.Shot();
-            }
+            if (!(Time.time >= _shootInSecond)) 
+                return;
+            _shootInSecond = Time.time + _shootsInOneSeconds;
+            _bulletFabric.Shot();
         }
 
+       
     }
 }
 

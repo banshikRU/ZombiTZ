@@ -32,7 +32,8 @@ namespace SfxSystem
 
         public void PlaySfx(AudioClip clip)
         {
-            if (_audioSources.Count <= 0) return;
+            if (_audioSources.Count <= 0) 
+                return;
             float randomPitch = Random.Range(_minimalRandomPitch,_maximumRandomPitch);
             var audioSource = _audioSources.Dequeue();
             audioSource.pitch = randomPitch;

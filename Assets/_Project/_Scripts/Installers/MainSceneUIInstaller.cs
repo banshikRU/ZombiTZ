@@ -14,6 +14,8 @@ namespace GameSystem
         [SerializeField]
         private ScoresMenu _mainMenuScores;
         [SerializeField]
+        private GameObject _inGameStats;
+        [SerializeField]
         private IAPButtonController _iapButton;
         [SerializeField] 
         private GameObject _canvas;
@@ -48,6 +50,7 @@ namespace GameSystem
             Container
                 .BindInterfacesAndSelfTo<UIController>()
                 .AsSingle()
+                .WithArguments(_inGameStats)
                 .NonLazy();
             Container
                 .BindInterfacesTo<IAPButtonController>()

@@ -1,6 +1,7 @@
 ﻿using System;
 using UniRx;
 using UnityEngine;
+using Zenject;
 
 namespace UIControl.MVVM.HealthBar
 {
@@ -9,7 +10,7 @@ namespace UIControl.MVVM.HealthBar
         public readonly ReactiveProperty<float> ZombieHealth = new();
         public readonly ReactiveProperty<Vector3> ZombiePosition = new();
 
-        private HealthBarModel _healthBarModel;
+        private readonly HealthBarModel _healthBarModel;
 
         public HealthBarViewModel(HealthBarModel healthBarModel)
         {
@@ -18,7 +19,7 @@ namespace UIControl.MVVM.HealthBar
             Initialize();
         }
 
-        private void Initialize()
+        public void Initialize()
         {
             OnHealthChanged(_healthBarModel.ZombieHealth.Value);
             _healthBarModel.ZombieHealth.Subscribe(OnHealthChanged);

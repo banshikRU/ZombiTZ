@@ -2,11 +2,11 @@ using GameStateControl;
 using SaveSystem;
 using System;
 using UniRx;
-using UnityEngine;
+using Zenject;
 
 namespace UIControl
 {
-    public class ScoreValueModel : IDisposable
+    public class ScoreValueModel : IDisposable,IInitializable
     {
         private readonly SaveGameController _saveGameController;
         private readonly GameStateUpdater _gameStateUpdater;
@@ -17,12 +17,15 @@ namespace UIControl
         {
             _saveGameController = saveGameController;
             _gameStateUpdater = gameStateUpdater;
-
+        }
+        
+        public void Initialize()
+        {
             InitMaxScores();
             EventInit();
         }
-
-        public void UnsubcribeEvent()
+        
+        private void UnsubscribeEvent()
         {
             _gameStateUpdater.OnGamePlayed -= ResetCurrentScores;
         }
@@ -49,17 +52,15 @@ namespace UIControl
 
         public void UpdateMaxScores()
         {
-            if (_saveGameController.LoadData().MaxScores < CurrentScores.Value)
-            {
-                _saveGameController.PlayerDataValues.MaxScores = CurrentScores.Value;
-                _saveGameController.SaveData();
-            }
+            if (_saveGameController.LoadData().MaxScores >= CurrentScores.Value)
+                return;
+            _saveGameController.PlayerDataValues.MaxScores = CurrentScores.Value;
+            _saveGameController.SaveData();
         }
 
         public void Dispose()
         {
-            UnsubcribeEvent();
+            UnsubscribeEvent();
         }
     }
-
 }

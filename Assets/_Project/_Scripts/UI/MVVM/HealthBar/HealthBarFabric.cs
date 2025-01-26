@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 using ZombieGeneratorBehaviour;
@@ -9,21 +7,24 @@ using Object = UnityEngine.Object;
 
 namespace UIControl.MVVM.HealthBar
 {
-    public class HealthBarFabric : ITickable,IDisposable
+    public class HealthBarFabric : ITickable,IDisposable, IInitializable
     {
-        private ZombieFactory _zombieFactory;
-        private HealthBarView _healthBarViewPrefab;
-        private GameObject _canvas;
+        private readonly ZombieFactory _zombieFactory;
+        private readonly HealthBarView _healthBarViewPrefab;
+        private readonly GameObject _canvas;
         
-        private Dictionary<ZombieBehaviour,HealthBarModel> _healthBarModels = new Dictionary<ZombieBehaviour, HealthBarModel>();
-        private Dictionary<ZombieBehaviour,HealthBarView> _healthBarViews = new Dictionary<ZombieBehaviour, HealthBarView>();
+        private readonly Dictionary<ZombieBehaviour,HealthBarModel> _healthBarModels = new Dictionary<ZombieBehaviour, HealthBarModel>();
+        private readonly Dictionary<ZombieBehaviour,HealthBarView> _healthBarViews = new Dictionary<ZombieBehaviour, HealthBarView>();
         
         public HealthBarFabric(HealthBarView healthBarViewPrefab, GameObject canvas, ZombieFactory zombieFactory)
         {
             _healthBarViewPrefab = healthBarViewPrefab;
             _canvas = canvas;
             _zombieFactory = zombieFactory;
-            
+        }
+        
+        public void Initialize()
+        {
             SubscribeEvent();
         }
         
@@ -49,8 +50,8 @@ namespace UIControl.MVVM.HealthBar
             {
                 _healthBarViews.TryGetValue(zombieBehaviour, out HealthBarView healthBarView);
                 _healthBarModels.TryGetValue(zombieBehaviour, out HealthBarModel healthBarModel);
-                healthBarModel.UpdateZombieHealthBar(1,1);
-                healthBarView.gameObject.SetActive(true);
+                healthBarModel?.UpdateZombieHealthBar(1,1);
+                healthBarView?.gameObject.SetActive(true);
             }
             else
             {
@@ -68,7 +69,7 @@ namespace UIControl.MVVM.HealthBar
             foreach (var zombieBehaviour in _healthBarModels.Keys)
             {
                 _healthBarModels.TryGetValue(zombieBehaviour, out HealthBarModel healthBarModel);
-                healthBarModel.UpdateZombiePosition(zombieBehaviour.transform.position);
+                healthBarModel?.UpdateZombiePosition(zombieBehaviour.transform.position);
             }
         }
 

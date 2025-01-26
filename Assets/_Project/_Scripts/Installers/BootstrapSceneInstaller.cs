@@ -19,7 +19,7 @@ namespace GameSystem
         public override void InstallBindings()
         {
             Container
-                .Bind<FirebaseDependendeciesCheck>()
+                .Bind<FirebaseDependencies>()
                 .AsSingle()
                 .NonLazy();
             Container
@@ -28,7 +28,7 @@ namespace GameSystem
                 .WithArguments(_androidGameId)
                 .NonLazy();
             Container
-                .Bind<RemoteConfigManager>()
+                .BindInterfacesAndSelfTo<RemoteConfigManager>()
                 .AsSingle()
                 .WithArguments(_gameSettings,_useRemoteConfig)
                 .NonLazy();

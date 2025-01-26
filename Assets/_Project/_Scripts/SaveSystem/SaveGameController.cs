@@ -12,7 +12,8 @@ namespace SaveSystem
 
         public void Initialize()
         {
-            if (PlayerPrefs.HasKey(PLAYER_DATA)) return;
+            if (PlayerPrefs.HasKey(PLAYER_DATA))
+                return;
             PlayerDataValues.MaxScores = 0;
             SaveData();
         }

@@ -7,10 +7,11 @@ using _Project._Scripts.FXSystem;
 using Random = UnityEngine.Random;
 using Firebase.Analytics;
 using Advertisements;
+using Zenject;
 
 namespace ZombieGeneratorBehaviour
 {
-    public class ZombieFactory: IDisposable , IFXEventSender
+    public class ZombieFactory: IDisposable , IFXEventSender,IInitializable
     {
         public event Action<FXType, Vector3> OnFXEvent;
         public event Action <ZombieBehaviour> OnZombieSpawned;
@@ -22,17 +23,21 @@ namespace ZombieGeneratorBehaviour
         private readonly ScoreValueModel _scoreModel;
         private readonly AnalyticsDataCollector _analyticsDataCollector;
         private readonly AdsRewardGiver _adsRewardGiver;
-        private readonly List<ZombieBehaviour> _generatedActiveZombies;
+        private List<ZombieBehaviour> _generatedActiveZombies;
 
         public ZombieFactory(ObjectPoolOrganizer objectPoolOrganizer, List<GeneratedZombies> zombiesPrefab, Transform player, ScoreValueModel scoreValueModel,AnalyticsDataCollector analyticsDataCollector,AdsRewardGiver adsRewardGiver)
         {
             _adsRewardGiver = adsRewardGiver;
-            _generatedActiveZombies = new List<ZombieBehaviour>();
             _analyticsDataCollector = analyticsDataCollector;
             _objectPoolOrganizer = objectPoolOrganizer;
             _player = player;
             _scoreModel = scoreValueModel;
             _zombiePrefabs = zombiesPrefab;
+        }
+        
+        public void Initialize()
+        {
+            _generatedActiveZombies = new List<ZombieBehaviour>();
             EventInit();
         }
 
@@ -100,8 +105,7 @@ namespace ZombieGeneratorBehaviour
             ObjectPool objectPool = _objectPoolOrganizer.GetPool(zombie.gameObject.name);
             return objectPool.GetObject().gameObject;
         }
-
-
+        
     }
 }
 

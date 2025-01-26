@@ -25,11 +25,11 @@ namespace Firebase.Analytics
 
         public void LogEventEndGame()
         {
-            foreach (var parameter in _dataCollector.AnalizedParameters)
+            foreach (var parameter in _dataCollector.AnalyzedParameters)
             {
                // Debug.Log($"key: {parameter.Key}  value: {parameter.Value}");
             }
-            LogEvent("End Game", _dataCollector.AnalizedParameters);
+            LogEvent("End Game", _dataCollector.AnalyzedParameters);
         }
     }
 }
