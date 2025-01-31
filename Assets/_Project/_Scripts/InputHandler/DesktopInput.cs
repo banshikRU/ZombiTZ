@@ -14,6 +14,11 @@ namespace InputControl
                 OnShoot?.Invoke();
             }
         }
+
+        public void Tick()
+        {
+            TakeShoot();
+        }
     }
 }
 

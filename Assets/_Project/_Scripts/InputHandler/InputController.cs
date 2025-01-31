@@ -4,7 +4,7 @@ using Zenject;
 
 namespace InputControl
 {
-    public class InputController : ITickable,IDisposable,IInitializable
+    public class InputController : IDisposable,IInitializable
     {
         private readonly PlayerFireControl _playerFireControl;
         private readonly IInput _currentInput;
@@ -18,11 +18,6 @@ namespace InputControl
         public void Initialize()
         {
             SubscribeEvent();
-        }
-
-        public void Tick()
-        {
-            TakeInput();
         }
         
         public void Dispose()
@@ -38,11 +33,6 @@ namespace InputControl
         private void UnsubscribeEvent()
         {
             _currentInput.OnShoot -= _playerFireControl.Shot;
-        }
-
-        private void TakeInput()
-        {
-            _currentInput?.TakeShoot();
         }
     }
 }
