@@ -1,6 +1,7 @@
 using UnityEngine;
 using PlayerControl;
 using Zenject;
+using Newtonsoft.Json;
 
 namespace SaveSystem
 {
@@ -21,7 +22,7 @@ namespace SaveSystem
 
         public void SaveData()
         {
-            string json = JsonUtility.ToJson(PlayerDataValues);
+            string json = JsonConvert.SerializeObject(PlayerDataValues);
             PlayerPrefs.SetString(PLAYER_DATA, json);
             PlayerPrefs.Save();
         }
@@ -29,7 +30,7 @@ namespace SaveSystem
         public PlayerData LoadData()
         {
             string jsonData = PlayerPrefs.GetString(PLAYER_DATA);
-            return JsonUtility.FromJson<PlayerData>(jsonData);
+            return JsonConvert.DeserializeObject<PlayerData>(jsonData);
 
         }
 

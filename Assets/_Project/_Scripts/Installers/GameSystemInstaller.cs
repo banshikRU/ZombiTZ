@@ -19,7 +19,7 @@ namespace GameSystem
                 .BindInterfacesAndSelfTo<DesktopInput>()
                 .AsSingle();
             Container
-                .Bind<SaveGameController>()
+                .BindInterfacesAndSelfTo<SaveGameController>()
                 .AsSingle();
             Container
                 .Bind<AnalyticsDataCollector>()
