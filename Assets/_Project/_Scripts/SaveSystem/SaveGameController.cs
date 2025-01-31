@@ -7,8 +7,9 @@ namespace SaveSystem
     public class SaveGameController: ISaveHandler<PlayerData>, IInitializable
     { 
         private const string PLAYER_DATA = "PlayerData";
-
-        public readonly PlayerData PlayerDataValues = new();
+        
+        public PlayerData PlayerDataValues { get; set; }
+        
 
         public void Initialize()
         {

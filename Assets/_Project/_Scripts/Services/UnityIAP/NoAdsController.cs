@@ -1,6 +1,7 @@
 using InAppPurchase;
 using SaveSystem;
 using System;
+using PlayerControl;
 using UnityEngine;
 
 namespace Services
@@ -9,12 +10,12 @@ namespace Services
     {
         private const string NO_ADS_ID = "com.DefaultCompany.NoAds";
 
-        private readonly SaveGameController _saveGameController;
+        private readonly ISaveHandler<PlayerData> _saveGameController;
         private readonly InAppStore _inAppStore;
 
         public bool IsAdsPurchased { get; private set; }
 
-        public NoAdsController(SaveGameController saveGameController, InAppStore inAppStore)
+        public NoAdsController(ISaveHandler<PlayerData> saveGameController, InAppStore inAppStore)
         {
             _inAppStore = inAppStore;
             _saveGameController = saveGameController;

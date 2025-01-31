@@ -1,7 +1,8 @@
 ﻿namespace SaveSystem
 {
-    public interface ISaveHandler<out T>
+    public interface ISaveHandler<T>
     {
+        public T  PlayerDataValues{get;set;}
         public void SaveData();
         public T LoadData();
     }

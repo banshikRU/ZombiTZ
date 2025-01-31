@@ -1,6 +1,7 @@
 using GameStateControl;
 using SaveSystem;
 using System;
+using PlayerControl;
 using UniRx;
 using Zenject;
 
@@ -8,12 +9,12 @@ namespace UIControl
 {
     public class ScoreValueModel : IDisposable,IInitializable
     {
-        private readonly SaveGameController _saveGameController;
+        private readonly ISaveHandler<PlayerData> _saveGameController;
         private readonly GameStateUpdater _gameStateUpdater;
 
         public readonly ReactiveProperty<int> CurrentScores = new();
 
-        public ScoreValueModel(SaveGameController saveGameController, GameStateUpdater gameStateUpdater)
+        public ScoreValueModel(ISaveHandler<PlayerData> saveGameController, GameStateUpdater gameStateUpdater)
         {
             _saveGameController = saveGameController;
             _gameStateUpdater = gameStateUpdater;
