@@ -4,7 +4,7 @@ using Zenject;
 
 namespace SaveSystem
 {
-    public class SaveGameController: IInitializable
+    public class SaveGameController: ISaveHandler<PlayerData>, IInitializable
     { 
         private const string PLAYER_DATA = "PlayerData";
 
@@ -29,6 +29,7 @@ namespace SaveSystem
         {
             string jsonData = PlayerPrefs.GetString(PLAYER_DATA);
             return JsonUtility.FromJson<PlayerData>(jsonData);
+
         }
 
     }

@@ -25,19 +25,19 @@ namespace InputControl
             TakeInput();
         }
         
-        private void UnsubscribeEvent()
-        {
-            _currentInput.OnShoot -= _playerFireControl.Shot;
-        }
-
         public void Dispose()
         {
             UnsubscribeEvent();
         }
-
+        
         private void SubscribeEvent()
         {
             _currentInput.OnShoot += _playerFireControl.Shot;
+        }
+        
+        private void UnsubscribeEvent()
+        {
+            _currentInput.OnShoot -= _playerFireControl.Shot;
         }
 
         private void TakeInput()
