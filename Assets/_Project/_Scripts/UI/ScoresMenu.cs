@@ -16,6 +16,7 @@ namespace UIControl
         {
             _scoreValueModel = scoreValueModel;
         }
+        
 
         private void OnEnable()
         {

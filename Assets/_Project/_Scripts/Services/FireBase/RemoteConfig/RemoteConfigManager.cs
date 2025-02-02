@@ -40,7 +40,7 @@ namespace Firebase.RemoteConfig
                 {
                     FirebaseRemoteConfig.DefaultInstance.ActivateAsync();
                     LoadRemoteConfig();
-                    IsRemoteConfigUsed();
+                    CheckingUseRemoteConfiguration();
                 }
                 else
                 {
@@ -75,7 +75,7 @@ namespace Firebase.RemoteConfig
 
         }
 
-        private void IsRemoteConfigUsed()
+        private void CheckingUseRemoteConfiguration()
         {
             if (_useRemoteConfig)
             {
@@ -89,10 +89,6 @@ namespace Firebase.RemoteConfig
             _gameSettings.WeaponDistanceFromPlayer = _gameSettingsParameters.WeaponDistanceFromPlayer;
             _gameSettings.FireRate = _gameSettingsParameters.FireRate;
         }
-
- 
     }
-
-
 }
 

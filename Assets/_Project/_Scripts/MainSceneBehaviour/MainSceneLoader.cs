@@ -1,18 +1,18 @@
 using UnityEngine.SceneManagement;
+using Zenject;
 
 namespace GameSystem
 {
-    public class MainSceneLoader
+    public class MainSceneLoader : IInitializable
     {
-        public MainSceneLoader()
+        public void Initialize()
         {
             LoadMainScene();
         }
-
+        
         private void LoadMainScene()
         {
             SceneManager.LoadScene("MainScene");
         }
     }
 }
-

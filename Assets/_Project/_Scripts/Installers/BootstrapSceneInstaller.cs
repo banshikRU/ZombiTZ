@@ -19,7 +19,7 @@ namespace GameSystem
         public override void InstallBindings()
         {
             Container
-                .Bind<FirebaseDependencies>()
+                .BindInterfacesAndSelfTo<FirebaseDependencies>()
                 .AsSingle()
                 .NonLazy();
             Container
@@ -33,7 +33,7 @@ namespace GameSystem
                 .WithArguments(_gameSettings,_useRemoteConfig)
                 .NonLazy();
             Container
-                .Bind<MainSceneLoader>()
+                .BindInterfacesTo<MainSceneLoader>()
                 .AsSingle()
                 .NonLazy();
         }
