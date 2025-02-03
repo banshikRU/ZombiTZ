@@ -13,8 +13,8 @@ namespace UIControl.MVVM.HealthBar
         private readonly HealthBarView _healthBarViewPrefab;
         private readonly GameObject _canvas;
         
-        private readonly Dictionary<ZombieBehaviour,HealthBarModel> _healthBarModels = new Dictionary<ZombieBehaviour, HealthBarModel>();
-        private readonly Dictionary<ZombieBehaviour,HealthBarView> _healthBarViews = new Dictionary<ZombieBehaviour, HealthBarView>();
+        private readonly Dictionary<ZombieBehaviour,HealthBarViewModel> _healthBarViewModels = new ();
+        private readonly Dictionary<ZombieBehaviour,HealthBarView> _healthBarViews = new ();
         
         public HealthBarFabric(HealthBarView healthBarViewPrefab, GameObject canvas, ZombieFactory zombieFactory)
         {
@@ -46,19 +46,19 @@ namespace UIControl.MVVM.HealthBar
 
         private void CheckForGeneratedZombies(ZombieBehaviour zombieBehaviour)
         {
-            if (_healthBarModels.ContainsKey(zombieBehaviour))
+            if (_healthBarViewModels.ContainsKey(zombieBehaviour))
             {
                 _healthBarViews.TryGetValue(zombieBehaviour, out HealthBarView healthBarView);
-                _healthBarModels.TryGetValue(zombieBehaviour, out HealthBarModel healthBarModel);
+                _healthBarViewModels.TryGetValue(zombieBehaviour, out HealthBarViewModel healthBarModel);
                 healthBarModel?.UpdateZombieHealthBar(1,1);
                 healthBarView?.gameObject.SetActive(true);
             }
             else
             {
-                HealthBarModel healthBarModel = new HealthBarModel(zombieBehaviour);
-                HealthBarViewModel healthBarViewModel = new HealthBarViewModel(healthBarModel);
+                HealthBarViewModel healthBarViewModel = new HealthBarViewModel(zombieBehaviour);
+                healthBarViewModel.Initialize(); 
                 HealthBarView healthBar = Object.Instantiate(_healthBarViewPrefab, _canvas.transform);
-                _healthBarModels.Add(zombieBehaviour, healthBarModel);
+                _healthBarViewModels.Add(zombieBehaviour, healthBarViewModel);
                 _healthBarViews.Add(zombieBehaviour, healthBar);
                 healthBar.Init(healthBarViewModel);
             }
@@ -66,13 +66,13 @@ namespace UIControl.MVVM.HealthBar
         
         private void UpdateZombiesPosition()
         {
-            foreach (var zombieBehaviour in _healthBarModels.Keys)
+            foreach (var zombieBehaviour in _healthBarViewModels.Keys)
             {
-                _healthBarModels.TryGetValue(zombieBehaviour, out HealthBarModel healthBarModel);
-                healthBarModel?.UpdateZombiePosition(zombieBehaviour.transform.position);
+                _healthBarViewModels.TryGetValue(zombieBehaviour, out HealthBarViewModel healthBarViewModel);
+                healthBarViewModel?.UpdateZombiePosition(zombieBehaviour.transform.position);
             }
         }
-
+        
         public void Dispose()
         {
             _zombieFactory.OnZombieDestroyed -= DisableHealBar;

@@ -2,6 +2,7 @@
 using UniRx;
 using UnityEngine;
 using Zenject;
+using ZombieGeneratorBehaviour;
 
 namespace UIControl.MVVM.HealthBar
 {
@@ -9,36 +10,40 @@ namespace UIControl.MVVM.HealthBar
     {
         public readonly ReactiveProperty<float> ZombieHealth = new();
         public readonly ReactiveProperty<Vector3> ZombiePosition = new();
+        
+        private readonly ZombieBehaviour _zombie;
 
-        private readonly HealthBarModel _healthBarModel;
-
-        public HealthBarViewModel(HealthBarModel healthBarModel)
+        public HealthBarViewModel(ZombieBehaviour zombie)
         {
-            _healthBarModel = healthBarModel;
-            
-            Initialize();
+            _zombie = zombie;
         }
 
         public void Initialize()
         {
-            OnHealthChanged(_healthBarModel.ZombieHealth.Value);
-            _healthBarModel.ZombieHealth.Subscribe(OnHealthChanged);
-            _healthBarModel.ZombiePosition.Subscribe(OnPositionChanged);
+            UpdateZombieHealthBar(1,1);
+            SubscribeEvent();
         }
-        private void OnHealthChanged(float value)
+        
+        private void SubscribeEvent()
         {
-            ZombieHealth.Value = value;
+            UpdateZombieHealthBar(1,1);
+            _zombie.OnZombieTakeDamage += UpdateZombieHealthBar;
         }
 
-        private void OnPositionChanged(Vector3 position)
+        public void UpdateZombieHealthBar(int value,int maxValue)
+        {
+            ZombieHealth.Value =(float)value/maxValue;
+        }
+        
+        public void UpdateZombiePosition(Vector3 position)
         {
             Vector3 screenPosition = Camera.main.WorldToScreenPoint(position);
             ZombiePosition.Value = new Vector3(screenPosition.x, screenPosition.y + 50, screenPosition.z); 
         }
-
+        
         public void Dispose()
         {
-            _healthBarModel.ZombieHealth.Dispose();
+            _zombie.OnZombieTakeDamage -= UpdateZombieHealthBar;
         }
     }
 }
