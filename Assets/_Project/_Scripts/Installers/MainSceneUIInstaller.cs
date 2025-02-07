@@ -10,36 +10,14 @@ namespace GameSystem
     public class MainSceneUIInstaller : MonoInstaller
     {
         [SerializeField]
-        private ScoresMenu _deadMenuScores;
-        [SerializeField]
-        private ScoresMenu _mainMenuScores;
-        [SerializeField]
-        private GameObject _inGameStats;
-        [SerializeField]
         private IAPButtonController _iapButton;
         [SerializeField] 
         private GameObject _canvas;
         [SerializeField]
         private HealthBarView _healthBarView;
         
-
         public override void InstallBindings()
         {
-            Container
-                .Bind<ScoresMenu>()
-                .WithId(ZenjectIds.MainMenu)
-                .FromInstance(_mainMenuScores)
-                .AsCached();
-            Container
-                .Bind<ScoresMenu>()
-                .WithId(ZenjectIds.DeadMenu)
-                .FromInstance(_deadMenuScores)
-                .AsCached();
-            Container
-                .BindInterfacesAndSelfTo<UIController>()
-                .AsSingle()
-                .WithArguments(_inGameStats)
-                .NonLazy();
             Container
                 .BindInterfacesTo<IAPButtonController>()
                 .FromInstance(_iapButton)

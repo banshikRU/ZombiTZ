@@ -79,7 +79,9 @@ namespace ZombieGeneratorBehaviour
 
         private void DeactivateAllZombies()
         {
-            foreach (var zombieBehaviour in _generatedActiveZombies)
+            List<ZombieBehaviour> generatedZombies = new List<ZombieBehaviour>(_generatedActiveZombies);
+            
+            foreach (var zombieBehaviour in generatedZombies)
             {
                 zombieBehaviour.DeactivateObject();
             }

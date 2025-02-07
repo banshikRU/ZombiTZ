@@ -14,9 +14,16 @@ namespace SaveSystem
 
         public void Initialize()
         {
+            PlayerDataValues = new PlayerData();
             if (PlayerPrefs.HasKey(PLAYER_DATA))
+            {
+                PlayerDataValues = LoadData();
                 return;
-            PlayerDataValues.MaxScores = 0;
+            }
+            PlayerDataValues = new PlayerData
+            {
+                MaxScores = 0
+            };
             SaveData();
         }
 

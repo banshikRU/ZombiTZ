@@ -915,8 +915,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d089d1aaaf8136d4cae3894c80d8e67c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _deadMenuScores: {fileID: 932228841}
-  _mainMenuScores: {fileID: 1849207694}
+  _deadMenuScores: {fileID: 932228837}
+  _mainMenuScores: {fileID: 1849207690}
   _inGameStats: {fileID: 2044511419}
   _iapButton: {fileID: 1088990094}
   _canvas: {fileID: 47028877}
@@ -1226,7 +1226,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 402285066}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: AdsButton, Assembly-CSharp
         m_MethodName: ShowAd
         m_Mode: 1
@@ -1247,13 +1247,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 402285061}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a238a76741322e40bbdecd5104aeab1, type: 3}
+  m_Script: {fileID: 11500000, guid: cb25a6f04b1d4cf1b7893aa70184e9bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _showAdButton: {fileID: 402285065}
   _adsUnitId: Interstitial_Android
   _rewardId: 2
-  _adsType: 1
+  _adsType: 0
 --- !u!1 &495808491
 GameObject:
   m_ObjectHideFlags: 0
@@ -1987,7 +1987,6 @@ GameObject:
   - component: {fileID: 932228838}
   - component: {fileID: 932228840}
   - component: {fileID: 932228839}
-  - component: {fileID: 932228841}
   m_Layer: 5
   m_Name: 'DeadMenuBackGround '
   m_TagString: Untagged
@@ -2056,19 +2055,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 932228837}
   m_CullTransparentMesh: 1
---- !u!114 &932228841
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 932228837}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93298be72dcc56f4d8be1d2f6c241549, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _currentScores: {fileID: 951431944}
 --- !u!1 &951431942
 GameObject:
   m_ObjectHideFlags: 0
@@ -3312,7 +3298,7 @@ GameObject:
   - component: {fileID: 1838245385}
   - component: {fileID: 1838245384}
   - component: {fileID: 1838245383}
-  - component: {fileID: 1838245382}
+  - component: {fileID: 1838245386}
   m_Layer: 5
   m_Name: RewardedButtonBackGround
   m_TagString: Untagged
@@ -3340,22 +3326,6 @@ RectTransform:
   m_AnchoredPosition: {x: -90.00001, y: 0}
   m_SizeDelta: {x: 180, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1838245382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1838245380}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a238a76741322e40bbdecd5104aeab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _showAdButton: {fileID: 1838245383}
-  _adsUnitId: Rewarded_Android
-  _rewardId: 0
-  _adsType: 0
 --- !u!114 &1838245383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3400,7 +3370,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1838245382}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: RewardedAdsButton, Assembly-CSharp
         m_MethodName: ShowAd
         m_Mode: 1
@@ -3450,6 +3420,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1838245380}
   m_CullTransparentMesh: 1
+--- !u!114 &1838245386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838245380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb25a6f04b1d4cf1b7893aa70184e9bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showAdButton: {fileID: 1838245383}
+  _adsUnitId: Rewarded_Ad
+  _rewardId: 0
+  _adsType: 0
 --- !u!1 &1849207690
 GameObject:
   m_ObjectHideFlags: 0
@@ -3461,14 +3447,13 @@ GameObject:
   - component: {fileID: 1849207691}
   - component: {fileID: 1849207693}
   - component: {fileID: 1849207692}
-  - component: {fileID: 1849207694}
   m_Layer: 5
   m_Name: MainMenuBackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1849207691
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3531,19 +3516,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1849207690}
   m_CullTransparentMesh: 1
---- !u!114 &1849207694
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1849207690}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93298be72dcc56f4d8be1d2f6c241549, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _currentScores: {fileID: 1941837914}
 --- !u!1 &1864994928
 GameObject:
   m_ObjectHideFlags: 0
@@ -3849,6 +3821,7 @@ GameObject:
   - component: {fileID: 1941837913}
   - component: {fileID: 1941837915}
   - component: {fileID: 1941837914}
+  - component: {fileID: 1941837916}
   m_Layer: 5
   m_Name: BestScoreValue
   m_TagString: Untagged
@@ -3972,6 +3945,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1941837912}
   m_CullTransparentMesh: 1
+--- !u!114 &1941837916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1941837912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b6e674f1ca8fb34299fb72903853502, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currencyValue: {fileID: 1941837914}
 --- !u!1 &2030933595
 GameObject:
   m_ObjectHideFlags: 0

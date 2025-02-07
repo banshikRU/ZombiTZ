@@ -1,5 +1,7 @@
+using System.Runtime.ConstrainedExecution;
 using UIControl;
 using UIControl.MVVM.Bullets;
+using UIControl.MVVM.MainMenu;
 using Zenject;
 
 namespace GameSystem
@@ -20,6 +22,13 @@ namespace GameSystem
             Container
                 .BindInterfacesAndSelfTo<ScoreViewModel>()
                 .AsSingle();
+            Container
+                .BindInterfacesAndSelfTo<AdsButtonViewModel>()
+                .AsSingle();
+            Container
+                .BindInterfacesAndSelfTo<UIViewModel>()
+                .AsSingle();
+            
         }
     }
 }

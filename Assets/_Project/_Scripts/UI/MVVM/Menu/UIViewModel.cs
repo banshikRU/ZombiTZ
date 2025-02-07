@@ -1,36 +1,28 @@
+﻿using System;
+using Advertisements;
 using GameStateControl;
 using PlayerControl;
-using Zenject;
-using System;
+using UniRx;
 using UnityEngine;
-using DG.Tweening;
-using Advertisements;
-using Zenject.ReflectionBaking.Mono.CompilerServices.SymbolWriter;
 
 namespace UIControl
 {
-    public class UIController: IDisposable,IInitializable
+    public class UIViewModel :  IDisposable
     {
-        private readonly ScoresMenu _mainMenu;
-        private readonly ScoresMenu _deathMenu;
-        private readonly GameObject _inGameStats;
         private readonly GameStateUpdater _gameStateUpdater;
         private readonly PlayerBehaviour _player;
         private readonly AdsRewardGiver _adsRewardGiver;
+        
+        public readonly ReactiveProperty<bool> IsMainMenuVisible = new ();
+        public readonly ReactiveProperty<bool> IsDeathMenuVisible = new ();
+        public readonly ReactiveProperty<bool> IsInGameStatsVisible = new ();
 
-        public UIController([Inject(Id = ZenjectIds.MainMenu)] ScoresMenu mainMenu, [Inject(Id = ZenjectIds.DeadMenu)] ScoresMenu deathMenu,GameStateUpdater gameStateUpdater, PlayerBehaviour player,AdsRewardGiver adsRewardGiver,GameObject inGameStats)
+        public UIViewModel(GameStateUpdater gameStateUpdater, PlayerBehaviour player, AdsRewardGiver adsRewardGiver)
         {
-            _inGameStats  = inGameStats;
-            _adsRewardGiver = adsRewardGiver;
-            _deathMenu = deathMenu;
-            _mainMenu = mainMenu;
             _gameStateUpdater = gameStateUpdater;
             _player = player;
-        }
-        
-        public void Initialize()
-        {
-            _mainMenu.gameObject.SetActive(true);
+            _adsRewardGiver = adsRewardGiver;
+
             EventInit();
         }
 
@@ -59,30 +51,40 @@ namespace UIControl
 
         private void OffMainMenu()
         {
-            _mainMenu.gameObject.SetActive(false);
+            IsMainMenuVisible.Value = false;
         }
 
         private void OnEndGameMenu()
         {
-            _deathMenu.gameObject.SetActive(true);
-            _deathMenu.gameObject.transform.DOScale(new Vector3(1, 1, 1), 3);
+            IsDeathMenuVisible.Value = true;
         }
 
         private void OffEndGameMenu()
         {
-            _deathMenu.gameObject.SetActive(false);
-            _deathMenu.gameObject.transform.DOScale(new Vector3(0, 0, 0), 3);
+            IsDeathMenuVisible.Value = false;
         }
 
         private void OnInGameStats()
         {
-            _inGameStats.gameObject.SetActive(true);
+            IsInGameStatsVisible.Value = true;
         }
 
         private void OffInGameStats()
         {
-            _inGameStats.gameObject.SetActive(false);
+            IsInGameStatsVisible.Value = false;
         }
+
+        public void StartGame()
+        {
+            _gameStateUpdater.StartGame();
+        }
+
+        public void RestartGame()
+        {
+            _gameStateUpdater.RestartGame();
+        }
+        
+        
+        
     }
 }
-
