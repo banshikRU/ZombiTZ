@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using UniRx;
+﻿using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -8,11 +7,18 @@ namespace UIControl
 {
     public class UIView : MonoBehaviour
     {
-        [SerializeField] private GameObject _mainMenu;
-        [SerializeField] private GameObject _deathMenu;
-        [SerializeField] private GameObject _inGameStats;
-        [SerializeField] private Button _playButton;
-        [SerializeField] private Button _gameEndButton;
+        [SerializeField] 
+        private GameObject _mainMenu;
+        [SerializeField] 
+        private GameObject _deathMenu;
+        [SerializeField] 
+        private GameObject _inGameStats;
+        [SerializeField] 
+        private Button _playButton;
+        [SerializeField] 
+        private Button _gameEndButton;
+        [SerializeField]
+        private Button _purchaseNoAdsButton;
 
         private UIViewModel _viewModel;
 
@@ -27,6 +33,13 @@ namespace UIControl
             SubscribeEvents();
             AddListenersForButtons();
             _viewModel.IsMainMenuVisible.Value = true;
+        }
+        
+        private void OnDestroy()
+        {
+            _viewModel.IsDeathMenuVisible.Dispose();
+            _viewModel.IsMainMenuVisible.Dispose();
+            _viewModel.IsInGameStatsVisible.Dispose();
         }
 
         private void SubscribeEvents()
@@ -52,13 +65,6 @@ namespace UIControl
             _inGameStats.SetActive(isInGameStatsVisible);
         }
         
-        private void OnDestroy()
-        {
-            _viewModel.IsDeathMenuVisible.Dispose();
-            _viewModel.IsMainMenuVisible.Dispose();
-            _viewModel.IsInGameStatsVisible.Dispose();
-        }
-
         private void AddListenersForButtons()
         {
             _playButton.onClick.AddListener(_viewModel.StartGame);

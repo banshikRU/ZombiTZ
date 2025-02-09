@@ -1,7 +1,6 @@
 ﻿using Advertisements;
 using Services;
 using UnityEngine.UI;
-using Zenject;
 
 namespace UIControl.MVVM.MainMenu
 {

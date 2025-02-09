@@ -26,14 +26,10 @@ namespace UIControl.MVVM.Bullets
 
         private void SubscribeEvents()
         {
-            _bulletViewModel.Bullets.Subscribe(DisplayBullet);
+            _bulletViewModel.Bullets.Subscribe(DisplayBullet)
+                .AddTo(this);
         }
-
-        private void OnDestroy()
-        {
-            _bulletViewModel.Bullets.Dispose();
-        }
-
+        
         private void DisplayBullet(int value)
         {
             _currentBulletValue.text = value.ToString();

@@ -37,7 +37,6 @@ namespace Services
         private void IsNoAdsPurchasedCheck()
         {
             IsAdsPurchased = _saveGameController.LoadData().NoAdsPurchased;
-            Debug.Log(IsAdsPurchased);
         }
 
         private void SetNoAdsPurchase(string Id)

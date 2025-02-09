@@ -2,12 +2,13 @@
 using Advertisements;
 using GameStateControl;
 using PlayerControl;
+using Services;
 using UniRx;
-using UnityEngine;
+using Zenject;
 
 namespace UIControl
 {
-    public class UIViewModel :  IDisposable
+    public class UIViewModel :  IDisposable,IInitializable
     {
         private readonly GameStateUpdater _gameStateUpdater;
         private readonly PlayerBehaviour _player;
@@ -22,13 +23,26 @@ namespace UIControl
             _gameStateUpdater = gameStateUpdater;
             _player = player;
             _adsRewardGiver = adsRewardGiver;
-
+        }
+        
+        public void Initialize()
+        {
             EventInit();
         }
 
         public void Dispose()
         {
             UnsubscribeEvent();
+        }
+        
+        public void StartGame()
+        {
+            _gameStateUpdater.StartGame();
+        }
+
+        public void RestartGame()
+        {
+            _gameStateUpdater.RestartGame();
         }
 
         private void UnsubscribeEvent()
@@ -73,18 +87,5 @@ namespace UIControl
         {
             IsInGameStatsVisible.Value = false;
         }
-
-        public void StartGame()
-        {
-            _gameStateUpdater.StartGame();
-        }
-
-        public void RestartGame()
-        {
-            _gameStateUpdater.RestartGame();
-        }
-        
-        
-        
     }
 }

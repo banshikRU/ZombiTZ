@@ -4,6 +4,7 @@ using Zenject;
 using InAppPurchase;
 using UIControl.MVVM.Bullets;
 using UIControl.MVVM.HealthBar;
+using UIControl.MVVM.MainMenu;
 
 namespace GameSystem
 {
@@ -28,6 +29,24 @@ namespace GameSystem
                 .AsSingle()
                 .WithArguments(_healthBarView,_canvas)
                 .NonLazy();
+            Container
+                .BindInterfacesAndSelfTo<ScoreValueModel>()
+                .AsSingle();
+            Container 
+                .BindInterfacesAndSelfTo<BulletValueModel>()
+                .AsSingle();
+            Container
+                .BindInterfacesAndSelfTo<BulletViewModel>()
+                .AsSingle();
+            Container
+                .BindInterfacesAndSelfTo<ScoreViewModel>()
+                .AsSingle();
+            Container
+                .BindInterfacesAndSelfTo<AdsButtonViewModel>()
+                .AsSingle();
+            Container
+                .BindInterfacesAndSelfTo<UIViewModel>()
+                .AsSingle();
         }
     }
 }
