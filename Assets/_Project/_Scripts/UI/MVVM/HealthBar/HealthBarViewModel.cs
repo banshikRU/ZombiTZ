@@ -1,7 +1,6 @@
 ﻿using System;
 using UniRx;
 using UnityEngine;
-using Zenject;
 using ZombieGeneratorBehaviour;
 
 namespace UIControl.MVVM.HealthBar
@@ -24,10 +23,9 @@ namespace UIControl.MVVM.HealthBar
             SubscribeEvent();
         }
         
-        private void SubscribeEvent()
+        public void Dispose()
         {
-            UpdateZombieHealthBar(1,1);
-            _zombie.OnZombieTakeDamage += UpdateZombieHealthBar;
+            _zombie.OnZombieTakeDamage -= UpdateZombieHealthBar;
         }
 
         public void UpdateZombieHealthBar(int value,int maxValue)
@@ -41,9 +39,10 @@ namespace UIControl.MVVM.HealthBar
             ZombiePosition.Value = new Vector3(screenPosition.x, screenPosition.y + 50, screenPosition.z); 
         }
         
-        public void Dispose()
+        private void SubscribeEvent()
         {
-            _zombie.OnZombieTakeDamage -= UpdateZombieHealthBar;
+            UpdateZombieHealthBar(1,1);
+            _zombie.OnZombieTakeDamage += UpdateZombieHealthBar;
         }
     }
 }

@@ -6,7 +6,9 @@ using GameStateControl;
 using SfxSystem;
 using Unity.Mathematics;
 using VFXSystem;
+using WeaponControl;
 using Zenject;
+using ZombieGeneratorBehaviour;
 
 public class FXEventCatcher : IInitializable,IDisposable
 {
@@ -39,7 +41,7 @@ public class FXEventCatcher : IInitializable,IDisposable
     {
         foreach (IFXEventSender eventSender in _fxEventSenders)
         {
-            eventSender.OnFXEvent += CatchEvents;
+            eventSender.OnFXEvent += SenderIdentification;
         }
     }
     
@@ -47,13 +49,25 @@ public class FXEventCatcher : IInitializable,IDisposable
     {
         foreach (IFXEventSender eventSender in _fxEventSenders)
         {
-            eventSender.OnFXEvent -= CatchEvents;
+            eventSender.OnFXEvent -= SenderIdentification;
+        }
+    }
+    
+    private void SenderIdentification(Vector3 position,IFXEventSender sender)
+    {
+        switch (sender)
+        {
+            case ZombieFactory:
+                CreateFx(position,FXType.ZombieDie);
+                break;
+            case BulletFabric:
+                CreateFx(position,FXType.BulletShot);
+                break;
         }
     }
 
-    private void CatchEvents(FXType fxType,Vector3 position)
+    private void CreateFx(Vector3 position,FXType fxType)
     {
-
         FXBehaviour currentFXBehaviour  = GetFXBehaviour(fxType);
         _vfxGenerator.PlayVFX(currentFXBehaviour.VfxPrefab, position,quaternion.identity);
         _sfxPlayer.PlaySfx(currentFXBehaviour.SfxSound);

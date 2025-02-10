@@ -22,14 +22,14 @@ namespace UIControl.MVVM.Bullets
             _bulletFabric.OnShot += OnShot;
         }
 
-        private void OnShot()
-        {
-            Bullets.Value++;
-        }
-
         public void Dispose()
         {
             _bulletFabric.OnShot -= OnShot;
+        }
+        
+        private void OnShot()
+        {
+            Bullets.Value++;
         }
     }
 }
