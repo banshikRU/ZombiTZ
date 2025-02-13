@@ -35,17 +35,6 @@ namespace SaveSystem
         private async void Init()
         {
             await CompareSaves();
-            PlayerDataValues = new PlayerData();
-            if (PlayerPrefs.HasKey(PLAYER_DATA))
-            {
-                PlayerDataValues = LoadData();
-                return;
-            }
-            PlayerDataValues = new PlayerData
-            {
-                MaxScores = 0
-            };
-            SaveData();
         }
 
         public async void SaveData()
@@ -66,6 +55,7 @@ namespace SaveSystem
         private async Task SaveCloud(string saveData)
         {
             await CloudSaveService.Instance.Data.Player.SaveAsync(new Dictionary<string, object> { { "CloudSave", saveData } });
+            Debug.Log("Cloud saved!");
         }
         
         private async Task<PlayerData> LoadCloud()
@@ -76,6 +66,8 @@ namespace SaveSystem
                 if (data.TryGetValue("CloudSave", out var jsonData))
                 {
                     string json = jsonData.Value.GetAsString();
+                    PlayerData a =  JsonConvert.DeserializeObject<PlayerData>(json);
+                    Debug.Log(a.SaveTime);
                     if (string.IsNullOrEmpty(json))
                     {
                         Debug.Log("Облачные данные пусты.");
@@ -94,9 +86,9 @@ namespace SaveSystem
 
 
 
-        public async Task<PlayerData> CompareSaves()
+        private async Task<PlayerData> CompareSaves()
         {
-            Debug.Log("хуй");
+            PlayerDataValues = new PlayerData();
             try
             {
                 PlayerData localData = LoadData();
@@ -105,28 +97,35 @@ namespace SaveSystem
                 if (localData == null && cloudData == null)
                 {
                     Debug.Log("Нет сохранений.");
+                    MakeFirstSave();
                     return null;
                 }
 
                 if (localData == null)
                 {
+                    PlayerDataValues = cloudData;
+                    SaveData();
                     Debug.Log("Локальное сохранение отсутствует. Используем облачное.");
                     return null;
                 }
 
                 if (cloudData == null)
                 {
+                    PlayerDataValues = localData;
+                    SaveData();
                     Debug.Log("Облачное сохранение отсутствует. Используем локальное.");
                     return null;
                 }
 
                 if (localData.SaveTime > cloudData.SaveTime)
                 {
-                    Debug.Log("Локальное сохранение новее.");
+                    PlayerDataValues = localData;
+                    SaveData();
                 }
                 else if (localData.SaveTime < cloudData.SaveTime)
                 {
-                    Debug.Log("Облачное сохранение новее.");
+                    PlayerDataValues = cloudData;
+                    SaveData();
                 }
                 else
                 {

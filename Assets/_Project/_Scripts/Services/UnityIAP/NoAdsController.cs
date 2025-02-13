@@ -43,7 +43,6 @@ namespace Services
         {
             if (Id == NO_ADS_ID)
             {
-                Debug.Log("set");
                 _saveGameController.PlayerDataValues.NoAdsPurchased = true;
                 _saveGameController.SaveData();
                 IsNoAdsPurchasedCheck();
