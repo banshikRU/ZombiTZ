@@ -19,6 +19,11 @@ namespace ObjectPoolSystem
         {
             FirstPoolsInit();
         }
+        
+        public ObjectPool GetPool(string prefabName)
+        {
+            return _pools.GetValueOrDefault(prefabName);
+        }
 
         private void FirstPoolsInit()
         {
@@ -31,12 +36,6 @@ namespace ObjectPoolSystem
                 _pools.Add(config.prefab.name, pool);
             }
         }
-
-        public ObjectPool GetPool(string prefabName)
-        {
-            return _pools.GetValueOrDefault(prefabName);
-        }
-
     }
 }
 

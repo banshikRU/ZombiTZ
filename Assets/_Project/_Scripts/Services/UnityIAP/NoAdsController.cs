@@ -2,11 +2,11 @@ using InAppPurchase;
 using SaveSystem;
 using System;
 using PlayerControl;
-using UnityEngine;
+using Zenject;
 
 namespace Services
 {
-    public class NoAdsController : IDisposable
+    public class NoAdsController : IDisposable,IInitializable
     {
         private const string NO_ADS_ID = "com.DefaultCompany.NoAds";
 
@@ -19,19 +19,22 @@ namespace Services
         {
             _inAppStore = inAppStore;
             _saveGameController = saveGameController;
+        }
+        
+        public void Initialize()
+        {
             IsNoAdsPurchasedCheck();
             EventInit();
-
+        }
+        
+        public void Dispose()
+        {
+            _inAppStore.OnProductPurchase -= SetNoAdsPurchase;
         }
 
         private void EventInit()
         {
             _inAppStore.OnProductPurchase += SetNoAdsPurchase;
-        }
-
-        public void Dispose()
-        {
-            _inAppStore.OnProductPurchase -= SetNoAdsPurchase;
         }
 
         private void IsNoAdsPurchasedCheck()

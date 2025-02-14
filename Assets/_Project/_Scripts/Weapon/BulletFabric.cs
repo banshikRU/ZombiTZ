@@ -58,8 +58,6 @@ namespace WeaponControl
             BaseBullet baseBullet = bullet.GetComponent<BaseBullet>();
             baseBullet.StartMoveBullet(_weaponHandler.Weapon.transform.position,DirectionDefine(), _weaponHandler.BulletDamage);
         }
-
-
     }
 }
 

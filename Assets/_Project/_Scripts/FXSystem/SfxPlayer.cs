@@ -48,7 +48,6 @@ namespace SfxSystem
             yield return new WaitWhile(() => audioSource.isPlaying);
             _audioSources.Enqueue(audioSource);
         }
-
     }
 }
 

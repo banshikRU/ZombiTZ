@@ -16,17 +16,17 @@ namespace GameSystem
         public override void InstallBindings()
         {
             Container
-                .BindInterfacesAndSelfTo<AuthenticationInitialization>()
+                .BindInterfacesAndSelfTo<InitializingAuthentication>()
                 .AsSingle();
             Container
                 .BindInterfacesAndSelfTo<DesktopInput>()
                 .AsSingle();
             Container
-                   .BindInterfacesAndSelfTo<SaveGameController>()
-                   .AsSingle()
-                   .NonLazy();
+                .BindInterfacesAndSelfTo<SaveGameController>()
+                .AsSingle()
+                .NonLazy();
             Container
-                .Bind<AnalyticsDataCollector>()
+                .BindInterfacesAndSelfTo<AnalyticsDataCollector>()
                 .AsSingle();
             Container
                 .Bind<AnalyticServiceManager>()

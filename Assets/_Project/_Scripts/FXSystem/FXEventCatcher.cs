@@ -82,10 +82,6 @@ public class FXEventCatcher : IInitializable,IDisposable
                 return fxBehaviour;
             }
         }
-
         return null;
     }
-
-
-
 }

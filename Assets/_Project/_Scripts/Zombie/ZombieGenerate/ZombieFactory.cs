@@ -40,17 +40,7 @@ namespace ZombieGeneratorBehaviour
             _generatedActiveZombies = new List<ZombieBehaviour>();
             EventInit();
         }
-
-        private void EventInit()
-        {
-            _adsRewardGiver.OnGiveSecondChance += DeactivateAllZombies;
-        }
-
-        private void UnsubscribeEvent()
-        {
-            _adsRewardGiver.OnGiveSecondChance -= DeactivateAllZombies;
-        }
-
+        
         public void Dispose()
         {
             UnsubscribeEvent();
@@ -72,11 +62,21 @@ namespace ZombieGeneratorBehaviour
         public void DeleteFromZombieList(ZombieBehaviour zombieBehaviour)
         {
             OnZombieDestroyed?.Invoke(zombieBehaviour);
-             OnFXEvent?.Invoke(zombieBehaviour.gameObject.transform.position,this);
+            OnFXEvent?.Invoke(zombieBehaviour.gameObject.transform.position,this);
             _generatedActiveZombies.Remove(zombieBehaviour);
 
         }
+        
+        private void EventInit()
+        {
+            _adsRewardGiver.OnGiveSecondChance += DeactivateAllZombies;
+        }
 
+        private void UnsubscribeEvent()
+        {
+            _adsRewardGiver.OnGiveSecondChance -= DeactivateAllZombies;
+        }
+        
         private void DeactivateAllZombies()
         {
             List<ZombieBehaviour> generatedZombies = new List<ZombieBehaviour>(_generatedActiveZombies);

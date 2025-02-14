@@ -33,6 +33,12 @@ namespace UIControl.MVVM.HealthBar
             UpdateZombiesPosition();
         }
         
+        public void Dispose()
+        {
+            _zombieFactory.OnZombieDestroyed -= DisableHealBar;
+            _zombieFactory.OnZombieSpawned -= GenerateHealthBar;
+        }
+        
         private void SubscribeEvent()
         {
             _zombieFactory.OnZombieDestroyed += DisableHealBar;
@@ -73,12 +79,6 @@ namespace UIControl.MVVM.HealthBar
             }
         }
         
-        public void Dispose()
-        {
-            _zombieFactory.OnZombieDestroyed -= DisableHealBar;
-            _zombieFactory.OnZombieSpawned -= GenerateHealthBar;
-        }
-
         private void DisableHealBar(ZombieBehaviour zombieBehaviour)
         {
             if (_healthBarViews.TryGetValue(zombieBehaviour, out HealthBarView healthBarView))

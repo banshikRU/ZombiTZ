@@ -2,6 +2,7 @@ using UIControl;
 using UnityEngine;
 using Zenject;
 using InAppPurchase;
+using UIControl.Buttons.IAPButtons;
 using UIControl.MVVM.Bullets;
 using UIControl.MVVM.HealthBar;
 using UIControl.MVVM.MainMenu;
@@ -10,8 +11,6 @@ namespace GameSystem
 {
     public class MainSceneUIInstaller : MonoInstaller
     {
-        [SerializeField]
-        private IAPButtonController _iapButton;
         [SerializeField] 
         private GameObject _canvas;
         [SerializeField]
@@ -19,11 +18,6 @@ namespace GameSystem
         
         public override void InstallBindings()
         {
-            Container
-                .BindInterfacesTo<IAPButtonController>()
-                .FromInstance(_iapButton)
-                .AsSingle()
-                .NonLazy();
             Container
                 .BindInterfacesTo<HealthBarFabric>()
                 .AsSingle()
@@ -43,6 +37,9 @@ namespace GameSystem
                 .AsSingle();
             Container
                 .BindInterfacesAndSelfTo<AdsButtonViewModel>()
+                .AsSingle();
+            Container
+                .BindInterfacesAndSelfTo<IAPButtonViewModel>()
                 .AsSingle();
             Container
                 .BindInterfacesAndSelfTo<UIViewModel>()

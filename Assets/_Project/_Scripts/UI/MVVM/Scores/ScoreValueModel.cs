@@ -26,21 +26,6 @@ namespace UIControl
             EventInit();
         }
         
-        private void UnsubscribeEvent()
-        {
-            _gameStateUpdater.OnGamePlayed -= ResetCurrentScores;
-        }
-
-        private void EventInit()
-        {
-            _gameStateUpdater.OnGamePlayed += ResetCurrentScores;
-        }
-
-        private void ResetCurrentScores()
-        {
-            CurrentScores.Value = 0;
-        }
-
         public void AddScores(int scores)
         {
             CurrentScores.Value += scores;
@@ -62,6 +47,21 @@ namespace UIControl
         public void Dispose()
         {
             UnsubscribeEvent();
+        }
+        
+        private void UnsubscribeEvent()
+        {
+            _gameStateUpdater.OnGamePlayed -= ResetCurrentScores;
+        }
+
+        private void EventInit()
+        {
+            _gameStateUpdater.OnGamePlayed += ResetCurrentScores;
+        }
+
+        private void ResetCurrentScores()
+        {
+            CurrentScores.Value = 0;
         }
     }
 }

@@ -1,10 +1,11 @@
 ﻿using System;
 using UniRx;
 using WeaponControl;
+using Zenject;
 
 namespace UIControl.MVVM.Bullets
 {
-    public class BulletValueModel: IDisposable
+    public class BulletValueModel: IDisposable,IInitializable
     {
         private readonly BulletFabric _bulletFabric;
 
@@ -13,7 +14,10 @@ namespace UIControl.MVVM.Bullets
         public BulletValueModel(BulletFabric bulletFabric)
         {
             _bulletFabric = bulletFabric;
-            
+        }
+        
+        public void Initialize()
+        {
             SubscribeEvent();
         }
 

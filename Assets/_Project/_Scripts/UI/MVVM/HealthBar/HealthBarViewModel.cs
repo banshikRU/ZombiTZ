@@ -7,11 +7,11 @@ namespace UIControl.MVVM.HealthBar
 {
     public class HealthBarViewModel: IDisposable
     {
+        private readonly ZombieBehaviour _zombie;
+        
         public readonly ReactiveProperty<float> ZombieHealth = new();
         public readonly ReactiveProperty<Vector3> ZombiePosition = new();
         
-        private readonly ZombieBehaviour _zombie;
-
         public HealthBarViewModel(ZombieBehaviour zombie)
         {
             _zombie = zombie;

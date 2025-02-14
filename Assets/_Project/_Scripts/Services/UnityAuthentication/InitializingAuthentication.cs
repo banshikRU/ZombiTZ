@@ -5,7 +5,7 @@ using Unity.Services.Core;
 using UnityEngine;
 using Zenject;
 
-public class AuthenticationInitialization: IInitializable
+public class InitializingAuthentication: IInitializable
 {
     public event Action OnInitializationComplete; 
     

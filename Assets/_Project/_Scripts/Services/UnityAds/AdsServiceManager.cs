@@ -6,9 +6,10 @@ namespace Advertisements
     public class AdsServiceManager
     {
         private readonly IAdsService _adsService;
-        private Button _button;
         private readonly Dictionary<string, int> _rewardIdDictionary = new ();
         private readonly AdsRewardGiver _rewardGiver;
+        
+        private Button _button;
 
         public AdsServiceManager(UnityAdsService adsController, AdsRewardGiver adsRewardGiver)
         {

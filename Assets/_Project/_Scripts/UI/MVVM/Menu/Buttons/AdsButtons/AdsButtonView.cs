@@ -51,7 +51,5 @@ namespace UIControl.MVVM.MainMenu.Buttons
             _menuViewModel.ShowAd(_adsType, _showAdButton, _adsUnitId);
             OnAdsButtonOnOff(false);
         }
-
-        
     }
 }

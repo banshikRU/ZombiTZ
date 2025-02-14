@@ -14,17 +14,12 @@ namespace SaveSystem
     { 
         private const string PLAYER_DATA = "PlayerData";
         
-        private readonly AuthenticationInitialization _authenticationInitialization;
+        private readonly InitializingAuthentication _initializingAuthentication;
         public PlayerData PlayerDataValues { get; set; }
 
-        public SaveGameController(AuthenticationInitialization authenticationInitialization)
+        public SaveGameController(InitializingAuthentication initializingAuthentication)
         {
-            _authenticationInitialization = authenticationInitialization;
-        }
-
-        private void SubscribeEvent()
-        {
-            _authenticationInitialization.OnInitializationComplete += Init;
+            _initializingAuthentication = initializingAuthentication;
         }
         
         public void Initialize()
@@ -32,11 +27,6 @@ namespace SaveSystem
             SubscribeEvent();
         }
         
-        private async void Init()
-        {
-            await CompareSaves();
-        }
-
         public async void SaveData()
         {
             PlayerDataValues.SaveTime = DateTime.Now;
@@ -51,7 +41,17 @@ namespace SaveSystem
             string jsonData = PlayerPrefs.GetString(PLAYER_DATA);
             return JsonConvert.DeserializeObject<PlayerData>(jsonData);
         }
-
+        
+        private void SubscribeEvent()
+        {
+            _initializingAuthentication.OnInitializationComplete += Init;
+        }
+        
+        private async void Init()
+        {
+            await CompareSaves();
+        }
+        
         private async Task SaveCloud(string saveData)
         {
             await CloudSaveService.Instance.Data.Player.SaveAsync(new Dictionary<string, object> { { "CloudSave", saveData } });
@@ -83,10 +83,8 @@ namespace SaveSystem
                 return null;
             }
         }
-
-
-
-        private async Task<PlayerData> CompareSaves()
+        
+        private async Task CompareSaves()
         {
             PlayerDataValues = new PlayerData();
             try
@@ -98,7 +96,7 @@ namespace SaveSystem
                 {
                     Debug.Log("Нет сохранений.");
                     MakeFirstSave();
-                    return null;
+                    return;
                 }
 
                 if (localData == null)
@@ -106,7 +104,7 @@ namespace SaveSystem
                     PlayerDataValues = cloudData;
                     SaveData();
                     Debug.Log("Локальное сохранение отсутствует. Используем облачное.");
-                    return null;
+                    return;
                 }
 
                 if (cloudData == null)
@@ -114,7 +112,7 @@ namespace SaveSystem
                     PlayerDataValues = localData;
                     SaveData();
                     Debug.Log("Облачное сохранение отсутствует. Используем локальное.");
-                    return null;
+                    return;
                 }
 
                 if (localData.SaveTime > cloudData.SaveTime)
@@ -136,8 +134,6 @@ namespace SaveSystem
             {
                 Debug.LogError($"Ошибка при сравнении сохранений: {ex.Message}");
             }
-
-            return null;
         }
 
         private void MakeFirstSave()

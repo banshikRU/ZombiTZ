@@ -56,7 +56,6 @@ namespace UIControl
 
         private void OnDeathMenuStateChanged(bool isDeathMenuVisible)
         {
-            Debug.Log(isDeathMenuVisible);
             _deathMenu.SetActive(isDeathMenuVisible);
         }
 

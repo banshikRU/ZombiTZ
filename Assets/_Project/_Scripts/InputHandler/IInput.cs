@@ -8,7 +8,6 @@ namespace InputControl
         public event Action OnShoot;
 
         public void TakeShoot();
-        
     }
 }
 

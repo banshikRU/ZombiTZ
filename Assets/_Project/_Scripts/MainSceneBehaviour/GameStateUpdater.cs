@@ -3,7 +3,6 @@ using Advertisements;
 using Firebase.Analytics;
 using PlayerControl;
 using UIControl;
-using UniRx;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
@@ -19,22 +18,9 @@ namespace GameStateControl
         [Inject] private readonly LazyInject<ScoreValueModel> _scoreUpdater;
         
         private AdsRewardGiver _adsRewardGiver;
-
         private AnalyticServiceManager _analyticServiceManager;
 
         public bool IsGame { get; private set; }
-
-        private void OnEnable()
-        {
-            _adsRewardGiver.OnGiveSecondChance += StartGame;
-            _player.OnPlayerDeath += GameOver;
-        }
-
-        private void OnDisable()
-        {
-            _adsRewardGiver.OnGiveSecondChance -= StartGame;
-            _player.OnPlayerDeath -= GameOver;
-        }
 
         public void Initialize()
         {
@@ -61,7 +47,19 @@ namespace GameStateControl
             _scoreUpdater.Value.UpdateMaxScores();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+        
+        private void OnEnable()
+        {
+            _adsRewardGiver.OnGiveSecondChance += StartGame;
+            _player.OnPlayerDeath += GameOver;
+        }
 
+        private void OnDisable()
+        {
+            _adsRewardGiver.OnGiveSecondChance -= StartGame;
+            _player.OnPlayerDeath -= GameOver;
+        }
+        
         private void GameOver()
         {
             _analyticServiceManager.LogEventEndGame();

@@ -6,9 +6,9 @@ namespace  UIControl
 {
     public class ScoreViewModel : IInitializable, IDisposable
     {
-        public readonly ReactiveProperty<int> Scores = new();
-
         private readonly ScoreValueModel _scoreValueModel;
+
+        public readonly ReactiveProperty<int> Scores = new();
 
         public ScoreViewModel(ScoreValueModel scoreValueModel)
         {
@@ -30,7 +30,5 @@ namespace  UIControl
         {
             Scores.Value = value;
         }
-
-        
     }
 }

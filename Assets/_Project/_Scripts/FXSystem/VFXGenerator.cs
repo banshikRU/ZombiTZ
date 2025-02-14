@@ -9,6 +9,5 @@ namespace VFXSystem
         {
             Object.Instantiate(vfxPrefab, vfxPosition, vfxRotation);
         }
-
     }
 }

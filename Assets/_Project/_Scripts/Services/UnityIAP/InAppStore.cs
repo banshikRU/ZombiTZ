@@ -2,10 +2,11 @@ using System;
 using UnityEngine;
 using UnityEngine.Purchasing;
 using UnityEngine.Purchasing.Extension;
+using Zenject;
 
 namespace InAppPurchase
 {
-    public class InAppStore : IDetailedStoreListener
+    public class InAppStore : IDetailedStoreListener,IInitializable
     {
         public event Action<string> OnProductPurchase;
 
@@ -13,14 +14,13 @@ namespace InAppPurchase
 
         private IStoreController _storeController;
 
-        private InAppStore()
+        public void Initialize()
         {
             AppStoreInit();
         }
 
         public void BuyProduct(string product_ID)
         {
-            Debug.Log(product_ID);
             _storeController.InitiatePurchase(product_ID);
             OnProductPurchase?.Invoke(product_ID);
         }

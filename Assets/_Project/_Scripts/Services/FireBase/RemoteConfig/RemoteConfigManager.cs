@@ -24,11 +24,11 @@ namespace Firebase.RemoteConfig
         {
             _useRemoteConfig = useRemoteConfig;
             _gameSettings = gameSettings;
-            _gameSettingsParameters = new RemoteGameSettingsValues();
         }
         
         public void Initialize()
         {
+            _gameSettingsParameters = new RemoteGameSettingsValues();
             SetDefaultValues();
             FetchRemoteConfig();
         }

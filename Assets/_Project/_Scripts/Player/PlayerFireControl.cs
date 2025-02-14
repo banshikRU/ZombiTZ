@@ -59,8 +59,6 @@ namespace WeaponControl
             _shootInSecond = Time.time + _shootsInOneSeconds;
             _bulletFabric.Shot();
         }
-
-       
     }
 }
 

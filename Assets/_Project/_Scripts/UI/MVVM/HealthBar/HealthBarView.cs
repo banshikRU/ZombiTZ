@@ -17,7 +17,7 @@ namespace UIControl.MVVM.HealthBar
             _healthBarViewModel = healthBarViewModel;
             SubscribeEvent();
         }
-        
+
         private void SubscribeEvent()
         {
             _healthBarViewModel.ZombieHealth.Subscribe(HealthBarValueUpdate);

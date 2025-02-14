@@ -30,8 +30,7 @@ namespace ZombieGeneratorBehaviour
         private ScoreValueModel _scoreModel;
         private PooledObject _pooledObject;
         private ZombieFactory _zombieFactory;
-
-
+        
         protected bool _isInit;
         private int _currentHealPoint;
 

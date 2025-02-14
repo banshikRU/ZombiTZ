@@ -1,12 +1,13 @@
 using System.Collections.Generic;
+using Zenject;
 
 namespace Firebase.Analytics
 {
-    public class AnalyticsDataCollector
+    public class AnalyticsDataCollector: IInitializable
     {
-        public Dictionary<string, int> AnalyzedParameters { get; }
+        public Dictionary<string, int> AnalyzedParameters { get; private set; }
 
-        private AnalyticsDataCollector()
+        public void Initialize()
         {
             AnalyzedParameters = new Dictionary<string, int>();
         }

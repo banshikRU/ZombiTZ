@@ -932,7 +932,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d089d1aaaf8136d4cae3894c80d8e67c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _iapButton: {fileID: 1088990094}
   _canvas: {fileID: 47028877}
   _healthBarView: {fileID: 9017824928038346423, guid: 69693ddc91478ec42ac85719a20410ef, type: 3}
 --- !u!1 &265366848
@@ -2300,9 +2299,9 @@ GameObject:
   - component: {fileID: 1088990091}
   - component: {fileID: 1088990096}
   - component: {fileID: 1088990095}
-  - component: {fileID: 1088990094}
   - component: {fileID: 1088990093}
   - component: {fileID: 1088990092}
+  - component: {fileID: 1088990097}
   m_Layer: 5
   m_Name: NoAdsButton
   m_TagString: Untagged
@@ -2367,18 +2366,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1088990090}
   m_CullTransparentMesh: 1
---- !u!114 &1088990094
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1088990090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 515a15153a561ba48a8b0d730469a985, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1088990095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2463,6 +2450,18 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   button: {fileID: 1088990095}
+--- !u!114 &1088990097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1088990090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40bd8d7aa59341f0b73ecfa142e1581f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1138701225
 GameObject:
   m_ObjectHideFlags: 0
