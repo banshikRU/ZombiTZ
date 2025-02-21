@@ -1,151 +1,119 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using UnityEngine;
-using PlayerControl;
-using Zenject;
+using _Project._Scripts.SaveSystem;
 using Newtonsoft.Json;
-using Unity.Services.Authentication;
-using Unity.Services.CloudSave;
+using PlayerControl;
+using Services;
+using UnityEngine;
+using Zenject;
 
-namespace SaveSystem
+public class SaveGameController 
 {
-    public class SaveGameController: ISaveHandler<PlayerData>,IInitializable
-    { 
-        private const string PLAYER_DATA = "PlayerData";
-        
-        private readonly InitializingAuthentication _initializingAuthentication;
-        public PlayerData PlayerDataValues { get; set; }
+    private const string PLAYER_DATA = "PlayerData";
+    
+    private readonly ISaveService _localSaveService;
+    private readonly ISaveService _cloudSaveService;
 
-        public SaveGameController(InitializingAuthentication initializingAuthentication)
-        {
-            _initializingAuthentication = initializingAuthentication;
-        }
-        
-        public void Initialize()
-        {
-            SubscribeEvent();
-        }
-        
-        public async void SaveData()
-        {
-            PlayerDataValues.SaveTime = DateTime.Now;
-            string json = JsonConvert.SerializeObject(PlayerDataValues);
-            PlayerPrefs.SetString(PLAYER_DATA, json);
-            PlayerPrefs.Save();
-            await SaveCloud(json); 
-        }
+    public PlayerData PlayerDataValues { get; private set; }
 
-        public PlayerData LoadData()
+    public SaveGameController([Inject(Id = SaveServices.Local)] ISaveService localSaveService , [Inject(Id = SaveServices.Cloud)]ISaveService cloudSaveService )
+    {
+        _localSaveService = localSaveService;
+        _cloudSaveService = cloudSaveService;
+    }
+    
+    public async Task Initialize()
+    {
+        await CompareSaves();
+    }
+
+    public async void SaveData()
+    {
+        PlayerDataValues.SaveTime = DateTime.Now;
+        string json = JsonConvert.SerializeObject(PlayerDataValues);
+        await _localSaveService.SaveAsync(PLAYER_DATA, json);
+        await _cloudSaveService.SaveAsync(PLAYER_DATA, json);
+    }
+
+    public async Task<PlayerData> LoadLocal()
+    {
+        string jsonData = await _localSaveService.LoadAsync(PLAYER_DATA);
+        return JsonConvert.DeserializeObject<PlayerData>(jsonData);
+    }
+
+    private async Task<PlayerData> LoadCloud()
+    {
+        string jsonData = await _cloudSaveService.LoadAsync(PLAYER_DATA);
+        if (string.IsNullOrEmpty(jsonData))
         {
-            string jsonData = PlayerPrefs.GetString(PLAYER_DATA);
-            return JsonConvert.DeserializeObject<PlayerData>(jsonData);
+            Debug.Log("Облачные данные пусты.");
+            return null;
         }
-        
-        private void SubscribeEvent()
+        return JsonConvert.DeserializeObject<PlayerData>(jsonData);
+    }
+
+    private async Task CompareSaves()
+    {
+        PlayerDataValues = new PlayerData();
+        try
         {
-            _initializingAuthentication.OnInitializationComplete += Init;
-        }
-        
-        private async void Init()
-        {
-            await CompareSaves();
-        }
-        
-        private async Task SaveCloud(string saveData)
-        {
-            await CloudSaveService.Instance.Data.Player.SaveAsync(new Dictionary<string, object> { { "CloudSave", saveData } });
-            Debug.Log("Cloud saved!");
-        }
-        
-        private async Task<PlayerData> LoadCloud()
-        {
-            try
+            PlayerData localData = await LoadLocal();
+            PlayerData cloudData = await LoadCloud();
+            
+            if (localData == null && cloudData == null)
             {
-                var data = await CloudSaveService.Instance.Data.Player.LoadAsync(new HashSet<string> { "CloudSave" });
-                if (data.TryGetValue("CloudSave", out var jsonData))
-                {
-                    string json = jsonData.Value.GetAsString();
-                    PlayerData a =  JsonConvert.DeserializeObject<PlayerData>(json);
-                    Debug.Log(a.SaveTime);
-                    if (string.IsNullOrEmpty(json))
-                    {
-                        Debug.Log("Облачные данные пусты.");
-                        return null;
-                    }
-                    return JsonConvert.DeserializeObject<PlayerData>(json);
-                }
-                return null;
+                Debug.Log("Нет сохранений.");
+                MakeFirstSave();
+                return;
             }
-            catch (Exception ex)
+
+            if (localData == null)
             {
-                Debug.LogError($"Ошибка при загрузке из облака: {ex.Message}");
-                return null;
+                PlayerDataValues = cloudData;
+                SaveData();
+                Debug.Log("Локальное сохранение отсутствует. Используем облачное.");
+                return;
             }
-        }
-        
-        private async Task CompareSaves()
-        {
-            PlayerDataValues = new PlayerData();
-            try
+
+            if (cloudData == null)
             {
-                PlayerData localData = LoadData();
-                PlayerData cloudData = await LoadCloud();
-
-                if (localData == null && cloudData == null)
-                {
-                    Debug.Log("Нет сохранений.");
-                    MakeFirstSave();
-                    return;
-                }
-
-                if (localData == null)
-                {
-                    PlayerDataValues = cloudData;
-                    SaveData();
-                    Debug.Log("Локальное сохранение отсутствует. Используем облачное.");
-                    return;
-                }
-
-                if (cloudData == null)
-                {
-                    PlayerDataValues = localData;
-                    SaveData();
-                    Debug.Log("Облачное сохранение отсутствует. Используем локальное.");
-                    return;
-                }
-
-                if (localData.SaveTime > cloudData.SaveTime)
-                {
-                    PlayerDataValues = localData;
-                    SaveData();
-                }
-                else if (localData.SaveTime < cloudData.SaveTime)
-                {
-                    PlayerDataValues = cloudData;
-                    SaveData();
-                }
-                else
-                {
-                    Debug.Log("Сохранения синхронизированы.");
-                }
+                PlayerDataValues = localData;
+                SaveData();
+                Debug.Log("Облачное сохранение отсутствует. Используем локальное.");
+                return;
             }
-            catch (Exception ex)
+
+            if (localData.SaveTime > cloudData.SaveTime)
             {
-                Debug.LogError($"Ошибка при сравнении сохранений: {ex.Message}");
+                PlayerDataValues = localData;
+                SaveData();
+            }
+            else if (localData.SaveTime < cloudData.SaveTime)
+            {
+                PlayerDataValues = cloudData;
+                SaveData();
+            }
+            else
+            {
+                PlayerDataValues = localData;
+                Debug.Log("Сохранения синхронизированы.");
             }
         }
-
-        private void MakeFirstSave()
+        catch (Exception ex)
         {
-            PlayerDataValues = new PlayerData
-            {
-                MaxScores = 0,
-                SaveTime = DateTime.Now,
-                NoAdsPurchased = false
-            };
-            SaveData();
+            Debug.LogError($"Ошибка при сравнении сохранений: {ex.Message}");
         }
     }
-}
 
+    private void MakeFirstSave()
+    {
+        PlayerDataValues = new PlayerData
+        {
+            MaxScores = 0,
+            SaveTime = DateTime.Now,
+            NoAdsPurchased = false
+        };
+        SaveData();
+    }
+}
+    

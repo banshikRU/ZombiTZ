@@ -1,7 +1,5 @@
 using GameStateControl;
-using SaveSystem;
 using System;
-using PlayerControl;
 using UniRx;
 using Zenject;
 
@@ -9,12 +7,12 @@ namespace UIControl
 {
     public class ScoreValueModel : IDisposable,IInitializable
     {
-        private readonly ISaveHandler<PlayerData> _saveGameController;
+        private readonly SaveGameController _saveGameController;
         private readonly GameStateUpdater _gameStateUpdater;
 
         public readonly ReactiveProperty<int> CurrentScores = new();
 
-        public ScoreValueModel(ISaveHandler<PlayerData> saveGameController, GameStateUpdater gameStateUpdater)
+        public ScoreValueModel(SaveGameController saveGameController, GameStateUpdater gameStateUpdater)
         {
             _saveGameController = saveGameController;
             _gameStateUpdater = gameStateUpdater;
@@ -33,12 +31,12 @@ namespace UIControl
 
         public void InitMaxScores()
         {
-            CurrentScores.Value = _saveGameController.LoadData().MaxScores;
+            CurrentScores.Value = _saveGameController.PlayerDataValues.MaxScores;
         }
 
         public void UpdateMaxScores()
         {
-            if (_saveGameController.LoadData().MaxScores >= CurrentScores.Value)
+            if (_saveGameController.PlayerDataValues.MaxScores >= CurrentScores.Value)
                 return;
             _saveGameController.PlayerDataValues.MaxScores = CurrentScores.Value;
             _saveGameController.SaveData();

@@ -1,11 +1,12 @@
+using _Project._Scripts.SaveSystem;
 using UnityEngine;
 using Zenject;
 using Firebase.Analytics;
-using SaveSystem;
 using Services;
 using InAppPurchase;
 using Advertisements;
 using InputControl;
+using Zenject.Asteroids;
 
 namespace GameSystem
 {
@@ -16,15 +17,25 @@ namespace GameSystem
         public override void InstallBindings()
         {
             Container
-                .BindInterfacesAndSelfTo<InitializingAuthentication>()
+                .Bind<SceneController>()
+                .AsSingle();
+            Container
+                .BindInterfacesAndSelfTo<InitializingUnityServices>()
                 .AsSingle();
             Container
                 .BindInterfacesAndSelfTo<DesktopInput>()
                 .AsSingle();
+            Container.Bind<ISaveService>()
+                .WithId(SaveServices.Local)
+                .To<LocalSaveService>()
+                .AsSingle();
+            Container.Bind<ISaveService>()
+                .WithId(SaveServices.Cloud)
+                .To<CloudSaveServiceWrapper>()
+                .AsSingle();
             Container
                 .BindInterfacesAndSelfTo<SaveGameController>()
-                .AsSingle()
-                .NonLazy();
+                .AsSingle();
             Container
                 .BindInterfacesAndSelfTo<AnalyticsDataCollector>()
                 .AsSingle();
@@ -45,7 +56,7 @@ namespace GameSystem
                 .NonLazy();
             Container
                 .BindInterfacesAndSelfTo<NoAdsController>()
-                .AsSingle(); 
+                .AsSingle();
         }
     }
 }

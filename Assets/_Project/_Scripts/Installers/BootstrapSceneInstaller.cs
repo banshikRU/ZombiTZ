@@ -4,6 +4,7 @@ using Zenject;
 using Firebase.RemoteConfig;
 using Advertisements;
 using Firebase;
+using Services;
 
 namespace GameSystem
 {
@@ -19,9 +20,12 @@ namespace GameSystem
         public override void InstallBindings()
         {
             Container
-                .BindInterfacesAndSelfTo<FirebaseDependencies>()
+                .BindInterfacesAndSelfTo<ServiceInitializer>()
                 .AsSingle()
                 .NonLazy();
+            Container
+                .BindInterfacesAndSelfTo<FirebaseDependencies>()
+                .AsSingle();
             Container
                 .BindInterfacesAndSelfTo<AdsInitializer>()
                 .AsSingle()
@@ -30,8 +34,7 @@ namespace GameSystem
             Container
                 .BindInterfacesAndSelfTo<RemoteConfigManager>()
                 .AsSingle()
-                .WithArguments(_gameSettings,_useRemoteConfig)
-                .NonLazy();
+                .WithArguments(_gameSettings, _useRemoteConfig);
             Container
                 .BindInterfacesTo<MainSceneLoader>()
                 .AsSingle()

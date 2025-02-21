@@ -1,17 +1,18 @@
+using System.Threading.Tasks;
 using Firebase.Extensions;
 using UnityEngine;
 using Zenject;
 
 namespace Firebase
 {
-    public class FirebaseDependencies: IInitializable
+    public class FirebaseDependencies
     {
-        public void Initialize()
+        public async Task Initialize()
         {
-            CheckFirebaseDependencies();
+            await CheckFirebaseDependencies();
         }
 
-        private void CheckFirebaseDependencies()
+        private Task CheckFirebaseDependencies()
         {
             FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task => {
                 var dependencyStatus = task.Result;
@@ -24,6 +25,7 @@ namespace Firebase
                     Debug.LogError($"Could not resolve all Firebase dependencies: {dependencyStatus}");
                 }
             });
+            return Task.CompletedTask;
         }
     }
 }

@@ -1,12 +1,13 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using GameStateControl;
 using Unity.VisualScripting;
 
 namespace Firebase.RemoteConfig
 {
-    public class RemoteConfigManager: IInitializable
+    public class RemoteConfigManager
     {
         public class RemoteGameSettingsValues
         {
@@ -26,14 +27,14 @@ namespace Firebase.RemoteConfig
             _gameSettings = gameSettings;
         }
         
-        public void Initialize()
+        public async Task Initialize()
         {
             _gameSettingsParameters = new RemoteGameSettingsValues();
-            SetDefaultValues();
-            FetchRemoteConfig();
+            await SetDefaultValues();
+            await FetchRemoteConfig();
         }
 
-        private void FetchRemoteConfig()
+        private Task FetchRemoteConfig()
         {
             FirebaseRemoteConfig.DefaultInstance.FetchAsync(TimeSpan.Zero).ContinueWith(fetchTask => {
                 if (fetchTask.IsCompleted)
@@ -48,6 +49,7 @@ namespace Firebase.RemoteConfig
                     LoadDefaultValues();
                 }
             });
+            return Task.CompletedTask;
         }
 
         private void LoadRemoteConfig()
@@ -56,7 +58,7 @@ namespace Firebase.RemoteConfig
             _gameSettingsParameters = JsonUtility.FromJson<RemoteGameSettingsValues>(jsonString);
         }
 
-        private void SetDefaultValues()
+        private Task SetDefaultValues()
         {
             TextAsset jsonFile = Resources.Load<TextAsset>("Game_Settings");
             string jsonString = jsonFile != null ? jsonFile.text : "{}";
@@ -66,6 +68,7 @@ namespace Firebase.RemoteConfig
             };
 
             FirebaseRemoteConfig.DefaultInstance.SetDefaultsAsync(defaults);
+            return Task.CompletedTask;
         }
 
         private void LoadDefaultValues()

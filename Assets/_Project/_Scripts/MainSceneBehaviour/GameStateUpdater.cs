@@ -19,6 +19,7 @@ namespace GameStateControl
         
         private AdsRewardGiver _adsRewardGiver;
         private AnalyticServiceManager _analyticServiceManager;
+        private SceneController _sceneController;
 
         public bool IsGame { get; private set; }
 
@@ -29,8 +30,9 @@ namespace GameStateControl
         }
 
         [Inject]
-        public void Construct(AnalyticServiceManager analyticServiceManager, AdsRewardGiver adsRewardGiver)
+        public void Construct(AnalyticServiceManager analyticServiceManager, AdsRewardGiver adsRewardGiver,SceneController sceneController)
         {
+            _sceneController = sceneController;
             _adsRewardGiver = adsRewardGiver;
             _analyticServiceManager = analyticServiceManager;
         }
@@ -45,7 +47,7 @@ namespace GameStateControl
         public void RestartGame()
         {
             _scoreUpdater.Value.UpdateMaxScores();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            _sceneController.ReloadCurrentScene();
         }
         
         private void OnEnable()
