@@ -1,122 +1,123 @@
 using System;
 using System.Threading.Tasks;
-using _Project._Scripts.SaveSystem;
+using SaveSystem;
 using Newtonsoft.Json;
 using PlayerControl;
 using UnityEngine;
 using Zenject;
 
-public class SaveGameController 
+namespace SaveSystem
 {
-    private const string PLAYER_DATA = "PlayerData";
-    
-    public event Action OnPlayerDataUpdated;
-    
-    private readonly ISaveService _localSaveService;
-    private readonly ISaveService _cloudSaveService;
-    
-    public PlayerData LocalPlayerData { get; private set; }
-    public PlayerData CloudPlayerData { get; private set; }
-    public bool IsSaveSetUp{get; private set;}
-
-    public PlayerData PlayerDataValues { get; private set; }
-
-    public SaveGameController([Inject(Id = SaveServices.Local)] ISaveService localSaveService , [Inject(Id = SaveServices.Cloud)]ISaveService cloudSaveService )
+    public class SaveGameController
     {
-        _localSaveService = localSaveService;
-        _cloudSaveService = cloudSaveService;
-    }
-    
-    public async Task Initialize()
-    {
-        await CompareSaves();
-    }
+        private const string PLAYER_DATA = "PlayerData";
 
-    public async void SaveData()
-    {
-        PlayerDataValues.SaveTime = DateTime.Now;
-        OnPlayerDataUpdated?.Invoke();
-        string json = JsonConvert.SerializeObject(PlayerDataValues);
-        await _localSaveService.SaveAsync(PLAYER_DATA, json);
-        await _cloudSaveService.SaveAsync(PLAYER_DATA, json);
-    }
+        public event Action OnPlayerDataUpdated;
 
-    public async Task<PlayerData> LoadLocal()
-    {
-        string jsonData = await _localSaveService.LoadAsync(PLAYER_DATA);
-        return JsonConvert.DeserializeObject<PlayerData>(jsonData);
-    }
+        private readonly ISaveService _localSaveService;
+        private readonly ISaveService _cloudSaveService;
 
-    private async Task<PlayerData> LoadCloud()
-    {
-        string jsonData = await _cloudSaveService.LoadAsync(PLAYER_DATA);
-        if (string.IsNullOrEmpty(jsonData))
+        public PlayerData LocalPlayerData { get; private set; }
+        public PlayerData CloudPlayerData { get; private set; }
+        public bool IsSaveSetUp { get; private set; }
+        public PlayerData PlayerDataValues { get; private set; }
+
+        public SaveGameController([Inject(Id = SaveServices.Local)] ISaveService localSaveService, [Inject(Id = SaveServices.Cloud)] ISaveService cloudSaveService)
         {
-            Debug.Log("Облачные данные пусты.");
-            return null;
+            _localSaveService = localSaveService;
+            _cloudSaveService = cloudSaveService;
         }
-        return JsonConvert.DeserializeObject<PlayerData>(jsonData);
-    }
 
-    private async Task CompareSaves()
-    {
-        PlayerDataValues = new PlayerData();
-        try
+        public async Task Initialize()
         {
-            LocalPlayerData = await LoadLocal();
-            CloudPlayerData = await LoadCloud();
-            
-            if (LocalPlayerData == null && CloudPlayerData == null)
+            await CompareSaves();
+        }
+
+        public async void SaveData()
+        {
+            PlayerDataValues.SaveTime = DateTime.Now;
+            OnPlayerDataUpdated?.Invoke();
+            var json = JsonConvert.SerializeObject(PlayerDataValues);
+            await _localSaveService.SaveAsync(PLAYER_DATA, json);
+            await _cloudSaveService.SaveAsync(PLAYER_DATA, json);
+        }
+
+        public async Task<PlayerData> LoadLocal()
+        {
+            var jsonData = await _localSaveService.LoadAsync(PLAYER_DATA);
+            return JsonConvert.DeserializeObject<PlayerData>(jsonData);
+        }
+        
+        public void SetUpLocalSave()
+        {
+            PlayerDataValues = LocalPlayerData;
+            IsSaveSetUp = true;
+            SaveData();
+        }
+
+        public void SetUpCloudSave()
+        {
+            PlayerDataValues = CloudPlayerData;
+            IsSaveSetUp = true;
+            SaveData();
+        }
+
+        private async Task<PlayerData> LoadCloud()
+        {
+            var jsonData = await _cloudSaveService.LoadAsync(PLAYER_DATA);
+            if (string.IsNullOrEmpty(jsonData))
             {
-                Debug.Log("Нет сохранений.");
-                MakeFirstSave();
+                Debug.Log("Облачные данные пусты.");
+                return null;
             }
-            else if (LocalPlayerData == null)
+            return JsonConvert.DeserializeObject<PlayerData>(jsonData);
+        }
+
+        private async Task CompareSaves()
+        {
+            PlayerDataValues = new PlayerData();
+            try
             {
-                PlayerDataValues = CloudPlayerData;
-                SaveData();
+                LocalPlayerData = await LoadLocal();
+                CloudPlayerData = await LoadCloud();
+
+                if (LocalPlayerData == null && CloudPlayerData == null)
+                {
+                    Debug.Log("Нет сохранений.");
+                    MakeFirstSave();
+                }
+                else if (LocalPlayerData == null)
+                {
+                    PlayerDataValues = CloudPlayerData;
+                    SaveData();
+                }
+                else if (CloudPlayerData == null)
+                {
+                    PlayerDataValues = LocalPlayerData;
+                    SaveData();
+                }
+                else if (LocalPlayerData.SaveTime == CloudPlayerData.SaveTime)
+                {
+                    PlayerDataValues = LocalPlayerData;
+                    IsSaveSetUp = true;
+                    SaveData();
+                }
             }
-            else if (CloudPlayerData == null)
+            catch (Exception ex)
             {
-                PlayerDataValues = LocalPlayerData;
-                SaveData();
-            }
-            else if (LocalPlayerData.SaveTime == CloudPlayerData.SaveTime)
-            {
-                PlayerDataValues = LocalPlayerData;
-                IsSaveSetUp = true;
-                SaveData();
+                Debug.LogError($"Ошибка при сравнении сохранений: {ex.Message}");
             }
         }
-        catch (Exception ex)
+
+        private void MakeFirstSave()
         {
-            Debug.LogError($"Ошибка при сравнении сохранений: {ex.Message}");
+            PlayerDataValues = new PlayerData
+            {
+                MaxScores = 0,
+                SaveTime = DateTime.Now,
+                NoAdsPurchased = false
+            };
+            SaveData();
         }
-    }
-
-    private void MakeFirstSave()
-    {
-        PlayerDataValues = new PlayerData
-        {
-            MaxScores = 0,
-            SaveTime = DateTime.Now,
-            NoAdsPurchased = false
-        };
-        SaveData();
-    }
-
-    public void SetUpLocalSave()
-    {
-        PlayerDataValues = LocalPlayerData; 
-        IsSaveSetUp = true;
-        SaveData();
-    }
-
-    public void SetUpCloudSave()
-    {
-        PlayerDataValues = CloudPlayerData;
-        IsSaveSetUp = true;
-        SaveData();
     }
 }
-    

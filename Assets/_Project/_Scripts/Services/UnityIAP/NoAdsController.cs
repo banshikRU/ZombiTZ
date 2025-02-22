@@ -1,8 +1,6 @@
 using InAppPurchase;
 using System;
-using GameStateControl;
-using UnityEngine;
-using Zenject;
+using SaveSystem;
 
 namespace Services
 {
@@ -12,7 +10,7 @@ namespace Services
 
         private readonly SaveGameController _saveGameController;
         private readonly InAppStore _inAppStore;
-
+        
         public bool IsAdsPurchased { get; private set; }
 
         public NoAdsController(SaveGameController saveGameController, InAppStore inAppStore )

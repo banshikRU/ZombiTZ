@@ -2,9 +2,9 @@
 using Advertisements;
 using GameStateControl;
 using PlayerControl;
+using SaveSystem;
 using UniRx;
-using Unity.VisualScripting;
-using IInitializable = Zenject.IInitializable;
+using Zenject;
 
 namespace UIControl
 {
@@ -59,6 +59,7 @@ namespace UIControl
         {
             _adsRewardGiver.OnGiveSecondChance -= OffEndGameMenu;
             _gameStateUpdater.OnGamePlayed -= OffMainMenu;
+            _gameStateUpdater.OnGameContinued -= OnInGameStats;
             _gameStateUpdater.OnGamePlayed -= OnInGameStats;
             _player.OnPlayerDeath -= OnEndGameMenu;
             _player.OnPlayerDeath -= OffInGameStats;
@@ -68,6 +69,7 @@ namespace UIControl
         {
             _adsRewardGiver.OnGiveSecondChance += OffEndGameMenu;
             _gameStateUpdater.OnGamePlayed += OffMainMenu;
+            _gameStateUpdater.OnGameContinued += OnInGameStats;
             _gameStateUpdater.OnGamePlayed += OnInGameStats;
             _player.OnPlayerDeath += OnEndGameMenu;
             _player.OnPlayerDeath += OffInGameStats;

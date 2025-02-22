@@ -15,6 +15,5 @@ namespace UIControl.Buttons.IAPButtons
         {
             _inAppStore.BuyProduct(productId);
         }
-
     }
 }

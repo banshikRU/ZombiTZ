@@ -4,7 +4,6 @@ using Firebase.Analytics;
 using PlayerControl;
 using UIControl;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace GameStateControl
@@ -12,6 +11,7 @@ namespace GameStateControl
     public class GameStateUpdater : MonoBehaviour, IInitializable
     {
         public event Action OnGamePlayed;
+        public event Action OnGameContinued;
         
         [SerializeField] private PlayerBehaviour _player;
 
@@ -43,22 +43,28 @@ namespace GameStateControl
             _analyticServiceManager.LogEventStartGame();
             OnGamePlayed?.Invoke();
         }
-
+        
         public void RestartGame()
         {
             _scoreUpdater.Value.UpdateMaxScores();
             _sceneController.ReloadCurrentScene();
         }
-        
+
+        private void GameContinuation()
+        {
+            IsGame = true;
+            OnGameContinued?.Invoke();
+        }
+
         private void OnEnable()
         {
-            _adsRewardGiver.OnGiveSecondChance += StartGame;
+            _adsRewardGiver.OnGiveSecondChance += GameContinuation;
             _player.OnPlayerDeath += GameOver;
         }
 
         private void OnDisable()
         {
-            _adsRewardGiver.OnGiveSecondChance -= StartGame;
+            _adsRewardGiver.OnGiveSecondChance -= GameContinuation;
             _player.OnPlayerDeath -= GameOver;
         }
         

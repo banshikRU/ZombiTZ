@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
 using Firebase.Extensions;
 using UnityEngine;
-using Zenject;
 
 namespace Firebase
 {

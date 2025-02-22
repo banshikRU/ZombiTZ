@@ -1,18 +1,21 @@
 ﻿using System.Threading.Tasks;
 using UnityEngine;
 
-public class LocalSaveService : ISaveService
+namespace SaveSystem
 {
-    public Task SaveAsync(string key, string data)
+    public class LocalSaveService : ISaveService
     {
-        PlayerPrefs.SetString(key, data);
-        PlayerPrefs.Save();
-        return Task.CompletedTask;
-    }
+        public Task SaveAsync(string key, string data)
+        {
+            PlayerPrefs.SetString(key, data);
+            PlayerPrefs.Save();
+            return Task.CompletedTask;
+        }
 
-    public Task<string> LoadAsync(string key)
-    {
-        string data = PlayerPrefs.GetString(key);
-        return Task.FromResult(data);
+        public Task<string> LoadAsync(string key)
+        {
+            string data = PlayerPrefs.GetString(key);
+            return Task.FromResult(data);
+        }
     }
 }

@@ -21,7 +21,6 @@ namespace Firebase.Analytics
 
             FirebaseAnalytics.LogEvent(eventName, firebaseParams);
         }
-
     }
 }
 

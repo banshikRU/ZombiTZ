@@ -39,6 +39,7 @@ namespace UIControl
             _viewModel.IsDeathMenuVisible.Dispose();
             _viewModel.IsMainMenuVisible.Dispose();
             _viewModel.IsInGameStatsVisible.Dispose();
+            _viewModel.IsSelectSaveMenuVisible.Dispose();
         }
 
         private void SubscribeEvents()

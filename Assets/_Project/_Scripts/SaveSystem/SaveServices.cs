@@ -1,4 +1,4 @@
-﻿namespace _Project._Scripts.SaveSystem
+﻿namespace SaveSystem
 {
     public enum SaveServices
     {

@@ -26,7 +26,6 @@ namespace ZombieGeneratorBehaviour
             _baseTimeToSpawnNewZombie = baseTimeToSpawnNewZombie;
             _reductionTime = reductionTime;
             _zombieFabric = zombieFabric;
-
         }
         
         public void Initialize()

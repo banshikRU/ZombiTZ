@@ -3,14 +3,11 @@ using System.Threading.Tasks;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using UnityEngine;
-using Zenject;
 
 namespace  Services
 {
     public class InitializingUnityServices
     {
-        public event Action OnInitializationComplete; 
-    
         public async Task Initialize()
         {
             await InitializeUnityServices();
@@ -34,7 +31,6 @@ namespace  Services
             try
             {
                 await AuthenticationService.Instance.SignInAnonymouslyAsync();
-                OnInitializationComplete?.Invoke();
             }
             catch (Exception ex)
             {

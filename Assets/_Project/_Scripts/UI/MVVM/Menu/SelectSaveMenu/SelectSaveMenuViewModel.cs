@@ -1,18 +1,19 @@
 ﻿using System;
+using SaveSystem;
 using UniRx;
 using Zenject;
 
-namespace UIControl.SelectSaveMenu
+namespace UIControl.MVVM
 {
     public class SelectSaveMenuViewModel: IInitializable
     {
+        private readonly SaveGameController _saveGameController;
+        private readonly UIViewModel _uiViewModel;
+        
         public readonly ReactiveProperty<DateTime> LastLocalSaveTime = new();
         public readonly ReactiveProperty<DateTime> LastCloudSaveTime = new();
         public readonly ReactiveProperty<bool> IsLocalSaveButtonActive = new(); 
         public readonly ReactiveProperty<bool> IsCloudSaveButtonActive = new();
-        
-        private readonly SaveGameController _saveGameController;
-        private readonly UIViewModel _uiViewModel;
 
         public SelectSaveMenuViewModel(SaveGameController saveGameController, UIViewModel uiViewModel)
         {
@@ -50,6 +51,5 @@ namespace UIControl.SelectSaveMenu
                 IsLocalSaveButtonActive.Value = true;
             }
         }
-        
     }
 }

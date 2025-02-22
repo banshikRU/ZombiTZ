@@ -24,7 +24,6 @@ namespace Advertisements
 
         public void AdInit(Button button, string adId, int rewardId = -1)
         {
-
             _button = button;
             LoadAd(adId);
             AddNewRewardId(adId, rewardId);
@@ -57,7 +56,5 @@ namespace Advertisements
         {
             return _rewardIdDictionary[adsId];
         }
-
     }
-
 }

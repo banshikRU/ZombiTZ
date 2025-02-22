@@ -20,15 +20,15 @@ namespace UIControl.MVVM.Bullets
         {
             SubscribeEvent();
         }
-
-        private void SubscribeEvent()
-        {
-            _bulletFabric.OnShot += OnShot;
-        }
-
+        
         public void Dispose()
         {
             _bulletFabric.OnShot -= OnShot;
+        }
+        
+        private void SubscribeEvent()
+        {
+            _bulletFabric.OnShot += OnShot;
         }
         
         private void OnShot()
