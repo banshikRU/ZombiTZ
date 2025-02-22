@@ -6,6 +6,7 @@ using UIControl.Buttons.IAPButtons;
 using UIControl.MVVM.Bullets;
 using UIControl.MVVM.HealthBar;
 using UIControl.MVVM.MainMenu;
+using UIControl.SelectSaveMenu;
 
 namespace GameSystem
 {
@@ -43,6 +44,9 @@ namespace GameSystem
                 .AsSingle();
             Container
                 .BindInterfacesAndSelfTo<UIViewModel>()
+                .AsSingle();
+            Container
+                .BindInterfacesAndSelfTo<SelectSaveMenuViewModel>()
                 .AsSingle();
         }
     }

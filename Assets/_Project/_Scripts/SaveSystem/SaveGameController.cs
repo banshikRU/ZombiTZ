@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using _Project._Scripts.SaveSystem;
 using Newtonsoft.Json;
 using PlayerControl;
-using Services;
 using UnityEngine;
 using Zenject;
 
@@ -11,8 +10,14 @@ public class SaveGameController
 {
     private const string PLAYER_DATA = "PlayerData";
     
+    public event Action OnPlayerDataUpdated;
+    
     private readonly ISaveService _localSaveService;
     private readonly ISaveService _cloudSaveService;
+    
+    public PlayerData LocalPlayerData { get; private set; }
+    public PlayerData CloudPlayerData { get; private set; }
+    public bool IsSaveSetUp{get; private set;}
 
     public PlayerData PlayerDataValues { get; private set; }
 
@@ -30,6 +35,7 @@ public class SaveGameController
     public async void SaveData()
     {
         PlayerDataValues.SaveTime = DateTime.Now;
+        OnPlayerDataUpdated?.Invoke();
         string json = JsonConvert.SerializeObject(PlayerDataValues);
         await _localSaveService.SaveAsync(PLAYER_DATA, json);
         await _cloudSaveService.SaveAsync(PLAYER_DATA, json);
@@ -57,46 +63,29 @@ public class SaveGameController
         PlayerDataValues = new PlayerData();
         try
         {
-            PlayerData localData = await LoadLocal();
-            PlayerData cloudData = await LoadCloud();
+            LocalPlayerData = await LoadLocal();
+            CloudPlayerData = await LoadCloud();
             
-            if (localData == null && cloudData == null)
+            if (LocalPlayerData == null && CloudPlayerData == null)
             {
                 Debug.Log("Нет сохранений.");
                 MakeFirstSave();
-                return;
             }
-
-            if (localData == null)
+            else if (LocalPlayerData == null)
             {
-                PlayerDataValues = cloudData;
-                SaveData();
-                Debug.Log("Локальное сохранение отсутствует. Используем облачное.");
-                return;
-            }
-
-            if (cloudData == null)
-            {
-                PlayerDataValues = localData;
-                SaveData();
-                Debug.Log("Облачное сохранение отсутствует. Используем локальное.");
-                return;
-            }
-
-            if (localData.SaveTime > cloudData.SaveTime)
-            {
-                PlayerDataValues = localData;
+                PlayerDataValues = CloudPlayerData;
                 SaveData();
             }
-            else if (localData.SaveTime < cloudData.SaveTime)
+            else if (CloudPlayerData == null)
             {
-                PlayerDataValues = cloudData;
+                PlayerDataValues = LocalPlayerData;
                 SaveData();
             }
-            else
+            else if (LocalPlayerData.SaveTime == CloudPlayerData.SaveTime)
             {
-                PlayerDataValues = localData;
-                Debug.Log("Сохранения синхронизированы.");
+                PlayerDataValues = LocalPlayerData;
+                IsSaveSetUp = true;
+                SaveData();
             }
         }
         catch (Exception ex)
@@ -113,6 +102,20 @@ public class SaveGameController
             SaveTime = DateTime.Now,
             NoAdsPurchased = false
         };
+        SaveData();
+    }
+
+    public void SetUpLocalSave()
+    {
+        PlayerDataValues = LocalPlayerData; 
+        IsSaveSetUp = true;
+        SaveData();
+    }
+
+    public void SetUpCloudSave()
+    {
+        PlayerDataValues = CloudPlayerData;
+        IsSaveSetUp = true;
         SaveData();
     }
 }

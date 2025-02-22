@@ -3,7 +3,8 @@ using Advertisements;
 using GameStateControl;
 using PlayerControl;
 using UniRx;
-using Zenject;
+using Unity.VisualScripting;
+using IInitializable = Zenject.IInitializable;
 
 namespace UIControl
 {
@@ -12,26 +13,36 @@ namespace UIControl
         private readonly GameStateUpdater _gameStateUpdater;
         private readonly PlayerBehaviour _player;
         private readonly AdsRewardGiver _adsRewardGiver;
+        private readonly SaveGameController _saveGameController;
         
         public readonly ReactiveProperty<bool> IsMainMenuVisible = new ();
         public readonly ReactiveProperty<bool> IsDeathMenuVisible = new ();
         public readonly ReactiveProperty<bool> IsInGameStatsVisible = new ();
+        public readonly ReactiveProperty<bool> IsSelectSaveMenuVisible = new ();
 
-        public UIViewModel(GameStateUpdater gameStateUpdater, PlayerBehaviour player, AdsRewardGiver adsRewardGiver)
+        public UIViewModel(GameStateUpdater gameStateUpdater, PlayerBehaviour player, AdsRewardGiver adsRewardGiver, SaveGameController saveGameController)
         {
             _gameStateUpdater = gameStateUpdater;
             _player = player;
             _adsRewardGiver = adsRewardGiver;
+            _saveGameController = saveGameController;
         }
         
         public void Initialize()
         {
             EventInit();
+            OnMainMenu();
+            ControlSelectSaveMenu();
         }
 
         public void Dispose()
         {
             UnsubscribeEvent();
+        }
+
+        public void SaveSelected()
+        {
+            OffSelectSaveMenu();
         }
         
         public void StartGame()
@@ -67,6 +78,11 @@ namespace UIControl
             IsMainMenuVisible.Value = false;
         }
 
+        private void OnMainMenu()
+        {
+            IsMainMenuVisible.Value = true;
+        }
+
         private void OnEndGameMenu()
         {
             IsDeathMenuVisible.Value = true;
@@ -85,6 +101,27 @@ namespace UIControl
         private void OffInGameStats()
         {
             IsInGameStatsVisible.Value = false;
+        }
+
+        private void OnSelectSaveMenu()
+        {
+            IsSelectSaveMenuVisible.Value = true;
+        }
+
+        private void OffSelectSaveMenu()
+        {
+            IsSelectSaveMenuVisible.Value = false;
+        }
+
+        private void ControlSelectSaveMenu()
+        {
+            TimeSpan difference = _saveGameController.LocalPlayerData.SaveTime - _saveGameController.CloudPlayerData.SaveTime;
+            if(difference.TotalSeconds < 30)
+                return;
+            if (_saveGameController.CloudPlayerData != null && _saveGameController.LocalPlayerData != null && !_saveGameController.IsSaveSetUp)
+            {
+                OnSelectSaveMenu();
+            }
         }
     }
 }

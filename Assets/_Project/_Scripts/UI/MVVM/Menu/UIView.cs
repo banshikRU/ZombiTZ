@@ -13,12 +13,12 @@ namespace UIControl
         private GameObject _deathMenu;
         [SerializeField] 
         private GameObject _inGameStats;
+        [SerializeField]
+        private GameObject _selectSaveMenu;
         [SerializeField] 
         private Button _playButton;
         [SerializeField] 
         private Button _gameEndButton;
-        [SerializeField]
-        private Button _purchaseNoAdsButton;
 
         private UIViewModel _viewModel;
 
@@ -32,7 +32,6 @@ namespace UIControl
         {
             SubscribeEvents();
             AddListenersForButtons();
-            _viewModel.IsMainMenuVisible.Value = true;
         }
         
         private void OnDestroy()
@@ -47,6 +46,7 @@ namespace UIControl
             _viewModel.IsDeathMenuVisible.Skip(1).Subscribe(OnDeathMenuStateChanged);
             _viewModel.IsMainMenuVisible.Skip(1).Subscribe(OnMainMenuStateChanged);
             _viewModel.IsInGameStatsVisible.Skip(1).Subscribe(OnInGameStatsStateChanged);
+            _viewModel.IsSelectSaveMenuVisible.Skip(1).Subscribe(OnSelectSaveMenuStateChanged);
         }
         
         private void OnMainMenuStateChanged(bool isMainMenuVisible)
@@ -62,6 +62,11 @@ namespace UIControl
         private void OnInGameStatsStateChanged(bool isInGameStatsVisible)
         {
             _inGameStats.SetActive(isInGameStatsVisible);
+        }
+
+        private void OnSelectSaveMenuStateChanged(bool isSelectSaveMenuVisible)
+        {
+            _selectSaveMenu.SetActive(isSelectSaveMenuVisible);
         }
         
         private void AddListenersForButtons()

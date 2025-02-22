@@ -24,16 +24,17 @@ namespace Services
         public void Initialize()
         {
             EventInit();
-            IsNoAdsPurchasedCheck();
         }
         
         public void Dispose()
         {
+            _saveGameController.OnPlayerDataUpdated += IsNoAdsPurchasedCheck;
             _inAppStore.OnProductPurchase -= SetNoAdsPurchase;
         }
 
         private void EventInit()
         {
+            _saveGameController.OnPlayerDataUpdated += IsNoAdsPurchasedCheck;
             _inAppStore.OnProductPurchase += SetNoAdsPurchase;
         }
 

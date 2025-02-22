@@ -20,7 +20,6 @@ namespace UIControl
         
         public void Initialize()
         {
-            InitMaxScores();
             EventInit();
         }
         
@@ -49,11 +48,13 @@ namespace UIControl
         
         private void UnsubscribeEvent()
         {
+            _saveGameController.OnPlayerDataUpdated += InitMaxScores;
             _gameStateUpdater.OnGamePlayed -= ResetCurrentScores;
         }
 
         private void EventInit()
         {
+            _saveGameController.OnPlayerDataUpdated += InitMaxScores;
             _gameStateUpdater.OnGamePlayed += ResetCurrentScores;
         }
 
