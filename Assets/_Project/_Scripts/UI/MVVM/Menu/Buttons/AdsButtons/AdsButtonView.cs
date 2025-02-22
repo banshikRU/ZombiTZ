@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace UIControl.MVVM.MainMenu.Buttons
+namespace UIControl.MVVM.Buttons
 {
     public class AdsButtonView : MonoBehaviour
     {

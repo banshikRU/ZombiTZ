@@ -41,7 +41,6 @@ namespace UIControl.MVVM.HealthBar
         
         private void SubscribeEvent()
         {
-            UpdateZombieHealthBar(1,1);
             _zombie.OnZombieTakeDamage += UpdateZombieHealthBar;
         }
     }

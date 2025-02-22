@@ -1,5 +1,8 @@
-﻿public enum FXType
+﻿namespace FXSystem
 {
-    BulletShot,
-    ZombieDie
+    public enum FXType
+    {
+        BulletShot,
+        ZombieDie
+    }
 }

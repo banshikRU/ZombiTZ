@@ -38,6 +38,5 @@ namespace UIControl.MVVM.HealthBar
         {
             gameObject.transform.position = position;
         }
-
     }
 }

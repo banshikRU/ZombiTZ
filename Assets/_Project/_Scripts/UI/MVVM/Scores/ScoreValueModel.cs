@@ -1,10 +1,10 @@
-using GameStateControl;
 using System;
+using GameSystem;
 using SaveSystem;
 using UniRx;
 using Zenject;
 
-namespace UIControl
+namespace UIControl.MVVM.Scores
 {
     public class ScoreValueModel : IDisposable,IInitializable
     {
@@ -21,6 +21,7 @@ namespace UIControl
         
         public void Initialize()
         {
+            InitMaxScores();
             EventInit();
         }
         
@@ -49,13 +50,11 @@ namespace UIControl
         
         private void UnsubscribeEvent()
         {
-            _saveGameController.OnPlayerDataUpdated += InitMaxScores;
             _gameStateUpdater.OnGamePlayed -= ResetCurrentScores;
         }
 
         private void EventInit()
         {
-            _saveGameController.OnPlayerDataUpdated += InitMaxScores;
             _gameStateUpdater.OnGamePlayed += ResetCurrentScores;
         }
 

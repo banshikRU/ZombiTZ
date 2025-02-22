@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using SaveSystem;
 using Newtonsoft.Json;
 using PlayerControl;
+using UniRx;
 using UnityEngine;
 using Zenject;
 
@@ -11,8 +11,6 @@ namespace SaveSystem
     public class SaveGameController
     {
         private const string PLAYER_DATA = "PlayerData";
-
-        public event Action OnPlayerDataUpdated;
 
         private readonly ISaveService _localSaveService;
         private readonly ISaveService _cloudSaveService;
@@ -36,7 +34,6 @@ namespace SaveSystem
         public async void SaveData()
         {
             PlayerDataValues.SaveTime = DateTime.Now;
-            OnPlayerDataUpdated?.Invoke();
             var json = JsonConvert.SerializeObject(PlayerDataValues);
             await _localSaveService.SaveAsync(PLAYER_DATA, json);
             await _cloudSaveService.SaveAsync(PLAYER_DATA, json);

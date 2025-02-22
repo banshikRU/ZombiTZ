@@ -2,11 +2,12 @@ using System;
 using Advertisements;
 using Firebase.Analytics;
 using PlayerControl;
-using UIControl;
+using Services;
+using UIControl.MVVM.Scores;
 using UnityEngine;
 using Zenject;
 
-namespace GameStateControl
+namespace GameSystem
 {
     public class GameStateUpdater : MonoBehaviour, IInitializable
     {
@@ -20,21 +21,23 @@ namespace GameStateControl
         private AdsRewardGiver _adsRewardGiver;
         private AnalyticServiceManager _analyticServiceManager;
         private SceneController _sceneController;
+        private NoAdsController _noAdsController;
 
         public bool IsGame { get; private set; }
 
         public void Initialize()
         {
             IsGame = false;
-            _scoreUpdater.Value.InitMaxScores();
+            _noAdsController.IsNoAdsPurchasedCheck();
         }
 
         [Inject]
-        public void Construct(AnalyticServiceManager analyticServiceManager, AdsRewardGiver adsRewardGiver,SceneController sceneController)
+        public void Construct(AnalyticServiceManager analyticServiceManager, AdsRewardGiver adsRewardGiver,SceneController sceneController,NoAdsController noAdsController)
         {
             _sceneController = sceneController;
             _adsRewardGiver = adsRewardGiver;
             _analyticServiceManager = analyticServiceManager;
+            _noAdsController = noAdsController;
         }
 
         public void StartGame()

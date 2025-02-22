@@ -1,16 +1,18 @@
-﻿using _Project._Scripts.MainSceneBehaviour.SceneController;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine.SceneManagement;
 
-public class SceneController
+namespace GameSystem
 {
-    public void LoadScene(ScenesNames sceneName)
+    public class SceneController
     {
-        SceneManager.LoadScene(sceneName.ToString());
-    }
+        public void LoadScene(ScenesNames sceneName)
+        {
+            SceneManager.LoadScene(sceneName.ToString());
+        }
 
-    public void ReloadCurrentScene()
-    {
-        Scene currentScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(currentScene.name);
+        public void ReloadCurrentScene()
+        {
+            Scene currentScene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(currentScene.name);
+        }
     }
 }

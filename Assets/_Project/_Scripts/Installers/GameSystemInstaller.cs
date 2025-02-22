@@ -4,10 +4,11 @@ using Firebase.Analytics;
 using Services;
 using InAppPurchase;
 using Advertisements;
+using GameSystem;
 using InputControl;
 using SaveSystem;
 
-namespace GameSystem
+namespace Installers
 {
     [CreateAssetMenu(fileName = "GameSystemInstallers", menuName = "Scriptable Objects/ProjectInstallers", order = 1)]
 
@@ -19,7 +20,7 @@ namespace GameSystem
                 .Bind<SceneController>()
                 .AsSingle();
             Container
-                .BindInterfacesAndSelfTo<InitializingUnityServices>()
+                .BindInterfacesAndSelfTo<UnityServicesInitializer>()
                 .AsSingle();
             Container
                 .BindInterfacesAndSelfTo<DesktopInput>()

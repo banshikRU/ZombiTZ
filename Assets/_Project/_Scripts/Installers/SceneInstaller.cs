@@ -1,3 +1,5 @@
+using FXSystem;
+using GameSystem;
 using InputControl;
 using ObjectPoolSystem;
 using PlayerControl;
@@ -5,11 +7,8 @@ using UnityEngine;
 using WeaponControl;
 using Zenject;
 using ZombieGeneratorBehaviour;
-using GameStateControl;
-using SfxSystem;
-using VFXSystem;
 
-namespace GameSystem
+namespace Installers
 {
     public class SceneInstaller : MonoInstaller
     {

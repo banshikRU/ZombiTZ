@@ -17,20 +17,7 @@ namespace ObjectPoolSystem
 
             SetupPool();
         }
-
-        private void SetupPool()
-        {
-            if (_objectToPool == null)
-            {
-                return;
-            }
-            _stack = new Stack<PooledObject>();
-            for (int i = 0; i < _initPoolSize; i++)
-            {
-                CreateNewInstance();
-            }
-        }
-
+        
         public PooledObject GetObject()
         {
             if (_objectToPool == null)
@@ -55,7 +42,20 @@ namespace ObjectPoolSystem
             _stack.Push(pooledObject);
             pooledObject.gameObject.SetActive(false);
         }
-
+        
+        private void SetupPool()
+        {
+            if (_objectToPool == null)
+            {
+                return;
+            }
+            _stack = new Stack<PooledObject>();
+            for (int i = 0; i < _initPoolSize; i++)
+            {
+                CreateNewInstance();
+            }
+        }
+        
         private PooledObject CreateNewInstance()
         {
             PooledObject instance = Instantiate(_objectToPool);
@@ -64,7 +64,6 @@ namespace ObjectPoolSystem
             _stack.Push(instance);
             return instance;
         }
-
     }
 }
 

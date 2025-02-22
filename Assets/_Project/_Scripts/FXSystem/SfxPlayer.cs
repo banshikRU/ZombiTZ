@@ -4,7 +4,7 @@ using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
-namespace SfxSystem
+namespace FXSystem
 {
     public class SfxPlayer : MonoBehaviour,IInitializable
     {
@@ -26,7 +26,6 @@ namespace SfxSystem
                 var audioSource = Instantiate(_audioSourcePrefab);
                 audioSource.transform.parent = transform;
                 _audioSources.Enqueue(audioSource);
-
             }
         }
 

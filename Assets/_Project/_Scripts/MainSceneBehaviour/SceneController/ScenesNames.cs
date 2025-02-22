@@ -1,4 +1,4 @@
-﻿namespace _Project._Scripts.MainSceneBehaviour.SceneController
+﻿namespace GameSystem
 {
     public enum ScenesNames
     {

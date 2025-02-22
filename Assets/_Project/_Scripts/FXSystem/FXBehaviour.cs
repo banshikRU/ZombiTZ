@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace _Project._Scripts.FXSystem
+namespace FXSystem
 {
     [Serializable]
     public class FXBehaviour

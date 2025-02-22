@@ -1,87 +1,76 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using _Project._Scripts.FXSystem;
-using GameStateControl;
-using SfxSystem;
+using GameSystem;
 using Unity.Mathematics;
-using VFXSystem;
 using WeaponControl;
 using Zenject;
 using ZombieGeneratorBehaviour;
 
-public class FXEventCatcher : IInitializable,IDisposable
+namespace FXSystem
 {
-    private readonly GameSettings _gameSettings;
-    private readonly SfxPlayer _sfxPlayer;
-    private readonly VFXGenerator _vfxGenerator;
-    
-    private readonly List<IFXEventSender> _fxEventSenders;
-    
-    public FXEventCatcher(List<IFXEventSender> fxEventSenders,VFXGenerator vfxGenerator,SfxPlayer sfxPlayer,GameSettings gameSettings)
+    public class FXEventCatcher : IInitializable, IDisposable
     {
-        _fxEventSenders = fxEventSenders;
-        _vfxGenerator = vfxGenerator;
-        _sfxPlayer = sfxPlayer;
-        _gameSettings = gameSettings;
-        
-    }
-    
-    public void Initialize()
-    {
-        EventInit();
-    }
-    
-    public void Dispose()
-    {
-        UnsubscribeEvents();
-    }
+        private readonly GameSettings _gameSettings;
+        private readonly SfxPlayer _sfxPlayer;
+        private readonly VFXGenerator _vfxGenerator;
 
-    private void EventInit()
-    {
-        foreach (IFXEventSender eventSender in _fxEventSenders)
-        {
-            eventSender.OnFXEvent += SenderIdentification;
-        }
-    }
-    
-    private void UnsubscribeEvents()
-    {
-        foreach (IFXEventSender eventSender in _fxEventSenders)
-        {
-            eventSender.OnFXEvent -= SenderIdentification;
-        }
-    }
-    
-    private void SenderIdentification(Vector3 position,IFXEventSender sender)
-    {
-        switch (sender)
-        {
-            case ZombieFactory:
-                CreateFx(position,FXType.ZombieDie);
-                break;
-            case BulletFabric:
-                CreateFx(position,FXType.BulletShot);
-                break;
-        }
-    }
+        private readonly List<IFXEventSender> _fxEventSenders;
 
-    private void CreateFx(Vector3 position,FXType fxType)
-    {
-        FXBehaviour currentFXBehaviour  = GetFXBehaviour(fxType);
-        _vfxGenerator.PlayVFX(currentFXBehaviour.VfxPrefab, position,quaternion.identity);
-        _sfxPlayer.PlaySfx(currentFXBehaviour.SfxSound);
-    }
-
-    private FXBehaviour GetFXBehaviour(FXType fxType)
-    {
-        foreach (FXBehaviour fxBehaviour in _gameSettings.FXPrefab)
+        public FXEventCatcher(List<IFXEventSender> fxEventSenders, VFXGenerator vfxGenerator, SfxPlayer sfxPlayer, GameSettings gameSettings)
         {
-            if (fxType == fxBehaviour.FXType)
+            _fxEventSenders = fxEventSenders;
+            _vfxGenerator = vfxGenerator;
+            _sfxPlayer = sfxPlayer;
+            _gameSettings = gameSettings;
+        }
+
+        public void Initialize()
+        {
+            EventInit();
+        }
+
+        public void Dispose()
+        {
+            UnsubscribeEvents();
+        }
+
+        private void EventInit()
+        {
+            foreach (var eventSender in _fxEventSenders) eventSender.OnFXEvent += SenderIdentification;
+        }
+
+        private void UnsubscribeEvents()
+        {
+            foreach (var eventSender in _fxEventSenders) eventSender.OnFXEvent -= SenderIdentification;
+        }
+
+        private void SenderIdentification(Vector3 position, IFXEventSender sender)
+        {
+            switch (sender)
             {
-                return fxBehaviour;
+                case ZombieFactory:
+                    CreateFx(position, FXType.ZombieDie);
+                    break;
+                case BulletFabric:
+                    CreateFx(position, FXType.BulletShot);
+                    break;
             }
         }
-        return null;
+
+        private void CreateFx(Vector3 position, FXType fxType)
+        {
+            var currentFXBehaviour = GetFXBehaviour(fxType);
+            _vfxGenerator.PlayVFX(currentFXBehaviour.VfxPrefab, position, quaternion.identity);
+            _sfxPlayer.PlaySfx(currentFXBehaviour.SfxSound);
+        }
+
+        private FXBehaviour GetFXBehaviour(FXType fxType)
+        {
+            foreach (FXBehaviour fxBehaviour in _gameSettings.FXPrefab)
+                if (fxType == fxBehaviour.FXType)
+                    return fxBehaviour;
+            return null;
+        }
     }
 }

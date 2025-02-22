@@ -1,13 +1,14 @@
 using UIControl;
 using UnityEngine;
 using Zenject;
-using UIControl.Buttons.IAPButtons;
+using UIControl.Buttons;
 using UIControl.MVVM;
 using UIControl.MVVM.Bullets;
 using UIControl.MVVM.HealthBar;
-using UIControl.MVVM.MainMenu;
+using UIControl.MVVM.Buttons;
+using UIControl.MVVM.Scores;
 
-namespace GameSystem
+namespace Installers
 {
     public class MainSceneUIInstaller : MonoInstaller
     {

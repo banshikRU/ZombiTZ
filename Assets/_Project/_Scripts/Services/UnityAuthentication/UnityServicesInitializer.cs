@@ -4,9 +4,9 @@ using Unity.Services.Authentication;
 using Unity.Services.Core;
 using UnityEngine;
 
-namespace  Services
+namespace Services
 {
-    public class InitializingUnityServices
+    public class UnityServicesInitializer
     {
         public async Task Initialize()
         {

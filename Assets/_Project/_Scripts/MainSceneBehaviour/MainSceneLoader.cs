@@ -1,6 +1,5 @@
 using System;
-using _Project._Scripts.MainSceneBehaviour.SceneController;
-using GameStateControl;
+using Services;
 using Zenject;
 
 namespace GameSystem

@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UIControl;
 using ObjectPoolSystem;
 using System;
-using _Project._Scripts.FXSystem;
 using Random = UnityEngine.Random;
 using Firebase.Analytics;
 using Advertisements;
+using FXSystem;
+using UIControl.MVVM.Scores;
 using Zenject;
 
 namespace ZombieGeneratorBehaviour

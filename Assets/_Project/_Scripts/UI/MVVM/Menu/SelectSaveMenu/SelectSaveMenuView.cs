@@ -1,7 +1,6 @@
 using System;
 using System.Globalization;
 using TMPro;
-using UIControl.MVVM;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;

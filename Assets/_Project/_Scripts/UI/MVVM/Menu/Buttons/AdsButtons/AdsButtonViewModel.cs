@@ -2,7 +2,7 @@
 using Services;
 using UnityEngine.UI;
 
-namespace UIControl.MVVM.MainMenu
+namespace UIControl.MVVM.Buttons
 {
     public class AdsButtonViewModel
     {

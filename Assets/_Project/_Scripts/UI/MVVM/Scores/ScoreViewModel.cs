@@ -2,7 +2,7 @@
 using UniRx;
 using Zenject;
 
-namespace  UIControl
+namespace  UIControl.MVVM.Scores
 {
     public class ScoreViewModel : IInitializable, IDisposable
     {

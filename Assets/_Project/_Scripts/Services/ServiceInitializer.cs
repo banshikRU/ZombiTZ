@@ -2,24 +2,23 @@
 using Firebase;
 using Firebase.RemoteConfig;
 using SaveSystem;
-using Services;
 using Zenject;
 
-namespace GameStateControl
+namespace Services
 {
     public class ServiceInitializer :IInitializable
     {
         public event Action OnInitializationCompleted; 
         
-        private readonly InitializingUnityServices _initializingUnityServices;
+        private readonly UnityServicesInitializer _unityServicesInitializer;
         private readonly FirebaseDependencies _firebaseDependencies;
         private readonly RemoteConfigManager _remoteConfigManager;
         private readonly SaveGameController _saveGameController;
         private readonly NoAdsController _noAdsController;
 
-        public ServiceInitializer(InitializingUnityServices initializingUnityServices, FirebaseDependencies firebaseDependencies, RemoteConfigManager remoteConfigManager,SaveGameController saveGameController, NoAdsController noAdsController)
+        public ServiceInitializer(UnityServicesInitializer unityServicesInitializer, FirebaseDependencies firebaseDependencies, RemoteConfigManager remoteConfigManager,SaveGameController saveGameController, NoAdsController noAdsController)
         {
-            _initializingUnityServices = initializingUnityServices;
+            _unityServicesInitializer = unityServicesInitializer;
             _firebaseDependencies = firebaseDependencies;
             _remoteConfigManager = remoteConfigManager;
             _saveGameController = saveGameController;
@@ -28,7 +27,7 @@ namespace GameStateControl
         
         public async void Initialize()
         {
-            await _initializingUnityServices.Initialize();
+            await _unityServicesInitializer.Initialize();
             await _firebaseDependencies.Initialize();
             await _remoteConfigManager.Initialize();
             await _saveGameController.Initialize();

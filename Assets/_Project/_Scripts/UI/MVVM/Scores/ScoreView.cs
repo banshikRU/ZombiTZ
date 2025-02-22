@@ -3,7 +3,7 @@ using UniRx;
 using UnityEngine;
 using Zenject;
 
-namespace  UIControl
+namespace  UIControl.MVVM.Scores
 {
     public class ScoreView : MonoBehaviour
     {

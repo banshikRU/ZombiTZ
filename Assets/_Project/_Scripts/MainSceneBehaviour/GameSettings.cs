@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using _Project._Scripts.FXSystem;
+using FXSystem;
 using UnityEngine;
 using ZombieGeneratorBehaviour;
 using WeaponControl;
 using ObjectPoolSystem;
 
-namespace GameStateControl
+namespace GameSystem
 {
     [CreateAssetMenu(fileName = "Game Settings", menuName = "Scriptable Objects/New Game Settings", order = 1)]
 

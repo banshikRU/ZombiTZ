@@ -1,6 +1,6 @@
 ﻿using System;
 using Advertisements;
-using GameStateControl;
+using GameSystem;
 using PlayerControl;
 using SaveSystem;
 using UniRx;

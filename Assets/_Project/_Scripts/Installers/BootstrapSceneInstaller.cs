@@ -1,11 +1,12 @@
-using GameStateControl;
 using UnityEngine;
 using Zenject;
 using Firebase.RemoteConfig;
 using Advertisements;
 using Firebase;
+using GameSystem;
+using Services;
 
-namespace GameSystem
+namespace Installers
 {
     public class BootstrapSceneInstaller : MonoInstaller
     {

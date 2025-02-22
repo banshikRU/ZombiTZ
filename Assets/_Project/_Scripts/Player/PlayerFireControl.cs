@@ -1,6 +1,6 @@
 using System;
+using GameSystem;
 using UnityEngine;
-using GameStateControl;
 using Zenject;
 
 namespace WeaponControl
@@ -32,6 +32,16 @@ namespace WeaponControl
         {
             UnsubscribeEvent();
         }
+        
+        public void Shot()
+        {
+            if (!_gameStateUpdater.IsGame)
+                return;
+            if (!(Time.time >= _shootInSecond)) 
+                return;
+            _shootInSecond = Time.time + _shootsInOneSeconds;
+            _bulletFabric.Shot();
+        }
 
         private void SubscribeEvents()
         {
@@ -48,16 +58,6 @@ namespace WeaponControl
             _weaponHandler.TakeWeapon();
             _shootsInOneSeconds = _weaponHandler.WeaponFireRate;
             _shootInSecond = _shootsInOneSeconds;
-        }
-
-        public void Shot()
-        {
-            if (!_gameStateUpdater.IsGame)
-                return;
-            if (!(Time.time >= _shootInSecond)) 
-                return;
-            _shootInSecond = Time.time + _shootsInOneSeconds;
-            _bulletFabric.Shot();
         }
     }
 }

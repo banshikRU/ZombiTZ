@@ -2,7 +2,8 @@ using UnityEngine;
 using ObjectPoolSystem;
 using Firebase.Analytics;
 using System;
-using _Project._Scripts.FXSystem;
+using FXSystem;
+using HelpUtilities;
 using Zenject;
 
 namespace WeaponControl

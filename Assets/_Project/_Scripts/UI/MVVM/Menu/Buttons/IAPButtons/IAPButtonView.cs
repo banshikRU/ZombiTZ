@@ -3,7 +3,7 @@ using UnityEngine.Purchasing;
 using UnityEngine.UI;
 using Zenject;
 
-namespace UIControl.Buttons.IAPButtons
+namespace UIControl.Buttons
 {
     [RequireComponent(typeof(CodelessIAPButton))]
     public class IAPButtonView : MonoBehaviour
@@ -22,10 +22,10 @@ namespace UIControl.Buttons.IAPButtons
         {
             _button = GetComponent<Button>();
             _codelessIAPButton = GetComponent<CodelessIAPButton>();
-            AddListeners();
+            AddButtonsListeners();
         }
 
-        private void AddListeners()
+        private void AddButtonsListeners()
         {
             _codelessIAPButton.onPurchaseComplete.AddListener(OnPurchaseComplete);
             _button.onClick.AddListener(BuyProduct);

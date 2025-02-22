@@ -1,7 +1,7 @@
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace VFXSystem
+namespace FXSystem
 {
     public class VFXGenerator 
     {

@@ -1,6 +1,6 @@
 ﻿using InAppPurchase;
 
-namespace UIControl.Buttons.IAPButtons
+namespace UIControl.Buttons
 {
     public class IAPButtonViewModel
     {

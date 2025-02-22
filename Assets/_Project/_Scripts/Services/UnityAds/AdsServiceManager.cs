@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
 namespace Advertisements
 {
-    public class AdsServiceManager
+    public class AdsServiceManager: IDisposable
     {
         private readonly IAdsService _adsService;
         private readonly Dictionary<string, int> _rewardIdDictionary = new ();
@@ -27,10 +28,20 @@ namespace Advertisements
             _button = button;
             LoadAd(adId);
             AddNewRewardId(adId, rewardId);
-            _adsService.OnRewardAdsShowed += GiveReward;
+            SubscribeEvents();
             ActivateButton();
         }
+        
+        public void Dispose()
+        {
+            _adsService.OnRewardAdsShowed -= GiveReward;
+        }
 
+        private void SubscribeEvents()
+        {
+            _adsService.OnRewardAdsShowed += GiveReward;
+        }
+        
         private void LoadAd(string adId)
         {
             _adsService.LoadAd(adId);

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
-using UIControl;
 using ObjectPoolSystem;
+using UIControl.MVVM.Scores;
 
 namespace ZombieGeneratorBehaviour
 {
@@ -40,7 +40,7 @@ namespace ZombieGeneratorBehaviour
             _sprite = gameObject.GetComponent<SpriteRenderer>();
         }
 
-        public virtual void Init(Transform player, ScoreValueModel gameManager,ZombieFactory zombieFactory)
+        public virtual void Init(Transform player, ScoreValueModel gameManager, ZombieFactory zombieFactory)
         {
             _zombieFactory = zombieFactory;
             _currentHealPoint = _healPoint;
