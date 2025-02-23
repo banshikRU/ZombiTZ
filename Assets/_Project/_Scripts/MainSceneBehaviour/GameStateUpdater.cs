@@ -2,7 +2,6 @@ using System;
 using Advertisements;
 using Firebase.Analytics;
 using PlayerControl;
-using Services;
 using UIControl.MVVM.Scores;
 using UnityEngine;
 using Zenject;
@@ -21,23 +20,20 @@ namespace GameSystem
         private AdsRewardGiver _adsRewardGiver;
         private AnalyticServiceManager _analyticServiceManager;
         private SceneController _sceneController;
-        private NoAdsController _noAdsController;
 
         public bool IsGame { get; private set; }
 
         public void Initialize()
         {
             IsGame = false;
-            _noAdsController.IsNoAdsPurchasedCheck();
         }
 
         [Inject]
-        public void Construct(AnalyticServiceManager analyticServiceManager, AdsRewardGiver adsRewardGiver,SceneController sceneController,NoAdsController noAdsController)
+        public void Construct(AnalyticServiceManager analyticServiceManager, AdsRewardGiver adsRewardGiver,SceneController sceneController)
         {
             _sceneController = sceneController;
             _adsRewardGiver = adsRewardGiver;
             _analyticServiceManager = analyticServiceManager;
-            _noAdsController = noAdsController;
         }
 
         public void StartGame()

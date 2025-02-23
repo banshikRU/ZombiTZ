@@ -526,7 +526,7 @@ GameObject:
   - component: {fileID: 87364956}
   - component: {fileID: 87364955}
   m_Layer: 5
-  m_Name: ChoseSaveTextBackGround
+  m_Name: SelectSaveTextBackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2428,7 +2428,7 @@ GameObject:
   - component: {fileID: 999893190}
   - component: {fileID: 999893189}
   m_Layer: 5
-  m_Name: ChoseSaveBackGround
+  m_Name: SelectSaveBackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2828,7 +2828,7 @@ GameObject:
   - component: {fileID: 1067508514}
   - component: {fileID: 1067508513}
   m_Layer: 5
-  m_Name: ChoseSaveText
+  m_Name: SelectSaveText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

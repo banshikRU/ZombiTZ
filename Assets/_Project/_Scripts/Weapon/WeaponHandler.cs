@@ -30,7 +30,6 @@ namespace WeaponControl
                     return 0;
                 return _currentWeapon.ShootsInOneSecond;
             }
-
         }
 
         public WeaponHandler(Weapon currentWeapon, Transform player, float weaponDistanceFromPlayer,SpriteRenderer weapon)

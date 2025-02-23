@@ -120,7 +120,7 @@ namespace UIControl
             TimeSpan difference = _saveGameController.LocalPlayerData.SaveTime - _saveGameController.CloudPlayerData.SaveTime;
             if(difference.TotalSeconds < 30)
                 return;
-            if (_saveGameController.CloudPlayerData != null && _saveGameController.LocalPlayerData != null && !_saveGameController.IsSaveSetUp)
+            if (_saveGameController.CloudPlayerData != null && _saveGameController.LocalPlayerData != null && !_saveGameController.IsSaveSetUp.Value)
             {
                 OnSelectSaveMenu();
             }

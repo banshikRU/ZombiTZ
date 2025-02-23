@@ -19,15 +19,15 @@ namespace GameSystem
         {
             SubscribeEvents();
         }
+        
+        public void Dispose()
+        {
+            _serviceInitializer.OnInitializationCompleted -= LoadMainScene;
+        }
 
         private void SubscribeEvents()
         {
             _serviceInitializer.OnInitializationCompleted += LoadMainScene;
-        }
-
-        public void Dispose()
-        {
-            _serviceInitializer.OnInitializationCompleted -= LoadMainScene;
         }
         
         private void LoadMainScene()

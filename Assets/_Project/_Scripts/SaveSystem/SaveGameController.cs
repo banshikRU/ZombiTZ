@@ -17,8 +17,9 @@ namespace SaveSystem
 
         public PlayerData LocalPlayerData { get; private set; }
         public PlayerData CloudPlayerData { get; private set; }
-        public bool IsSaveSetUp { get; private set; }
         public PlayerData PlayerDataValues { get; private set; }
+        
+        public readonly ReactiveProperty<bool> IsSaveSetUp = new ();
 
         public SaveGameController([Inject(Id = SaveServices.Local)] ISaveService localSaveService, [Inject(Id = SaveServices.Cloud)] ISaveService cloudSaveService)
         {
@@ -33,6 +34,7 @@ namespace SaveSystem
 
         public async void SaveData()
         {
+            IsSaveSetUp.Value = true;
             PlayerDataValues.SaveTime = DateTime.Now;
             var json = JsonConvert.SerializeObject(PlayerDataValues);
             await _localSaveService.SaveAsync(PLAYER_DATA, json);
@@ -48,14 +50,12 @@ namespace SaveSystem
         public void SetUpLocalSave()
         {
             PlayerDataValues = LocalPlayerData;
-            IsSaveSetUp = true;
             SaveData();
         }
 
         public void SetUpCloudSave()
         {
             PlayerDataValues = CloudPlayerData;
-            IsSaveSetUp = true;
             SaveData();
         }
 
@@ -96,7 +96,6 @@ namespace SaveSystem
                 else if (LocalPlayerData.SaveTime == CloudPlayerData.SaveTime)
                 {
                     PlayerDataValues = LocalPlayerData;
-                    IsSaveSetUp = true;
                     SaveData();
                 }
             }

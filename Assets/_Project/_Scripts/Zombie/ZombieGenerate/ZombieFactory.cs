@@ -56,7 +56,6 @@ namespace ZombieGeneratorBehaviour
             zombie.SetActive(true);
             OnZombieSpawned?.Invoke(zombieBehaviour);
             _analyticsDataCollector.AddAnalyzedParameterValue(zombie.name, 1);
-
         }
 
         public void DeleteFromZombieList(ZombieBehaviour zombieBehaviour)
@@ -64,7 +63,6 @@ namespace ZombieGeneratorBehaviour
             OnZombieDestroyed?.Invoke(zombieBehaviour);
             OnFXEvent?.Invoke(zombieBehaviour.gameObject.transform.position,this);
             _generatedActiveZombies.Remove(zombieBehaviour);
-
         }
         
         private void EventInit()
@@ -107,7 +105,6 @@ namespace ZombieGeneratorBehaviour
             ObjectPool objectPool = _objectPoolOrganizer.GetPool(zombie.gameObject.name);
             return objectPool.GetObject().gameObject;
         }
-        
     }
 }
 

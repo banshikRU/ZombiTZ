@@ -1,6 +1,7 @@
 using InAppPurchase;
 using System;
 using SaveSystem;
+using UniRx;
 using UnityEngine;
 
 namespace Services
@@ -27,15 +28,17 @@ namespace Services
         
         public void Dispose()
         {
+            _saveGameController.IsSaveSetUp.Dispose();
             _inAppStore.OnProductPurchase -= SetNoAdsPurchase;
         }
 
         private void EventInit()
         {
+            _saveGameController.IsSaveSetUp.Subscribe(IsNoAdsPurchasedCheck);
             _inAppStore.OnProductPurchase += SetNoAdsPurchase;
         }
 
-        public void IsNoAdsPurchasedCheck()
+        private void IsNoAdsPurchasedCheck(bool value)
         {
             IsAdsPurchased = _saveGameController.PlayerDataValues.NoAdsPurchased;
             Debug.Log(IsAdsPurchased);
@@ -47,7 +50,7 @@ namespace Services
             {
                 _saveGameController.PlayerDataValues.NoAdsPurchased = true;
                 _saveGameController.SaveData();
-                IsNoAdsPurchasedCheck();
+                IsNoAdsPurchasedCheck(true);
             }
         }
     }
