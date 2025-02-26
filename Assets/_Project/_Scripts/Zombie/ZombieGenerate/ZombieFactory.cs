@@ -38,7 +38,7 @@ namespace ZombieGeneratorBehaviour
         public void Initialize()
         {
             _generatedActiveZombies = new List<ZombieBehaviour>();
-            EventInit();
+            SubscribeEvents();
         }
         
         public void Dispose()
@@ -65,7 +65,7 @@ namespace ZombieGeneratorBehaviour
             _generatedActiveZombies.Remove(zombieBehaviour);
         }
         
-        private void EventInit()
+        private void SubscribeEvents()
         {
             _adsRewardGiver.OnGiveSecondChance += DeactivateAllZombies;
         }

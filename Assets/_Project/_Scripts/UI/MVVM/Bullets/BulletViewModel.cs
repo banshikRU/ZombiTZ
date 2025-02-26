@@ -16,13 +16,23 @@ public class BulletViewModel : IDisposable,IInitializable
     
     public void Dispose()
     {
-        _bulletValueModel.Bullets.Dispose();
+        UnsubscribeEvents();
     }
 
     public void Initialize()
     {
         OnBulletChanged(_bulletValueModel.Bullets.Value);
+        SubscribeEvents();
+    }
+
+    private void SubscribeEvents()
+    {
         _bulletValueModel.Bullets.Subscribe(OnBulletChanged);
+    }
+
+    private void UnsubscribeEvents()
+    {
+        _bulletValueModel.Bullets.Dispose();
     }
 
     private void OnBulletChanged(int value)

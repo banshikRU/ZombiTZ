@@ -35,6 +35,11 @@ namespace UIControl.MVVM.HealthBar
         
         public void Dispose()
         {
+            UnsubscribeEvent();
+        }
+
+        private void UnsubscribeEvent()
+        {
             _zombieFactory.OnZombieDestroyed -= DisableHealBar;
             _zombieFactory.OnZombieSpawned -= GenerateHealthBar;
         }

@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Firebase.Extensions;
 using UnityEngine;
 
@@ -6,12 +7,12 @@ namespace Firebase
 {
     public class FirebaseDependencies
     {
-        public async Task Initialize()
+        public async UniTask Initialize()
         {
             await CheckFirebaseDependencies();
         }
 
-        private Task CheckFirebaseDependencies()
+        private UniTask CheckFirebaseDependencies()
         {
             FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task => {
                 var dependencyStatus = task.Result;
@@ -24,7 +25,7 @@ namespace Firebase
                     Debug.LogError($"Could not resolve all Firebase dependencies: {dependencyStatus}");
                 }
             });
-            return Task.CompletedTask;
+            return UniTask.CompletedTask;
         }
     }
 }

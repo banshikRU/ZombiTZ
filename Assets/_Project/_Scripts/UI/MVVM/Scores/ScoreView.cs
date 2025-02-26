@@ -25,12 +25,17 @@ namespace  UIControl.MVVM.Scores
 
         private void OnDestroy()
         {
-            _scoreViewModel.Scores.Dispose();
+           UnsubscribeEvents();
         }
 
         private void SubscribeEvents()
         {
             _scoreViewModel.Scores.Subscribe(DisplayScore);
+        }
+
+        private void UnsubscribeEvents()
+        {
+            _scoreViewModel.Scores.Dispose();
         }
 
         private void DisplayScore(int score)

@@ -36,10 +36,7 @@ namespace UIControl
         
         private void OnDestroy()
         {
-            _viewModel.IsDeathMenuVisible.Dispose();
-            _viewModel.IsMainMenuVisible.Dispose();
-            _viewModel.IsInGameStatsVisible.Dispose();
-            _viewModel.IsSelectSaveMenuVisible.Dispose();
+            UnsubscribeEvents();
         }
 
         private void SubscribeEvents()
@@ -48,6 +45,14 @@ namespace UIControl
             _viewModel.IsMainMenuVisible.Skip(1).Subscribe(OnMainMenuStateChanged);
             _viewModel.IsInGameStatsVisible.Skip(1).Subscribe(OnInGameStatsStateChanged);
             _viewModel.IsSelectSaveMenuVisible.Skip(1).Subscribe(OnSelectSaveMenuStateChanged);
+        }
+
+        private void UnsubscribeEvents()
+        {
+            _viewModel.IsDeathMenuVisible.Dispose();
+            _viewModel.IsMainMenuVisible.Dispose();
+            _viewModel.IsInGameStatsVisible.Dispose();
+            _viewModel.IsSelectSaveMenuVisible.Dispose();
         }
         
         private void OnMainMenuStateChanged(bool isMainMenuVisible)

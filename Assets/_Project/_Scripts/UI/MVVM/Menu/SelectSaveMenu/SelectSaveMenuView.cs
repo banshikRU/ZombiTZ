@@ -35,10 +35,7 @@ namespace UIControl.MVVM
 
         private void OnDestroy()
         {
-            _selectSaveMenuViewModel.LastCloudSaveTime.Dispose();
-            _selectSaveMenuViewModel.LastLocalSaveTime.Dispose();
-            _selectSaveMenuViewModel.IsCloudSaveButtonActive.Dispose();
-            _selectSaveMenuViewModel.IsLocalSaveButtonActive.Dispose();
+            UnsubscribeEvents();
         }
 
         private void SubscribeEvents()
@@ -47,6 +44,14 @@ namespace UIControl.MVVM
             _selectSaveMenuViewModel.LastLocalSaveTime.Subscribe(OnLocalSaveLastSaveTimeChanged);
             _selectSaveMenuViewModel.IsCloudSaveButtonActive.Subscribe(OnCloudSaveButtonStateChanged);
             _selectSaveMenuViewModel.IsLocalSaveButtonActive.Subscribe(OnLocalSaveButtonStateChanged);
+        }
+
+        private void UnsubscribeEvents()
+        {
+            _selectSaveMenuViewModel.LastCloudSaveTime.Dispose();
+            _selectSaveMenuViewModel.LastLocalSaveTime.Dispose();
+            _selectSaveMenuViewModel.IsCloudSaveButtonActive.Dispose();
+            _selectSaveMenuViewModel.IsLocalSaveButtonActive.Dispose();
         }
 
         private void OnLocalSaveLastSaveTimeChanged(DateTime value)

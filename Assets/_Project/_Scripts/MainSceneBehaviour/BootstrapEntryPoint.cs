@@ -4,12 +4,12 @@ using Zenject;
 
 namespace GameSystem
 {
-    public class MainSceneLoader : IInitializable, IDisposable
+    public class BootstrapEntryPoint : IInitializable, IDisposable
     {
         private readonly ServiceInitializer _serviceInitializer;
         private readonly SceneController _sceneController;
 
-        public MainSceneLoader(ServiceInitializer serviceInitializer, SceneController sceneController)
+        public BootstrapEntryPoint(ServiceInitializer serviceInitializer, SceneController sceneController)
         {
             _serviceInitializer = serviceInitializer;
             _sceneController = sceneController;
@@ -22,9 +22,14 @@ namespace GameSystem
         
         public void Dispose()
         {
-            _serviceInitializer.OnInitializationCompleted -= LoadMainScene;
+           UnsubscribeEvents();
         }
 
+        private void UnsubscribeEvents()
+        {
+            _serviceInitializer.OnInitializationCompleted -= LoadMainScene;
+        }
+        
         private void SubscribeEvents()
         {
             _serviceInitializer.OnInitializationCompleted += LoadMainScene;

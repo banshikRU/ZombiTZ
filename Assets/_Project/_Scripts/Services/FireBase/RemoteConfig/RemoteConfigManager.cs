@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using GameSystem;
 
 namespace Firebase.RemoteConfig
@@ -26,14 +27,14 @@ namespace Firebase.RemoteConfig
             _gameSettings = gameSettings;
         }
         
-        public async Task Initialize()
+        public async UniTask Initialize()
         {
             _gameSettingsParameters = new RemoteGameSettingsValues();
             await SetDefaultValues();
             await FetchRemoteConfig();
         }
 
-        private Task FetchRemoteConfig()
+        private UniTask FetchRemoteConfig()
         {
             FirebaseRemoteConfig.DefaultInstance.FetchAsync(TimeSpan.Zero).ContinueWith(fetchTask => {
                 if (fetchTask.IsCompleted)
@@ -48,7 +49,7 @@ namespace Firebase.RemoteConfig
                     LoadDefaultValues();
                 }
             });
-            return Task.CompletedTask;
+            return UniTask.CompletedTask;
         }
 
         private void LoadRemoteConfig()

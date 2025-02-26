@@ -1,4 +1,5 @@
 ﻿using System;
+using Cysharp.Threading.Tasks;
 using Firebase;
 using Firebase.RemoteConfig;
 using SaveSystem;
@@ -27,12 +28,15 @@ namespace Services
         
         public async void Initialize()
         {
-            await _unityServicesInitializer.Initialize();
-            await _firebaseDependencies.Initialize();
-            await _remoteConfigManager.Initialize();
+             await InitializeServices();
+             OnInitializationCompleted?.Invoke();
+        }
+
+        private async UniTask InitializeServices()
+        {
+            await UniTask.WhenAll(_unityServicesInitializer.Initialize(), _firebaseDependencies.Initialize(),_remoteConfigManager.Initialize());
             await _saveGameController.Initialize();
             _noAdsController.Initialize();
-            OnInitializationCompleted?.Invoke();
         }
     }
 }

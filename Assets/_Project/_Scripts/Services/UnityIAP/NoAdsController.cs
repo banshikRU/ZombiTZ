@@ -23,16 +23,21 @@ namespace Services
         
         public void Initialize()
         {
-            EventInit();
+            SubscribeEvents();
         }
         
         public void Dispose()
+        {
+            UnsubscribeEvents();
+        }
+
+        private void UnsubscribeEvents()
         {
             _saveGameController.IsSaveSetUp.Dispose();
             _inAppStore.OnProductPurchase -= SetNoAdsPurchase;
         }
 
-        private void EventInit()
+        private void SubscribeEvents()
         {
             _saveGameController.IsSaveSetUp.Subscribe(IsNoAdsPurchasedCheck);
             _inAppStore.OnProductPurchase += SetNoAdsPurchase;

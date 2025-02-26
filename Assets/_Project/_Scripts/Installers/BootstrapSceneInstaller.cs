@@ -36,7 +36,7 @@ namespace Installers
                 .AsSingle()
                 .WithArguments(_gameSettings, _useRemoteConfig);
             Container
-                .BindInterfacesTo<MainSceneLoader>()
+                .BindInterfacesTo<BootstrapEntryPoint>()
                 .AsSingle()
                 .NonLazy();
         }

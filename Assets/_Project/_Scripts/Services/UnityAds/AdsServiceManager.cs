@@ -34,6 +34,11 @@ namespace Advertisements
         
         public void Dispose()
         {
+            UnsubscribeEvents();
+        }
+
+        private void UnsubscribeEvents()
+        {
             _adsService.OnRewardAdsShowed -= GiveReward;
         }
 

@@ -23,6 +23,11 @@ namespace UIControl.MVVM.Bullets
         
         public void Dispose()
         {
+            UnsubscribeEvent();
+        }
+
+        private void UnsubscribeEvent()
+        {
             _bulletFabric.OnShot -= OnShot;
         }
         

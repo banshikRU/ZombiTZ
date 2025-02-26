@@ -22,7 +22,7 @@ namespace UIControl.MVVM.Scores
         public void Initialize()
         {
             InitMaxScores();
-            EventInit();
+            SubscribeEvents();
         }
         
         public void AddScores(int scores)
@@ -53,7 +53,7 @@ namespace UIControl.MVVM.Scores
             _gameStateUpdater.OnGamePlayed -= ResetCurrentScores;
         }
 
-        private void EventInit()
+        private void SubscribeEvents()
         {
             _gameStateUpdater.OnGamePlayed += ResetCurrentScores;
         }

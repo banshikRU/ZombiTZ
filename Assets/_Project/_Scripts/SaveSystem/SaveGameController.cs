@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using PlayerControl;
 using UniRx;
@@ -27,7 +28,7 @@ namespace SaveSystem
             _cloudSaveService = cloudSaveService;
         }
 
-        public async Task Initialize()
+        public async UniTask Initialize()
         {
             await CompareSaves();
         }

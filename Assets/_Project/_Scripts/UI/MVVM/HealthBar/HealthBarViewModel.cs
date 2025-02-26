@@ -25,7 +25,7 @@ namespace UIControl.MVVM.HealthBar
         
         public void Dispose()
         {
-            _zombie.OnZombieTakeDamage -= UpdateZombieHealthBar;
+            UnsubscribeEvent();
         }
 
         public void UpdateZombieHealthBar(int value,int maxValue)
@@ -42,6 +42,11 @@ namespace UIControl.MVVM.HealthBar
         private void SubscribeEvent()
         {
             _zombie.OnZombieTakeDamage += UpdateZombieHealthBar;
+        }
+
+        private void UnsubscribeEvent()
+        {
+            _zombie.OnZombieTakeDamage -= UpdateZombieHealthBar;
         }
     }
 }

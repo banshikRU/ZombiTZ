@@ -18,14 +18,24 @@ namespace  UIControl.MVVM.Scores
         public void Initialize()
         {
             OnMoneyChanged(_scoreValueModel.CurrentScores.Value);
-            _scoreValueModel.CurrentScores.Subscribe(OnMoneyChanged);
+            SubscribeEvents();
         }
 
         public void Dispose()
         {
+            UnsubscribeEvents();
+        }
+
+        private void SubscribeEvents()
+        {
+            _scoreValueModel.CurrentScores.Subscribe(OnMoneyChanged);
+        }
+
+        private void UnsubscribeEvents()
+        {
             _scoreValueModel.CurrentScores.Dispose();
         }
-        
+
         private void OnMoneyChanged(int value)
         {
             Scores.Value = value;

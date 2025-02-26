@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using UnityEngine;
@@ -8,13 +9,13 @@ namespace Services
 {
     public class UnityServicesInitializer
     {
-        public async Task Initialize()
+        public async UniTask Initialize()
         {
             await InitializeUnityServices();
             await SignInAnonymously();
         }
 
-        private async Task InitializeUnityServices()
+        private async UniTask InitializeUnityServices()
         {
             try
             {
@@ -26,7 +27,7 @@ namespace Services
             }
         }
 
-        private async Task SignInAnonymously()
+        private async UniTask SignInAnonymously()
         {
             try
             {

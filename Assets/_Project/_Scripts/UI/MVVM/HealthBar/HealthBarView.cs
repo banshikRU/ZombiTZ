@@ -16,17 +16,22 @@ namespace UIControl.MVVM.HealthBar
             _healthBarViewModel = healthBarViewModel;
             SubscribeEvent();
         }
+        
+        private void OnDestroy()
+        {
+            UnsubscribeEvent();
+        }
+
+        private void UnsubscribeEvent()
+        {
+            _healthBarViewModel.ZombieHealth.Dispose();
+            _healthBarViewModel.ZombiePosition.Dispose();
+        }
 
         private void SubscribeEvent()
         {
             _healthBarViewModel.ZombieHealth.Subscribe(HealthBarValueUpdate);
             _healthBarViewModel.ZombiePosition.Subscribe(UpdateHealthBarPosition);
-        }
-
-        private void OnDestroy()
-        {
-            _healthBarViewModel.ZombieHealth.Dispose();
-            _healthBarViewModel.ZombiePosition.Dispose();
         }
 
         private void HealthBarValueUpdate(float value)

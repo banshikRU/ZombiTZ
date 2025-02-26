@@ -30,7 +30,7 @@ namespace UIControl
         
         public void Initialize()
         {
-            EventInit();
+            SubscribeEvents();
             OnMainMenu();
             ControlSelectSaveMenu();
         }
@@ -65,7 +65,7 @@ namespace UIControl
             _player.OnPlayerDeath -= OffInGameStats;
         }
 
-        private void EventInit()
+        private void SubscribeEvents()
         {
             _adsRewardGiver.OnGiveSecondChance += OffEndGameMenu;
             _gameStateUpdater.OnGamePlayed += OffMainMenu;
