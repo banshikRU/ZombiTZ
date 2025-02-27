@@ -4,15 +4,14 @@ namespace GameSystem
 {
     public class SceneController
     {
-        public void LoadScene(ScenesNames sceneName)
+        public void LoadGameScene()
         {
-            SceneManager.LoadScene(sceneName.ToString());
+            SceneManager.LoadScene(1);
         }
 
-        public void ReloadCurrentScene()
+        public void ReloadGameScene()
         {
-            Scene currentScene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(currentScene.name);
+            SceneManager.LoadScene(1);
         }
     }
 }

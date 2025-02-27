@@ -46,7 +46,7 @@ namespace GameSystem
         public void RestartGame()
         {
             _scoreUpdater.Value.UpdateMaxScores();
-            _sceneController.ReloadCurrentScene();
+            _sceneController.ReloadGameScene();
         }
 
         private void GameContinuation()

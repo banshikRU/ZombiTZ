@@ -43,7 +43,7 @@ namespace Installers
                 .BindInterfacesAndSelfTo<IAPButtonViewModel>()
                 .AsSingle();
             Container
-                .BindInterfacesAndSelfTo<UIViewModel>()
+                .BindInterfacesAndSelfTo<AllGameMenusViewModel>()
                 .AsSingle();
             Container
                 .BindInterfacesAndSelfTo<SelectSaveMenuViewModel>()

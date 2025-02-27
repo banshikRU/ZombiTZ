@@ -32,14 +32,14 @@ namespace UIControl.MVVM.Scores
 
         public void InitMaxScores()
         {
-            CurrentScores.Value = _saveGameController.PlayerDataValues.MaxScores;
+            CurrentScores.Value = _saveGameController.SelectedPlayerData.MaxScores;
         }
 
         public void UpdateMaxScores()
         {
-            if (_saveGameController.PlayerDataValues.MaxScores >= CurrentScores.Value)
+            if (_saveGameController.SelectedPlayerData.MaxScores >= CurrentScores.Value)
                 return;
-            _saveGameController.PlayerDataValues.MaxScores = CurrentScores.Value;
+            _saveGameController.SelectedPlayerData.MaxScores = CurrentScores.Value;
             _saveGameController.SaveData();
         }
 

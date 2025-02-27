@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Unity.Services.CloudSave;
 using UnityEngine;
 
@@ -8,13 +9,13 @@ namespace SaveSystem
 {
     public class CloudSaveServiceWrapper : ISaveService
     {
-        public async Task SaveAsync(string key, string data)
+        public async UniTask SaveAsync(string key, string data)
         {
             await CloudSaveService.Instance.Data.Player.SaveAsync(new Dictionary<string, object> { { key, data } });
             Debug.Log("Cloud saved!");
         }
 
-        public async Task<string> LoadAsync(string key)
+        public async UniTask<String> LoadAsync(string key)
         {
             try
             {

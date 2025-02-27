@@ -8,7 +8,7 @@ using Zenject;
 
 namespace UIControl
 {
-    public class UIViewModel :  IDisposable,IInitializable
+    public class AllGameMenusViewModel :  IDisposable,IInitializable
     {
         private readonly GameStateUpdater _gameStateUpdater;
         private readonly PlayerBehaviour _player;
@@ -20,7 +20,7 @@ namespace UIControl
         public readonly ReactiveProperty<bool> IsInGameStatsVisible = new ();
         public readonly ReactiveProperty<bool> IsSelectSaveMenuVisible = new ();
 
-        public UIViewModel(GameStateUpdater gameStateUpdater, PlayerBehaviour player, AdsRewardGiver adsRewardGiver, SaveGameController saveGameController)
+        public AllGameMenusViewModel(GameStateUpdater gameStateUpdater, PlayerBehaviour player, AdsRewardGiver adsRewardGiver, SaveGameController saveGameController)
         {
             _gameStateUpdater = gameStateUpdater;
             _player = player;
@@ -117,13 +117,14 @@ namespace UIControl
 
         private void ControlSelectSaveMenu()
         {
+            if (_saveGameController.IsSaveSetUp.Value)
+                return;
             TimeSpan difference = _saveGameController.LocalPlayerData.SaveTime - _saveGameController.CloudPlayerData.SaveTime;
             if(difference.TotalSeconds < 30)
                 return;
-            if (_saveGameController.CloudPlayerData != null && _saveGameController.LocalPlayerData != null && !_saveGameController.IsSaveSetUp.Value)
-            {
+            if (_saveGameController.CloudPlayerData != null && _saveGameController.LocalPlayerData != null)
                 OnSelectSaveMenu();
-            }
+            
         }
     }
 }

@@ -18,7 +18,7 @@ namespace SaveSystem
 
         public PlayerData LocalPlayerData { get; private set; }
         public PlayerData CloudPlayerData { get; private set; }
-        public PlayerData PlayerDataValues { get; private set; }
+        public PlayerData SelectedPlayerData { get; private set; }
         
         public readonly ReactiveProperty<bool> IsSaveSetUp = new ();
 
@@ -36,13 +36,13 @@ namespace SaveSystem
         public async void SaveData()
         {
             IsSaveSetUp.Value = true;
-            PlayerDataValues.SaveTime = DateTime.Now;
-            var json = JsonConvert.SerializeObject(PlayerDataValues);
+            SelectedPlayerData.SaveTime = DateTime.Now;
+            var json = JsonConvert.SerializeObject(SelectedPlayerData);
             await _localSaveService.SaveAsync(PLAYER_DATA, json);
             await _cloudSaveService.SaveAsync(PLAYER_DATA, json);
         }
 
-        public async Task<PlayerData> LoadLocal()
+        public async UniTask<PlayerData> LoadLocal()
         {
             var jsonData = await _localSaveService.LoadAsync(PLAYER_DATA);
             return JsonConvert.DeserializeObject<PlayerData>(jsonData);
@@ -50,17 +50,17 @@ namespace SaveSystem
         
         public void SetUpLocalSave()
         {
-            PlayerDataValues = LocalPlayerData;
+            SelectedPlayerData = LocalPlayerData;
             SaveData();
         }
 
         public void SetUpCloudSave()
         {
-            PlayerDataValues = CloudPlayerData;
+            SelectedPlayerData = CloudPlayerData;
             SaveData();
         }
 
-        private async Task<PlayerData> LoadCloud()
+        private async UniTask<PlayerData> LoadCloud()
         {
             var jsonData = await _cloudSaveService.LoadAsync(PLAYER_DATA);
             if (string.IsNullOrEmpty(jsonData))
@@ -73,11 +73,14 @@ namespace SaveSystem
 
         private async Task CompareSaves()
         {
-            PlayerDataValues = new PlayerData();
+            SelectedPlayerData = new PlayerData();
+            
             try
             {
-                LocalPlayerData = await LoadLocal();
-                CloudPlayerData = await LoadCloud();
+                var (localPlayerData,cloudPlayerData) = await UniTask.WhenAll(LoadLocal(), LoadCloud());
+
+                LocalPlayerData = localPlayerData;
+                CloudPlayerData = cloudPlayerData;
 
                 if (LocalPlayerData == null && CloudPlayerData == null)
                 {
@@ -86,17 +89,17 @@ namespace SaveSystem
                 }
                 else if (LocalPlayerData == null)
                 {
-                    PlayerDataValues = CloudPlayerData;
+                    SelectedPlayerData = CloudPlayerData;
                     SaveData();
                 }
                 else if (CloudPlayerData == null)
                 {
-                    PlayerDataValues = LocalPlayerData;
+                    SelectedPlayerData = LocalPlayerData;
                     SaveData();
                 }
                 else if (LocalPlayerData.SaveTime == CloudPlayerData.SaveTime)
                 {
-                    PlayerDataValues = LocalPlayerData;
+                    SelectedPlayerData = LocalPlayerData;
                     SaveData();
                 }
             }
@@ -108,7 +111,7 @@ namespace SaveSystem
 
         private void MakeFirstSave()
         {
-            PlayerDataValues = new PlayerData
+            SelectedPlayerData = new PlayerData
             {
                 MaxScores = 0,
                 SaveTime = DateTime.Now,

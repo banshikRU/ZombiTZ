@@ -1,21 +1,23 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace SaveSystem
 {
     public class LocalSaveService : ISaveService
     {
-        public Task SaveAsync(string key, string data)
+        public UniTask SaveAsync(string key, string data)
         {
             PlayerPrefs.SetString(key, data);
             PlayerPrefs.Save();
-            return Task.CompletedTask;
+            return UniTask.CompletedTask;
         }
 
-        public Task<string> LoadAsync(string key)
+        public UniTask<String> LoadAsync(string key)
         {
             string data = PlayerPrefs.GetString(key);
-            return Task.FromResult(data);
+            return UniTask.FromResult(data);
         }
     }
 }

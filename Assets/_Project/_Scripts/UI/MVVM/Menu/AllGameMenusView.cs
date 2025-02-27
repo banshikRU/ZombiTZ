@@ -5,7 +5,7 @@ using Zenject;
 
 namespace UIControl
 {
-    public class UIView : MonoBehaviour
+    public class AllGameMenusView : MonoBehaviour
     {
         [SerializeField] 
         private GameObject _mainMenu;
@@ -20,10 +20,10 @@ namespace UIControl
         [SerializeField] 
         private Button _gameEndButton;
 
-        private UIViewModel _viewModel;
+        private AllGameMenusViewModel _viewModel;
 
         [Inject]
-        public void Construct(UIViewModel viewModel)
+        public void Construct(AllGameMenusViewModel viewModel)
         {
             _viewModel = viewModel;
         }

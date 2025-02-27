@@ -45,7 +45,7 @@ namespace Services
 
         private void IsNoAdsPurchasedCheck(bool value)
         {
-            IsAdsPurchased = _saveGameController.PlayerDataValues.NoAdsPurchased;
+            IsAdsPurchased = _saveGameController.SelectedPlayerData.NoAdsPurchased;
             Debug.Log(IsAdsPurchased);
         }
 
@@ -53,7 +53,7 @@ namespace Services
         {
             if (Id == NO_ADS_ID)
             {
-                _saveGameController.PlayerDataValues.NoAdsPurchased = true;
+                _saveGameController.SelectedPlayerData.NoAdsPurchased = true;
                 _saveGameController.SaveData();
                 IsNoAdsPurchasedCheck(true);
             }

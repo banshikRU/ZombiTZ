@@ -37,7 +37,7 @@ namespace GameSystem
         
         private void LoadMainScene()
         {
-            _sceneController.LoadScene(ScenesNames.MainScene);
+            _sceneController.LoadGameScene();
         }
     }
 }

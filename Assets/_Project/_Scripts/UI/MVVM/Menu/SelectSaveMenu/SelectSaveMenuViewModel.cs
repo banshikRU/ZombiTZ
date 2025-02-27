@@ -8,17 +8,17 @@ namespace UIControl.MVVM
     public class SelectSaveMenuViewModel: IInitializable
     {
         private readonly SaveGameController _saveGameController;
-        private readonly UIViewModel _uiViewModel;
+        private readonly AllGameMenusViewModel _allGameMenusViewModel;
         
         public readonly ReactiveProperty<DateTime> LastLocalSaveTime = new();
         public readonly ReactiveProperty<DateTime> LastCloudSaveTime = new();
         public readonly ReactiveProperty<bool> IsLocalSaveButtonActive = new(); 
         public readonly ReactiveProperty<bool> IsCloudSaveButtonActive = new();
 
-        public SelectSaveMenuViewModel(SaveGameController saveGameController, UIViewModel uiViewModel)
+        public SelectSaveMenuViewModel(SaveGameController saveGameController, AllGameMenusViewModel allGameMenusViewModel)
         {
             _saveGameController = saveGameController;
-            _uiViewModel = uiViewModel;
+            _allGameMenusViewModel = allGameMenusViewModel;
         }
         
         public void Initialize()
@@ -29,13 +29,13 @@ namespace UIControl.MVVM
         public void LoadLocalSave()
         {
             _saveGameController.SetUpLocalSave();
-            _uiViewModel.SaveSelected();
+            _allGameMenusViewModel.SaveSelected();
         }
 
         public void LoadCloudSave()
         {
             _saveGameController.SetUpCloudSave();
-            _uiViewModel.SaveSelected();
+            _allGameMenusViewModel.SaveSelected();
         }
 
         private void InitSelectSaveButtons()
