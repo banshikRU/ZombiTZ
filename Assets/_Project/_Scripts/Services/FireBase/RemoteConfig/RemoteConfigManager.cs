@@ -58,7 +58,7 @@ namespace Firebase.RemoteConfig
             _gameSettingsParameters = JsonUtility.FromJson<RemoteGameSettingsValues>(jsonString);
         }
 
-        private Task SetDefaultValues()
+        private UniTask SetDefaultValues()
         {
             TextAsset jsonFile = Resources.Load<TextAsset>("Game_Settings");
             string jsonString = jsonFile != null ? jsonFile.text : "{}";
@@ -68,7 +68,7 @@ namespace Firebase.RemoteConfig
             };
 
             FirebaseRemoteConfig.DefaultInstance.SetDefaultsAsync(defaults);
-            return Task.CompletedTask;
+            return UniTask.CompletedTask;
         }
 
         private void LoadDefaultValues()

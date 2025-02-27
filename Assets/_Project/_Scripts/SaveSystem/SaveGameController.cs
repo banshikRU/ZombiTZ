@@ -71,7 +71,7 @@ namespace SaveSystem
             return JsonConvert.DeserializeObject<PlayerData>(jsonData);
         }
 
-        private async Task CompareSaves()
+        private async UniTask CompareSaves()
         {
             SelectedPlayerData = new PlayerData();
             
