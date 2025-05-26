@@ -42,7 +42,7 @@ namespace SaveSystem
             await _cloudSaveService.SaveAsync(PLAYER_DATA, json);
         }
 
-        public async UniTask<PlayerData> LoadLocal()
+        private async UniTask<PlayerData> LoadLocal()
         {
             var jsonData = await _localSaveService.LoadAsync(PLAYER_DATA);
             return JsonConvert.DeserializeObject<PlayerData>(jsonData);

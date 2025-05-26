@@ -18,7 +18,7 @@ namespace Firebase.Analytics
             _analyticsService.LogEventStartGame();
         }
 
-        public void LogEvent(string eventName, Dictionary<string, int> parameters)
+        private void LogEvent(string eventName, Dictionary<string, int> parameters)
         {
             _analyticsService.LogEvent(eventName, parameters);
         }
