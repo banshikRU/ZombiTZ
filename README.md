@@ -1,7 +1,7 @@
 # Zombie Shooter
 This is a simple 2d arcade shooting game made on Unity 2022.3.29f1 and C#.
 ## Description
-(https://github.com/banshikRU/ZombieTZ/Assets/Demo.gif)
+(https://github.com/banshikRU/ZombiTZ/blob/main/Assets/Demo.gif)
 This is a simple 2d arcade shooting game made on Unity. The game includes 3 types of zombies that appear at random off-screen and attack the player.
 When the player clicks on the screen with the left mouse button, he indicates the firing location of his gun.
 
